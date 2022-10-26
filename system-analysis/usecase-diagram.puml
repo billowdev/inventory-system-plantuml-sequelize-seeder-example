@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+' =================== Customer ===================
+' role - ผู้ที่เข้ามาเพื่อซื้อสินค้าภายในบริษัท
+' duty - ทำให้เกิดการซื้อขายสินค้า
+actor Customer as actorCustomeer
+
+' =================== Manager ===================
+' role - เจ้าหน้าที่ ที่จัดการสินค้า ให้คงคลังสินค้าอยู่เสมอ
+' duty - บริหารจัดการ stock สินค้า ทั้งการจำหน่ายออก และการรับสินค้ารวมถึงการ
+' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
+actor Manager as actorManager
+
+' =================== Supplier ===================
+' role - เป็นบริษัทคู่ค้าที่จำหน่ายสินค้าหรือวัตถุดิบให้กับบริษัท
+' duty - ขายและจัดส่งสินค้าตามใบสั่งของ
+actor Supplier as actorSupplier
+
+' =================== Financial ===================
+' role - เป็นฝ่ายดูแลบัญชีและการเงินของบริษัท
+' duty - รับข้อมูลการซื้อและขายสินค้า
+actor Financial as actorFinancial
+
+' =================== Stock System ===================
+rectangle "Stock system" {
+    usecase (category product) as (usecaseCategoryProduct)
+'    usecase ()
+    actorManager -- (usecaseCategoryProduct)
+ }
+
+@enduml
