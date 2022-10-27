@@ -13,7 +13,15 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		name: {
 			type: Sequelize.STRING(100),
+			allowNull: false
+		},
+		desc: {
+			type: Sequelize.STRING(200),
 			allowNull: true
+		},
+		brand: {
+			type: Sequelize.STRING(50),
+			allowNull: false
 		}
 	})
 

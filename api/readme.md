@@ -20,6 +20,7 @@
 		npx sequelize-cli db:migrate:undo --name 20221027022035-category.js
 '</pre>
 
+npx sequelize-cli migration:create --name procut-add-brand-desc-column
 
 
 #### seeder
@@ -45,8 +46,8 @@ npx sequelize-cli db:seed:undo:all
 	1. create seeder
 		npx sequelize-cli seed:generate --name product
 	2. seed run
-		npx sequelize-cli db:seed --seed 20221026151755-product.js
+		npx sequelize-cli db:seed --seed _2_20221026151755-product.js
 	2.1 if want to undo
-		npx sequelize-cli db:seed:undo --seed 20221026151755-product.js
+		npx sequelize-cli db:seed:undo --seed _2_20221026151755-product.js
 '</pre>
 

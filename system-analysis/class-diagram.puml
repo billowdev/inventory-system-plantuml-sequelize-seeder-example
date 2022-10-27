@@ -1,11 +1,54 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-autonumber
+class Product {
+- id
+- name
+- desc
+- brand
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+ + getProduct()
+ + createProduct()
+ + updateProduct()
+ + deleteProduct()
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+class Category {
+    - id
+    - name
+    - desc
+}
+
+class Stock {
+    - id
+    - qty
+    - importDate
+    - productId
+}
+
+class Receipt {
+    - id
+    - date
+    - orderId
+}
+
+class Invoice {
+    - id
+    - productId
+    - qty
+}
+
+class Order {
+    - id
+    - qty
+    - productId
+}
+
+Product "1" -- "0..*" Category
+Product "1" -- "0..*" Stock
+Product "1..*" <|-- "1" Invoice
+
+
+
+
 @enduml
