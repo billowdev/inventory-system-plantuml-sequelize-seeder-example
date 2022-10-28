@@ -1,0 +1,87 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+left to right direction
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+' skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+
+' =================== Manager ===================
+' role - เจ้าหน้าที่ ที่จัดการสินค้า ให้คงคลังสินค้าอยู่เสมอ
+' duty - บริหารจัดการ stock สินค้า ทั้งการจำหน่ายออก และการรับสินค้ารวมถึงการ
+' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
+actor Manager as actorManager
+note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
+
+' =================== Financial ===================
+' role - เป็นฝ่ายดูแลบัญชีและการเงินของบริษัท
+' duty - รับข้อมูลการซื้อและขายสินค้า
+actor Financial as actorFinancial
+note top of actorFinancial : เป็นฝ่ายดูแลบัญชี
+
+
+
+' =================== Stock System ===================
+rectangle "ระบบจัดการสินค้าคงคลัง" as stockSystem {
+
+
+    ' ================ Reporting ================
+    '   การทำรายงาน
+    usecase (Sell Report) as (usecaseSellReport)
+
+
+
+    usecase (View Receipt) as (usecaseViewReceipt)
+
+
+
+    usecase (Create product order list) as (usecaseCreateProductOrderList)
+
+    ' ================ Stock ================
+    usecase (Check Stock) as (usecaseCheckStock)
+
+
+
+    '===========================================================
+    ' ===                  Associate Flow                    ===
+    '===========================================================
+
+    ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
+    actorManager -- (usecaseSellReport)
+    actorFinancial -right- (usecaseSellReport)
+
+
+    ' ================ Reporting ================
+    '   การทำรายงาน
+
+    (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
+    (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
+    (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
+
+'    (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
+'    (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
+'    (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
+'
+'    actorSupplier -- (usecaseOrderProductFromSupplier)
+'    actorCEO -- (usecaseConfirmOrderList)
+
+
+
+
+}
+
+@enduml
