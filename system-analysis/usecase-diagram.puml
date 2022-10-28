@@ -121,6 +121,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     usecase (Delete product) as (usecaseDeleteProduct)
     usecase (Pick up product) as (usecasePickUpProduct)
 
+    usecase (Promotion) as (usecasePromotion)
+
     ' ================ Category ================
     usecase (Manage category) as (usecaseCategory)
     usecase (View category) as (usecaseViewCategory)
@@ -139,7 +141,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
 
     ' ================ Product ================
-    actorManager -- (usecaseViewProduct)
+    actorManager -- (usecaseProduct)
     (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
     (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
@@ -147,6 +149,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseProduct) <.. (usecaseViewProduct) : <<extends>>
 
     (usecaseProduct) ..> (usecaseViewCategory) : <<include>>
+    (usecaseProduct) ..> (usecasePromotion) : <<extends>>
 
 
     ' ================ Category ================
