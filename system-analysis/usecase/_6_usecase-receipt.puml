@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+' skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+left to right direction
+
+actor Salesperson as actorSalesperson
+note left of actorSalesperson : พนักงานขาย
+
+
+' =================== Stock System ===================
+rectangle "จัดการใบเสร็จ" as manageReceipt {
+
+
+    '    ออกใบเสร็จ
+    usecase (Manage Receipt) as (usecaseReceipt)
+    usecase (View Receipt) as (usecaseViewReceipt)
+    usecase (Print receipt) as (usecasePrintReceipt)
+    usecase (Edit receipt) as (usecaseEditReceipt)
+    usecase (Create receipt) as (usecaseCreateReceipt)
+
+
+
+    '===========================================================
+    ' ===                  Associate Flow                    ===
+    '===========================================================
+
+
+
+
+    ' ================ Receipt ================
+    (usecaseCreateReceipt) .up.> (usecaseReceipt) : <<extends>>
+    (usecaseViewReceipt) .> (usecaseReceipt) : <<extends>>
+    (usecaseEditReceipt) ...> (usecaseReceipt) : <<extends>>
+    (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<include>>
+    (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<include>>
+
+    (usecaseReceipt) -- actorSalesperson
+
+
+
+
+}
+
+@enduml
