@@ -30,6 +30,7 @@ rectangle "จัดการการขาย" as manageSale {
     ' ================ Selling ================
     ' กระบวนการขายสินค้า
     usecase (Sell) as (usecaseSell)
+    usecase (Sell Product) as (usecaseSellProduct)
     '    note bottom of usecaseSell : กระบวนการขายสินค้า
 
 
