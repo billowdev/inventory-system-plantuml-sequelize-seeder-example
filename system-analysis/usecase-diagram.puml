@@ -1,18 +1,28 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-left to right direction
+skinparam Arrow{
+    Thickness .6
+}
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
 
 ' =================== Customer ===================
 ' role - ผู้ที่เข้ามาเพื่อซื้อสินค้าภายในบริษัท
 ' duty - ทำให้เกิดการซื้อขายสินค้า
 actor Customer as actorCustomer
-note right of actorCustomer : ลูกค้าผู้ที่เข้ามาซื้อสินค้าภายในบริษัท
+note bottom of actorCustomer : ลูกค้าผู้ที่เข้ามาซื้อสินค้าภายในบริษัท
 ' =================== Manager ===================
 ' role - เจ้าหน้าที่ ที่จัดการสินค้า ให้คงคลังสินค้าอยู่เสมอ
 ' duty - บริหารจัดการ stock สินค้า ทั้งการจำหน่ายออก และการรับสินค้ารวมถึงการ
 ' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
 actor Manager as actorManager
-note left of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
+note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
 ' =================== Supplier ===================
 ' role - เป็นบริษัทคู่ค้าที่จำหน่ายสินค้าหรือวัตถุดิบให้กับบริษัท
 ' duty - ขายและจัดส่งสินค้าตามใบสั่งของ
@@ -22,105 +32,129 @@ note left of actorSupplier : เป็นบริษัทคู่ค้าท
 ' role - เป็นฝ่ายดูแลบัญชีและการเงินของบริษัท
 ' duty - รับข้อมูลการซื้อและขายสินค้า
 actor Financial as actorFinancial
-note left of actorFinancial : เป็นฝ่ายดูแลบัญชี
+note top of actorFinancial : เป็นฝ่ายดูแลบัญชี
 
 ' =================== Stock System ===================
 rectangle "Stock system" as stockSystem {
 
-' ================ Selling ================
+    ' ================ Selling ================
     ' กระบวนการขายสินค้า
     usecase (Sell) as (usecaseSell)
-'    การขายสินค้า
+    '    การขายสินค้า
     usecase (Sell product) as (usecaseSellProduct)
-'    การตรวจสอบยอดสินค้า
+    '    การตรวจสอบยอดสินค้า
 
-'    ออกใบเสร็จ
+    '    ออกใบเสร็จ
     usecase (Receipt) as (usecaseReceipt)
+    usecase (Print receipt) as (usecasePrintReceipt)
+    usecase (Create receipt) as (usecaseCreateReceipt)
 
-' ================ Ordering ================
-'    การสั่งซื้อสินค้า
+    ' ================ Ordering ================
+    '    การสั่งซื้อสินค้า
     usecase (Order) as (usecaseOrder)
-'    การลงรับสินค้า
-    usecase (Pick up Products) as (usecasePickUpProduct)
-'    ปรับปรุงยอดสินค้า
+    usecase (Edit Order) as (usecaseEditOrder)
+    usecase (Delete Order) as (usecaseDeleteOrder)
+
+    '    การลงรับสินค้า
+
+    ' ================ Reporting ================
+    '   การทำรายงาน
+    usecase (Sell Report) as (usecaseSellReport)
 
 
-' ================ Product ================
-'    การสั่งซื้อสินค้า
+    ' ================ Product ================
+    '    การสั่งซื้อสินค้า
     usecase (View product) as (usecaseProduct)
     usecase (Add product) as (usecaseAddProduct)
     usecase (update product) as (usecaseUpdateProduct)
     usecase (Delete product) as (usecaseDeleteProduct)
 
+    usecase (Pick up product) as (usecasePickUpProduct)
+
 
     usecase (Stock) as (usecaseStock)
+    usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
 
 
-' ================ Reporting ================
-'   การทำรายงาน
-    usecase (Sell Report) as (usecaseSellReport)
 
-' ================ Invoice ================
-'   คลัง
+    ' ================ Invoice ================
     usecase (Invoice) as (usecaseInvoice)
     usecase (Create Invoice) as (usecaseCreateInvoice)
     usecase (Print Invoice) as (usecasePrintInvoice)
 
+    ' ================ Shipment ================
+    usecase (Shipment) as (usecaseShipment)
 
+    '    ===================== Associate Flow =====================
 
-'    ===================== Associate Flow =====================
-
-'    ================ actor - usecase Flow ================
-'   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
+    '    ================ actor - usecase Flow ================
+    '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
     actorManager -- (usecaseSell)
 
-'  ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสั่งซื้อสินค้า ===
+    ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสั่งซื้อสินค้า ===
     actorManager -left- (usecaseOrder)
     (usecaseOrder) -- actorCustomer
 
-'  ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
+    ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
     actorManager --- (usecaseSellReport)
     actorFinancial --- (usecaseSellReport)
 
     actorManager -- (usecaseStock)
     actorManager -left- (usecaseProduct)
 
-'    ================ usecase - usecase Flow ================
+    actorSupplier -- (usecaseShipment)
+
+    '================ usecase - usecase Flow ================
+
 
     (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
     (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
-
+    (usecasePickUpProduct) .left.> (usecaseProduct) : <<extends>>
 
     ' ================ Stock ================
     (usecaseAddStock) ..> (usecaseStock) : <<extends>>
+    (usecaseStock) <.. (usecaseCheckStock) : <<extends>>
     (usecaseUpdateStock) ..> (usecaseStock) : <<extends>>
 
-'    การขายสินค้า เป็นส่วนหนึ่งของกระบวนการขายสินค้า
+    ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
-'    ตรวจสอบยอดสินค้า เป็นส่วนหนึ่งของกระบวนการขายสินค้า
+    (usecaseCheckStock) <.. (usecaseSell) : <<include>>
 
-    (usecaseStock) <.. (usecaseSell) : <<include>>
-
-    '    การตัดยอดสินค้า เป็นส่วนหนึ่งของกระบวนการขายสินค้า
-'    (usecaseSell) ..> (usecaseUpdateStock)  : <<include>>
-
-'   การออกใบเสร็จ เป็นส่วนหนึ่งของกระบวนการขายสินค้า
     (usecaseReceipt) ..> (usecaseSell) : <<extends>>
 
-
-'   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
-    (usecasePickUpProduct) ..> (usecaseOrder) : <<extends>>
-
-'   การปรับปรุงยอดสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
-   (usecaseStock) <.. (usecaseOrder) : <<include>>
+    (usecaseInvoice) <.. (usecaseSell) : <<include>>
 
 
- ' ================ Invoice ================
+    '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
+    (usecaseOrder) ..> (usecasePickUpProduct) : <<include>>
+
+    '   การปรับปรุงยอดสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
+    (usecaseCheckStock) <.. (usecaseOrder) : <<include>>
+
+    ' ================ Order ================
+    (usecaseOrder) <.. (usecaseDeleteOrder) : <<extends>>
+    (usecaseEditOrder) ..> (usecaseOrder) : <extends>>
+
+
+    ' ================ Invoice ================
     (usecaseCreateInvoice) ..> (usecaseInvoice) : <<extends>>
     (usecaseInvoice)  <..   (usecasePrintInvoice): <<extends>>
- }
+
+    ' ================ Receipt ================
+    (usecaseCreateReceipt) ..> (usecaseReceipt) : <<extends>>
+    (usecaseReceipt)  <..   (usecasePrintReceipt): <<extends>>
+
+    ' ================ Reporting ================
+    '   การทำรายงาน
+
+    (usecaseSell) <..  (usecaseSellReport)   : <<include>>
+
+    ' ================ Shipment ================
+    (usecaseShipment) <.. (usecaseAddStock) : <<include>>
+
+}
 
 @enduml
