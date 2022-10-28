@@ -55,8 +55,6 @@ rectangle "จัดการสต๊อกสินค้า" as manageStock {
 
 
 
-
-
 }
 
 @enduml
