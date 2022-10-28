@@ -36,8 +36,7 @@ note top of actorFinancial : เป็นฝ่ายดูแลบัญชี
 
 
 ' =================== Stock System ===================
-rectangle "ระบบจัดการสินค้าคงคลัง" as stockSystem {
-
+rectangle "จัดการรายงานการสั่งซื้อ" as manageSellReport {
 
     ' ================ Reporting ================
     '   การทำรายงาน
