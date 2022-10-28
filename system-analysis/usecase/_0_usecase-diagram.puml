@@ -154,9 +154,10 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
-    (usecaseCheckStock) <.. (usecaseSell)    : <<include>>
+    (usecaseSellProduct)  ..> (usecaseUpdateStock)   : <<include>>
 
     (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
+    (usecaseSell)  ..> (usecaseOrder) : <<include>>
 
     '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
     actorSalesperson - (usecaseSell)

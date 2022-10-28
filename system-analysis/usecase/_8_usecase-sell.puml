@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+left to right direction
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+' skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+
+actor Salesperson as actorSalesperson
+note left of actorSalesperson : พนักงานขาย
+
+' =================== Stock System ===================
+rectangle "จัดการการขาย" as manageSale {
+
+    ' ================ Selling ================
+    ' กระบวนการขายสินค้า
+    usecase (Sell) as (usecaseSell)
+    '    note bottom of usecaseSell : กระบวนการขายสินค้า
+
+
+    usecase (View Receipt) as (usecaseViewReceipt)
+    usecase (Print receipt) as (usecasePrintReceipt)
+    usecase (Create receipt) as (usecaseCreateReceipt)
+
+    usecase (Order) as (usecaseOrder)
+    usecase (Update stock) as (usecaseUpdateStock)
+
+    '===========================================================
+    ' ===                  Associate Flow                    ===
+    '===========================================================
+    ' ================ Sell ================
+    (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
+    (usecaseSellProduct)  ..> (usecaseUpdateStock)   : <<include>>
+
+    (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
+    (usecaseSell)  ..> (usecaseOrder) : <<include>>
+
+    '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
+     (usecaseSell) -- actorSalesperson
+
+    ' ================ Receipt ================
+    (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<include>>
+    (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<include>>
+
+
+}
+
+@enduml
