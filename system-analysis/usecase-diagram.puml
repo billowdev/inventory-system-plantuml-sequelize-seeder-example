@@ -34,8 +34,6 @@ rectangle "Stock system" as stockSystem {
     usecase (Sell product) as (usecaseSellProduct)
 '    การตรวจสอบยอดสินค้า
 
-'    ตัดยอดสอนค้า
-    usecase (Cut off product) as (usecaseCutOffProduct)
 '    ออกใบเสร็จ
     usecase (Receipt) as (usecaseReceipt)
 
@@ -49,17 +47,16 @@ rectangle "Stock system" as stockSystem {
 
 ' ================ Product ================
 '    การสั่งซื้อสินค้า
-    usecase (View product detail) as (usecaseProductDetail)
-    usecase (Add product detail) as (usecaseAddProductDetail)
-    usecase (update product detail) as (usecaseUpdateProductDetail)
-    usecase (Delete product detail) as (usecaseDeleteProductDetail)
+    usecase (View product) as (usecaseProduct)
+    usecase (Add product) as (usecaseAddProduct)
+    usecase (update product) as (usecaseUpdateProduct)
+    usecase (Delete product) as (usecaseDeleteProduct)
 
-    usecase (Check stock) as (usecaseCheckStock)
+
+    usecase (Stock) as (usecaseStock)
+    usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
 
-        (usecaseProductDetail) <.. (usecaseAddProductDetail)  : <<extends>>
-       (usecaseUpdateProductDetail) ..> (usecaseProductDetail) : <<extends>>
-        (usecaseProductDetail) <.. (usecaseDeleteProductDetail)  : <<extends>>
 
 ' ================ Reporting ================
 '   การทำรายงาน
@@ -87,31 +84,39 @@ rectangle "Stock system" as stockSystem {
     actorManager --- (usecaseSellReport)
     actorFinancial --- (usecaseSellReport)
 
-    actorManager -- (usecaseCheckStock)
+    actorManager -- (usecaseStock)
+    actorManager -left- (usecaseProduct)
 
 '    ================ usecase - usecase Flow ================
+
+    (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
+    (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
+    (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
+
+
+    ' ================ Stock ================
+    (usecaseAddStock) ..> (usecaseStock) : <<extends>>
+    (usecaseUpdateStock) ..> (usecaseStock) : <<extends>>
 
 '    การขายสินค้า เป็นส่วนหนึ่งของกระบวนการขายสินค้า
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
 '    ตรวจสอบยอดสินค้า เป็นส่วนหนึ่งของกระบวนการขายสินค้า
-    (usecaseCheckStock) <.right. (usecaseSell) : <<include>>
+
+    (usecaseStock) <.. (usecaseSell) : <<include>>
+
     '    การตัดยอดสินค้า เป็นส่วนหนึ่งของกระบวนการขายสินค้า
-    (usecaseSell) <.. (usecaseCutOffProduct)  : <<uses>>
+'    (usecaseSell) ..> (usecaseUpdateStock)  : <<include>>
 
 '   การออกใบเสร็จ เป็นส่วนหนึ่งของกระบวนการขายสินค้า
-    (usecaseReceipt) .left.> (usecaseSell) : <<extends>>
+    (usecaseReceipt) ..> (usecaseSell) : <<extends>>
 
 
 '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
     (usecasePickUpProduct) ..> (usecaseOrder) : <<extends>>
 
 '   การปรับปรุงยอดสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
-   (usecaseCheckStock) <.. (usecaseOrder) : <<include>>
+   (usecaseStock) <.. (usecaseOrder) : <<include>>
 
-' ================ Product ================
-    (usecaseAddProduct) ..> (usecaseCheckStock) : <<extends>>
-    (usecaseUpdateStock) ..> (usecaseCheckStock) : <<extends>>
-    (usecaseCheckStock) <.. (usecaseDeleteProduct) : <<extends>>
 
  ' ================ Invoice ================
     (usecaseCreateInvoice) ..> (usecaseInvoice) : <<extends>>
