@@ -19,16 +19,12 @@ skinparam Sequence{
     LifeLineBorderColor #8a8a8a
 }
 
-' =================== Manager ===================
-' role - เจ้าหน้าที่ ที่จัดการสินค้า ให้คงคลังสินค้าอยู่เสมอ
-' duty - บริหารจัดการ stock สินค้า ทั้งการจำหน่ายออก และการรับสินค้ารวมถึงการ
-' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
+
 actor Manager as actorManager
 note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
 
 
-' =================== Stock System ===================
-rectangle "ระบบจัดการสินค้าคงคลัง" as stockSystem {
+rectangle "จัดการประเภทสินค้า" as manageCategory {
 
     ' ================ Category ================
     usecase (Manage category) as (usecaseCategory)
@@ -44,6 +40,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseUpdateCategory) ..> (usecaseCategory) : <<extends>>
     (usecaseCategory) <.. (usecaseDeleteCategory)  : <<extends>>
     (usecaseViewCategory)  ..> (usecaseCategory) : <<extends>>
+
+
 
 
 
