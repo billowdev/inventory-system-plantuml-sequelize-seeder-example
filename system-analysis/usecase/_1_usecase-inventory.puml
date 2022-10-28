@@ -1,0 +1,62 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+left to right direction
+
+' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
+actor Manager as actorManager
+note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
+' =================== Supplier ===================
+' role - เป็นบริษัทคู่ค้าที่จำหน่ายสินค้าหรือวัตถุดิบให้กับบริษัท
+' duty - ขายและจัดส่งสินค้าตามใบสั่งของ
+actor Supplier as actorSupplier
+note right of actorSupplier : เป็นบริษัทคู่ค้าที่จำหน่ายสินค้า
+
+
+rectangle "จัดการสต๊อกสินค้า" as manageStock {
+
+    ' ================ Stock ================
+    usecase (Manage Inventory) as (usecaseInventory)
+    usecase (Check Stock) as (usecaseCheckStock)
+    usecase (Add stock) as (usecaseAddStock)
+    usecase (Update stock) as (usecaseUpdateStock)
+    usecase (View product) as (usecaseViewProduct)
+
+    ' ================ Shipment ================
+    usecase (Shipment) as (usecaseShipment)
+
+
+    ' ================ Stock ================
+    actorSupplier -down- (usecaseShipment)
+    (usecaseInventory) - actorManager
+
+    (usecaseAddStock) ..> (usecaseInventory) : <<extends>>
+    (usecaseAddStock) ..> (usecaseViewProduct) : <<include>>
+    (usecaseUpdateStock) ..> (usecaseInventory) : <<extends>>
+    (usecaseInventory) <.. (usecaseCheckStock) : <<extends>>
+
+
+
+
+
+}
+
+@enduml

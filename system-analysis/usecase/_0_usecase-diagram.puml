@@ -1,32 +1,15 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-'!theme vibrant
+'https://plantuml.com/usecase-diagram
 
 skinparam sequence {
-    'ArrowColor DeepSkyBlue
-    'ActorBorderColor DeepSkyBlue
-    'LifeLineBorderColor blue
-    'LifeLineBackgroundColor #A9DCDF
-
-    'ParticipantBorderColor DeepSkyBlue
-    'ParticipantBackgroundColor DodgerBlue
     ParticipantFontName Thai
     ParticipantFontSize 16
-    'ParticipantFontColor #A9DCDF
-
-    'ActorBackgroundColor black
-    '    ActorFontColor black
     ActorFontSize 16
     ActorFontName Thai
 }
-
-
-skinparam linetype polyline
+'skinparam linetype polyline
 'skinparam linetype ortho
 
-skinparam Arrow{
-    Thickness .6
-}
 skinparam Participant{
     FontColor #efefef
     BorderColor #c0c0c0
@@ -117,9 +100,9 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     usecase (Manage product) as (usecaseProduct)
     usecase (View product) as (usecaseViewProduct)
     usecase (Add product) as (usecaseAddProduct)
-    usecase (update product) as (usecaseUpdateProduct)
+    usecase (Edit product) as (usecaseUpdateProduct)
     usecase (Delete product) as (usecaseDeleteProduct)
-    usecase (Pick up product) as (usecasePickUpProduct)
+    usecase (Select product) as (usecaseSelectProduct)
 
     usecase (Promotion) as (usecasePromotion)
 
@@ -127,7 +110,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     usecase (Manage category) as (usecaseCategory)
     usecase (View category) as (usecaseViewCategory)
     usecase (Add category) as (usecaseAddCategory)
-    usecase (update category) as (usecaseUpdateCategory)
+    usecase (Edit category) as (usecaseUpdateCategory)
     usecase (Delete category) as (usecaseDeleteCategory)
 
 
@@ -145,11 +128,11 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
     (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
-    (usecasePickUpProduct) ..> (usecaseProduct) : <<extends>>
+    (usecaseSelectProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseViewProduct) : <<extends>>
 
     (usecaseProduct) ..> (usecaseViewCategory) : <<include>>
-    (usecaseProduct) ..> (usecasePromotion) : <<extends>>
+    (usecaseProduct) <.. (usecasePromotion) : <<extends>>
 
 
     ' ================ Category ================
@@ -164,7 +147,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     actorSupplier -down- (usecaseShipment)
     (usecaseInventory) - actorManager
 
-    (usecaseAddStock) ..> (usecaseCheckStock) : <<extends>>
+    (usecaseAddStock) ..> (usecaseInventory) : <<extends>>
     (usecaseAddStock) ..> (usecaseViewProduct) : <<include>>
     (usecaseUpdateStock) ..> (usecaseInventory) : <<extends>>
     (usecaseInventory) <.. (usecaseCheckStock) : <<extends>>
@@ -179,7 +162,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     actorSalesperson - (usecaseSell)
 
     '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
-    (usecaseOrder) ..> (usecasePickUpProduct) : <<include>>
+    (usecaseOrder) ..> (usecaseSelectProduct) : <<include>>
+    (usecaseViewProduct) <.. (usecaseOrder) : <<include>>
 
     '   การปรับปรุงยอดสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
     (usecaseCheckStock) <.. (usecaseOrder) : <<include>>
@@ -222,11 +206,11 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     '    (usecaseViewInvoice) <..  (usecaseSellReport)   : <<include>>
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
-    (usecaseCreateProductOrderList) <..  (usecaseSellReport)   : <<extends>>
+    (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
 
     (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
     (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
-    (usecaseConfirmOrderList) <.. (usecaseOrderProductFromSupplier) : <<extend>>
+    (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
     actorSupplier -- (usecaseOrderProductFromSupplier)
 
 
