@@ -184,8 +184,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseInvoice)  <..   (usecaseCreateInvoice): <<extends>>
     (usecaseEditInvoice) ..> (usecaseInvoice) : <<extends>>
 
-    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<uses>>
-    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<uses>>
+    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<include>>
+    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<include>>
 
      (usecaseInvoice) -- actorSalesperson
 
@@ -193,8 +193,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseCreateReceipt) .up.> (usecaseReceipt) : <<extends>>
     (usecaseViewReceipt) .> (usecaseReceipt) : <<extends>>
     (usecaseEditReceipt) ...> (usecaseReceipt) : <<extends>>
-    (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<uses>>
-    (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<uses>>
+    (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<include>>
+    (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<include>>
 
     (usecaseReceipt) -- actorSalesperson
 

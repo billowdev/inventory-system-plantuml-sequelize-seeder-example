@@ -67,8 +67,8 @@ rectangle "จัดการคำสั่งซื้อ" as stockSystem {
 
     ' ================ Invoice ================
 
-    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<uses>>
-    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<uses>>
+    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<include>>
+    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<include>>
 
 
 
