@@ -1,6 +1,9 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
+skinparam linetype polyline
+'skinparam linetype ortho
+
 skinparam Arrow{
     Thickness .6
 }
@@ -41,6 +44,9 @@ rectangle "Stock system" as stockSystem {
     ' ================ Selling ================
     ' กระบวนการขายสินค้า
     usecase (Sell) as (usecaseSell)
+    note bottom of usecaseSell : กระบวนการขายสินค้า
+
+
     '    การขายสินค้า
     usecase (Sell product) as (usecaseSellProduct)
     '    การตรวจสอบยอดสินค้า
@@ -54,7 +60,9 @@ rectangle "Stock system" as stockSystem {
 
     ' ================ Ordering ================
     '    การสั่งซื้อสินค้า
+
     usecase (Order) as (usecaseOrder)
+    note bottom of usecaseOrder : การสั่งซื้อสินค้า
     usecase (Edit Order) as (usecaseEditOrder)
     usecase (Delete Order) as (usecaseDeleteOrder)
 
@@ -68,17 +76,18 @@ rectangle "Stock system" as stockSystem {
     ' ================ Product ================
     '    การสั่งซื้อสินค้า
     usecase (View product) as (usecaseProduct)
+
     usecase (Add product) as (usecaseAddProduct)
     usecase (update product) as (usecaseUpdateProduct)
     usecase (Delete product) as (usecaseDeleteProduct)
 
     usecase (Pick up product) as (usecasePickUpProduct)
 
+    ' ================ Stock ================
+    usecase (Inventory) as (usecaseInventory)
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
-
-
 
     ' ================ Invoice ================
     usecase (Manage Invoice) as (usecaseInvoice)
@@ -90,6 +99,9 @@ rectangle "Stock system" as stockSystem {
     ' ================ Shipment ================
     usecase (Shipment) as (usecaseShipment)
 
+
+
+
     '    ===================== Associate Flow =====================
 
     '    ================ actor - usecase Flow ================
@@ -97,14 +109,14 @@ rectangle "Stock system" as stockSystem {
     actorManager -- (usecaseSell)
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสั่งซื้อสินค้า ===
-    actorManager -- (usecaseOrder)
-    (usecaseOrder) -up- actorCustomer
+    actorManager -up- (usecaseOrder)
+    (usecaseOrder) -- actorCustomer
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
     actorManager --- (usecaseSellReport)
     actorFinancial -up- (usecaseSellReport)
 
-    actorManager - (usecaseCheckStock)
+    actorManager - (usecaseInventory)
     actorManager -- (usecaseProduct)
 
     actorSupplier -down- (usecaseShipment)
@@ -121,15 +133,15 @@ rectangle "Stock system" as stockSystem {
     (usecaseAddStock) ..> (usecaseCheckStock) : <<extends>>
     (usecaseAddStock) ..> (usecaseProduct) : <<include>>
 
-    (usecaseUpdateStock) ..> (usecaseCheckStock) : <<extends>>
+    (usecaseUpdateStock) ..> (usecaseInventory) : <<extends>>
+
+    (usecaseInventory) <.. (usecaseCheckStock) : <<extends>>
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
     (usecaseCheckStock) <.. (usecaseSell)    : <<include>>
 
     (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
-
-
 
 
     '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
