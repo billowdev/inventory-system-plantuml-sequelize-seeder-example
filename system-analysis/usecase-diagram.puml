@@ -1,5 +1,6 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+
 skinparam Arrow{
     Thickness .6
 }
@@ -45,8 +46,10 @@ rectangle "Stock system" as stockSystem {
     '    การตรวจสอบยอดสินค้า
 
     '    ออกใบเสร็จ
-    usecase (View Receipt) as (usecaseReceipt)
+    usecase (Manage Receipt) as (usecaseReceipt)
+    usecase (View Receipt) as (usecaseViewReceipt)
     usecase (Print receipt) as (usecasePrintReceipt)
+    usecase (Edit receipt) as (usecaseEditReceipt)
     usecase (Create receipt) as (usecaseCreateReceipt)
 
     ' ================ Ordering ================
@@ -71,8 +74,6 @@ rectangle "Stock system" as stockSystem {
 
     usecase (Pick up product) as (usecasePickUpProduct)
 
-
-
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
@@ -80,8 +81,10 @@ rectangle "Stock system" as stockSystem {
 
 
     ' ================ Invoice ================
-    usecase (View Invoice) as (usecaseInvoice)
+    usecase (Manage Invoice) as (usecaseInvoice)
+    usecase (View Invoice) as (usecaseViewInvoice)
     usecase (Create Invoice) as (usecaseCreateInvoice)
+    usecase (Edit Invoice) as (usecaseEditInvoice)
     usecase (Print Invoice) as (usecasePrintInvoice)
 
     ' ================ Shipment ================
@@ -94,17 +97,17 @@ rectangle "Stock system" as stockSystem {
     actorManager -- (usecaseSell)
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสั่งซื้อสินค้า ===
-    actorManager -left- (usecaseOrder)
-    (usecaseOrder) -- actorCustomer
+    actorManager -- (usecaseOrder)
+    (usecaseOrder) -up- actorCustomer
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
     actorManager --- (usecaseSellReport)
-    actorFinancial --- (usecaseSellReport)
+    actorFinancial -up- (usecaseSellReport)
 
-    actorManager -- (usecaseCheckStock)
-    actorManager -left- (usecaseProduct)
+    actorManager - (usecaseCheckStock)
+    actorManager -- (usecaseProduct)
 
-    actorSupplier -- (usecaseShipment)
+    actorSupplier -down- (usecaseShipment)
 
     '================ usecase - usecase Flow ================
 
@@ -112,7 +115,7 @@ rectangle "Stock system" as stockSystem {
     (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
     (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
-    (usecasePickUpProduct) .left.> (usecaseProduct) : <<extends>>
+    (usecasePickUpProduct) ..> (usecaseProduct) : <<extends>>
 
     ' ================ Stock ================
     (usecaseAddStock) ..> (usecaseCheckStock) : <<extends>>
@@ -122,9 +125,9 @@ rectangle "Stock system" as stockSystem {
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
-    (usecaseCheckStock) <.. (usecaseSell) : <<include>>
+    (usecaseCheckStock) <.. (usecaseSell)    : <<include>>
 
-    (usecaseCreateReceipt) ..> (usecaseSell) : <<include>>
+    (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
 
 
 
@@ -142,12 +145,20 @@ rectangle "Stock system" as stockSystem {
     (usecaseCreateInvoice) <.. (usecaseOrder) : <<include>>
 
     ' ================ Invoice ================
-    (usecaseCreateInvoice) ..> (usecaseInvoice) : <<extends>>
-    (usecaseInvoice)  <..   (usecasePrintInvoice): <<extends>>
+    (usecaseInvoice) <.. (usecaseViewInvoice) : <<extends>>
+    (usecaseInvoice)  <..   (usecaseCreateInvoice): <<extends>>
+    (usecaseEditInvoice) ..> (usecaseInvoice) : <<extends>>
+
+    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<uses>>
+    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<uses>>
 
     ' ================ Receipt ================
-    (usecaseCreateReceipt) ..> (usecaseReceipt) : <<extends>>
-    (usecaseReceipt)  <..   (usecasePrintReceipt): <<extends>>
+    (usecaseCreateReceipt) .up.> (usecaseReceipt) : <<extends>>
+    (usecaseViewReceipt) ..> (usecaseReceipt) : <<extends>>
+    (usecaseEditReceipt) ..> (usecaseReceipt) : <<extends>>
+
+    (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<uses>>
+    (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<uses>>
 
     ' ================ Reporting ================
     '   การทำรายงาน
