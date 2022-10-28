@@ -8,7 +8,7 @@ skinparam sequence {
     ActorFontName Thai
 }
 'skinparam linetype polyline
-'skinparam linetype ortho
+' skinparam linetype ortho
 
 skinparam Participant{
     FontColor #efefef
@@ -187,6 +187,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<uses>>
     (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<uses>>
 
+     (usecaseInvoice) -- actorSalesperson
+
     ' ================ Receipt ================
     (usecaseCreateReceipt) .up.> (usecaseReceipt) : <<extends>>
     (usecaseViewReceipt) .> (usecaseReceipt) : <<extends>>
@@ -194,6 +196,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<uses>>
     (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<uses>>
 
+    (usecaseReceipt) -- actorSalesperson
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
     actorManager -- (usecaseSellReport)
@@ -203,7 +206,6 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     ' ================ Reporting ================
     '   การทำรายงาน
 
-    '    (usecaseViewInvoice) <..  (usecaseSellReport)   : <<include>>
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
     (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
@@ -211,10 +213,8 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
     (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
     (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
+   
     actorSupplier -- (usecaseOrderProductFromSupplier)
-
-
-
     actorCEO -- (usecaseConfirmOrderList)
 
 

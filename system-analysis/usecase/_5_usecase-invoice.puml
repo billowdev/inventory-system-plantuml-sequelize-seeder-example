@@ -1,0 +1,66 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+' =================== Customer ===================
+' role - ผู้ที่เข้ามาเพื่อซื้อสินค้าภายในบริษัท
+' duty - ทำให้เกิดการซื้อขายสินค้า
+actor Customer as actorCustomer
+note bottom of actorCustomer : ลูกค้าผู้ที่เข้ามาซื้อสินค้าภายในบริษัท
+' =================== Manager ===================
+' role - เจ้าหน้าที่ ที่จัดการสินค้า ให้คงคลังสินค้าอยู่เสมอ
+' duty - บริหารจัดการ stock สินค้า ทั้งการจำหน่ายออก และการรับสินค้ารวมถึงการ
+' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
+actor Manager as actorManager
+note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
+' =================== Supplier ===================
+' role - เป็นบริษัทคู่ค้าที่จำหน่ายสินค้าหรือวัตถุดิบให้กับบริษัท
+' duty - ขายและจัดส่งสินค้าตามใบสั่งของ
+actor Supplier as actorSupplier
+note right of actorSupplier : เป็นบริษัทคู่ค้าที่จำหน่ายสินค้า
+' =================== Financial ===================
+' role - เป็นฝ่ายดูแลบัญชีและการเงินของบริษัท
+' duty - รับข้อมูลการซื้อและขายสินค้า
+actor Financial as actorFinancial
+note top of actorFinancial : เป็นฝ่ายดูแลบัญชี
+
+actor Salesperson as actorSalesperson
+note top of actorSalesperson : พนักงานขาย
+
+
+' =================== Stock System ===================
+rectangle "ระบบจัดการสินค้าคงคลัง" as stockSystem {
+
+  
+
+    ' ================ Invoice ================
+    (usecaseInvoice) <.. (usecaseViewInvoice) : <<extends>>
+    (usecaseInvoice)  <..   (usecaseCreateInvoice): <<extends>>
+    (usecaseEditInvoice) ..> (usecaseInvoice) : <<extends>>
+
+    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<uses>>
+    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<uses>>
+
+
+
+
+}
+
+@enduml
