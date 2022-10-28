@@ -45,7 +45,7 @@ rectangle "Stock system" as stockSystem {
     '    การตรวจสอบยอดสินค้า
 
     '    ออกใบเสร็จ
-    usecase (Receipt) as (usecaseReceipt)
+    usecase (View Receipt) as (usecaseReceipt)
     usecase (Print receipt) as (usecasePrintReceipt)
     usecase (Create receipt) as (usecaseCreateReceipt)
 
@@ -72,7 +72,7 @@ rectangle "Stock system" as stockSystem {
     usecase (Pick up product) as (usecasePickUpProduct)
 
 
-    usecase (Stock) as (usecaseStock)
+
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
@@ -80,7 +80,7 @@ rectangle "Stock system" as stockSystem {
 
 
     ' ================ Invoice ================
-    usecase (Invoice) as (usecaseInvoice)
+    usecase (View Invoice) as (usecaseInvoice)
     usecase (Create Invoice) as (usecaseCreateInvoice)
     usecase (Print Invoice) as (usecasePrintInvoice)
 
@@ -101,7 +101,7 @@ rectangle "Stock system" as stockSystem {
     actorManager --- (usecaseSellReport)
     actorFinancial --- (usecaseSellReport)
 
-    actorManager -- (usecaseStock)
+    actorManager -- (usecaseCheckStock)
     actorManager -left- (usecaseProduct)
 
     actorSupplier -- (usecaseShipment)
@@ -115,17 +115,17 @@ rectangle "Stock system" as stockSystem {
     (usecasePickUpProduct) .left.> (usecaseProduct) : <<extends>>
 
     ' ================ Stock ================
-    (usecaseAddStock) ..> (usecaseStock) : <<extends>>
-    (usecaseStock) <.. (usecaseCheckStock) : <<extends>>
-    (usecaseUpdateStock) ..> (usecaseStock) : <<extends>>
+    (usecaseAddStock) ..> (usecaseCheckStock) : <<extends>>
+
+    (usecaseUpdateStock) ..> (usecaseCheckStock) : <<extends>>
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
     (usecaseCheckStock) <.. (usecaseSell) : <<include>>
 
-    (usecaseReceipt) ..> (usecaseSell) : <<extends>>
+    (usecaseCreateReceipt) ..> (usecaseSell) : <<include>>
 
-    (usecaseInvoice) <.. (usecaseSell) : <<include>>
+
 
 
     '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
@@ -136,8 +136,9 @@ rectangle "Stock system" as stockSystem {
 
     ' ================ Order ================
     (usecaseOrder) <.. (usecaseDeleteOrder) : <<extends>>
-    (usecaseEditOrder) ..> (usecaseOrder) : <extends>>
-
+    (usecaseEditOrder) ..> (usecaseOrder) : <<extends>>
+    (usecaseEditOrder) ..> (usecaseUpdateStock) : <<include>>
+    (usecaseCreateInvoice) <.. (usecaseOrder) : <<include>>
 
     ' ================ Invoice ================
     (usecaseCreateInvoice) ..> (usecaseInvoice) : <<extends>>
@@ -153,7 +154,6 @@ rectangle "Stock system" as stockSystem {
     (usecaseSell) <..  (usecaseSellReport)   : <<include>>
 
     ' ================ Shipment ================
-    (usecaseShipment) <.. (usecaseAddStock) : <<include>>
 
 }
 
