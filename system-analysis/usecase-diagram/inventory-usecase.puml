@@ -2,21 +2,21 @@
 'https://plantuml.com/sequence-diagram
 '!theme toy
 skinparam sequence {
-'ArrowColor DeepSkyBlue
-'ActorBorderColor DeepSkyBlue
-'LifeLineBorderColor blue
-'LifeLineBackgroundColor #A9DCDF
+    'ArrowColor DeepSkyBlue
+    'ActorBorderColor DeepSkyBlue
+    'LifeLineBorderColor blue
+    'LifeLineBackgroundColor #A9DCDF
 
-'ParticipantBorderColor DeepSkyBlue
-'ParticipantBackgroundColor DodgerBlue
-ParticipantFontName Thai
-ParticipantFontSize 16
-'ParticipantFontColor #A9DCDF
+    'ParticipantBorderColor DeepSkyBlue
+    'ParticipantBackgroundColor DodgerBlue
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    'ParticipantFontColor #A9DCDF
 
-'ActorBackgroundColor black
-ActorFontColor black
-ActorFontSize 16
-ActorFontName Thai
+    'ActorBackgroundColor black
+    ActorFontColor black
+    ActorFontSize 16
+    ActorFontName Thai
 }
 
 
@@ -50,7 +50,7 @@ note top of actorManager : เจ้าหน้าที่ ที่จัด�
 ' role - เป็นบริษัทคู่ค้าที่จำหน่ายสินค้าหรือวัตถุดิบให้กับบริษัท
 ' duty - ขายและจัดส่งสินค้าตามใบสั่งของ
 actor Supplier as actorSupplier
-note left of actorSupplier : เป็นบริษัทคู่ค้าที่จำหน่ายสินค้า
+note right of actorSupplier : เป็นบริษัทคู่ค้าที่จำหน่ายสินค้า
 ' =================== Financial ===================
 ' role - เป็นฝ่ายดูแลบัญชีและการเงินของบริษัท
 ' duty - รับข้อมูลการซื้อและขายสินค้า
@@ -61,11 +61,11 @@ actor Salesperson as actorSalesperson
 note top of actorSalesperson : พนักงานขาย
 
 actor CEO as actorCEO
-note top of actorCEO : ผู้บริหารระดับสูง
+note bottom of actorCEO : ผู้บริหารระดับสูง
 
 
 ' =================== Stock System ===================
-rectangle "Stock system" as stockSystem {
+rectangle "ระบบจัดการสินค้าคงคลัง" as stockSystem {
 
     ' ================ Selling ================
     ' กระบวนการขายสินค้า
@@ -75,7 +75,6 @@ rectangle "Stock system" as stockSystem {
     ' ================ Reporting ================
     '   การทำรายงาน
     usecase (Sell Report) as (usecaseSellReport)
-    usecase (List product for stock detail) as (usecaseListProductForStock)
 
     '    การขายสินค้า
     usecase (Sell product) as (usecaseSellProduct)
@@ -88,6 +87,13 @@ rectangle "Stock system" as stockSystem {
     usecase (Edit receipt) as (usecaseEditReceipt)
     usecase (Create receipt) as (usecaseCreateReceipt)
 
+    ' ================ Invoice ================
+    usecase (Manage Invoice) as (usecaseInvoice)
+    usecase (View Invoice) as (usecaseViewInvoice)
+    usecase (Create Invoice) as (usecaseCreateInvoice)
+    usecase (Edit Invoice) as (usecaseEditInvoice)
+    usecase (Print Invoice) as (usecasePrintInvoice)
+
     ' ================ Ordering ================
     '    การสั่งซื้อสินค้า
 
@@ -97,32 +103,30 @@ rectangle "Stock system" as stockSystem {
     usecase (Cancel Order) as (usecaseDeleteOrder)
 
     usecase (Order product from supplier) as (usecaseOrderProductFromSupplier)
-
-    '    การลงรับสินค้า
-
-    ' ================ Invoice ================
-    usecase (Manage Invoice) as (usecaseInvoice)
-    usecase (View Invoice) as (usecaseViewInvoice)
-    usecase (Create Invoice) as (usecaseCreateInvoice)
-    usecase (Edit Invoice) as (usecaseEditInvoice)
-    usecase (Print Invoice) as (usecasePrintInvoice)
-
-    ' ================ Product ================
-    '    การสั่งซื้อสินค้า
-    usecase (product) as (usecaseProduct)
-    usecase (View product) as (usecaseViewProduct)
-
-    usecase (Add product) as (usecaseAddProduct)
-    usecase (update product) as (usecaseUpdateProduct)
-    usecase (Delete product) as (usecaseDeleteProduct)
-
-    usecase (Pick up product) as (usecasePickUpProduct)
+    usecase (Create product order list) as (usecaseCreateProductOrderList)
+    usecase (confirm product order list) as (usecaseConfirmOrderList)
 
     ' ================ Stock ================
     usecase (Inventory) as (usecaseInventory)
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
+
+    ' ================ Product ================
+    usecase (product) as (usecaseProduct)
+    usecase (View product) as (usecaseViewProduct)
+    usecase (Add product) as (usecaseAddProduct)
+    usecase (update product) as (usecaseUpdateProduct)
+    usecase (Delete product) as (usecaseDeleteProduct)
+    usecase (Pick up product) as (usecasePickUpProduct)
+
+    ' ================ Category ================
+    usecase (category) as (usecaseCategory)
+    usecase (View category) as (usecaseViewCategory)
+    usecase (Add category) as (usecaseAddCategory)
+    usecase (update category) as (usecaseUpdateCategory)
+    usecase (Delete category) as (usecaseDeleteCategory)
+
 
     ' ================ Shipment ================
     usecase (Shipment) as (usecaseShipment)
@@ -133,19 +137,28 @@ rectangle "Stock system" as stockSystem {
     '===========================================================
 
 
-   ' ================ Product ================
-       actorManager -- (usecaseViewProduct)
+    ' ================ Product ================
+    actorManager -- (usecaseViewProduct)
     (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
     (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
     (usecasePickUpProduct) ..> (usecaseProduct) : <<extends>>
     (usecaseProduct) <.. (usecaseViewProduct) : <<extends>>
 
+    (usecaseProduct) ..> (usecaseViewCategory) : <<include>>
+
+
+    ' ================ Category ================
+    actorManager -- (usecaseCategory)
+    (usecaseCategory) <.. (usecaseAddCategory)  : <<extends>>
+    (usecaseUpdateCategory) ..> (usecaseCategory) : <<extends>>
+    (usecaseCategory) <.. (usecaseDeleteCategory)  : <<extends>>
+    (usecaseViewCategory)  ..> (usecaseCategory) : <<extends>>
+
+
     ' ================ Stock ================
-     actorSupplier -down- (usecaseShipment)
-        (usecaseInventory) - actorManager
-
-
+    actorSupplier -down- (usecaseShipment)
+    (usecaseInventory) - actorManager
 
     (usecaseAddStock) ..> (usecaseCheckStock) : <<extends>>
     (usecaseAddStock) ..> (usecaseViewProduct) : <<include>>
@@ -158,9 +171,8 @@ rectangle "Stock system" as stockSystem {
 
     (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
 
-   '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
-    actorSalesperson -- (usecaseSell)
-
+    '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
+    actorSalesperson - (usecaseSell)
 
     '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
     (usecaseOrder) ..> (usecasePickUpProduct) : <<include>>
@@ -179,7 +191,6 @@ rectangle "Stock system" as stockSystem {
     actorSalesperson -- (usecaseOrder)
     (usecaseOrder) -- actorCustomer
 
-
     ' ================ Invoice ================
     (usecaseInvoice) <.. (usecaseViewInvoice) : <<extends>>
     (usecaseInvoice)  <..   (usecaseCreateInvoice): <<extends>>
@@ -190,9 +201,8 @@ rectangle "Stock system" as stockSystem {
 
     ' ================ Receipt ================
     (usecaseCreateReceipt) .up.> (usecaseReceipt) : <<extends>>
-    (usecaseViewReceipt) ..> (usecaseReceipt) : <<extends>>
-    (usecaseEditReceipt) ..> (usecaseReceipt) : <<extends>>
-
+    (usecaseViewReceipt) .> (usecaseReceipt) : <<extends>>
+    (usecaseEditReceipt) ...> (usecaseReceipt) : <<extends>>
     (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<uses>>
     (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<uses>>
 
@@ -205,21 +215,22 @@ rectangle "Stock system" as stockSystem {
     ' ================ Reporting ================
     '   การทำรายงาน
 
-    (usecaseViewInvoice) <..  (usecaseSellReport)   : <<include>>
+    '    (usecaseViewInvoice) <..  (usecaseSellReport)   : <<include>>
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
-    (usecaseListProductForStock) <..  (usecaseSellReport)   : <<extends>>
+    (usecaseCreateProductOrderList) <..  (usecaseSellReport)   : <<extends>>
 
-    (usecaseViewProduct) <... (usecaseListProductForStock) : <<include>>
+    (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
+    (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
+    (usecaseConfirmOrderList) <.. (usecaseOrderProductFromSupplier) : <<extend>>
+    actorSupplier -- (usecaseOrderProductFromSupplier)
 
-    (usecaseListProductForStock) ..>  (usecaseOrder)   : <<include>>
-'    actorCEO -- (usecaseListProductForStock)
 
-    note "ยืนยันคำสั่งซื้อ" as ListOrderForStock
-    actorCEO -- ListOrderForStock
-    ListOrderForStock -- (usecaseListProductForStock)
 
-    ' ================ Shipment ================
+    actorCEO -- (usecaseConfirmOrderList)
+
+
+
 
 }
 
