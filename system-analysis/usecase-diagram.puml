@@ -116,6 +116,7 @@ rectangle "Stock system" as stockSystem {
 
     ' ================ Stock ================
     (usecaseAddStock) ..> (usecaseCheckStock) : <<extends>>
+    (usecaseAddStock) ..> (usecaseProduct) : <<include>>
 
     (usecaseUpdateStock) ..> (usecaseCheckStock) : <<extends>>
 
@@ -152,6 +153,7 @@ rectangle "Stock system" as stockSystem {
     '   การทำรายงาน
 
     (usecaseSell) <..  (usecaseSellReport)   : <<include>>
+    (usecaseCheckStock) <..  (usecaseSellReport)   : <<include>>
 
     ' ================ Shipment ================
 
