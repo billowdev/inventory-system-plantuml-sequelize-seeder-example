@@ -20,4 +20,4 @@ db.sequelize = sequelize;
 db.Product = require("./product.model")(sequelize, Sequelize);
 db.Category = require("./category.model")(sequelize, Sequelize);
 
-module.exports = db;
+module.exports = db

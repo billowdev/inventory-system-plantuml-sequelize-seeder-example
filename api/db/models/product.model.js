@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const Product = sequelize.define("product", {
+	const Product = sequelize.define("Product", {
 		id: {
 			type: DataTypes.INTEGER,
 			primaryKey: true,
@@ -24,9 +24,14 @@ module.exports = (sequelize, DataTypes) => {
 		freezeTableName: true
 	});
 
-	// Product.associate = (models) => {
-	// 	Product.belongsTo(models.Category);
-	// }
+	Product.associate = (models) => {
+		Product.belongsTo(models.Category, {
+			// foreignKey: 'category_id',
+			// field: 'category_id',
+			foreignKey: 'category_id',
+			onDelete: 'NO ACTION'
+		});
+	}
 
 	return Product;
 };

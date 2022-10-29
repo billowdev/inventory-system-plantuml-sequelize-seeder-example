@@ -2,7 +2,7 @@ const express = require('express')
 const figlet = require("figlet")
 const gradient = require("gradient-string")
 const morgan = require('morgan')
-const db = require('./models')
+const db = require('./db/models')
 
 // import cors = require('cors')
 const app = express()
