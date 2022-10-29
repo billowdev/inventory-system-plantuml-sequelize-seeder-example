@@ -30,7 +30,7 @@ deactivate classProduct
 InventorySystem --> actorManager : 2. Response products
 deactivate InventorySystem
 
-
+opt
 
 actorManager -> InventorySystem: 3. RequestViewProduct
 activate InventorySystem
@@ -52,5 +52,7 @@ deactivate classProduct
 
 InventorySystem --> actorManager : 4. Response product
 deactivate InventorySystem
+
+end
 
 @enduml
