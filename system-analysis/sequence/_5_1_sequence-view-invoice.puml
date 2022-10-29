@@ -32,28 +32,37 @@ activate classInvoice
 classInvoice --> InventorySystem: 3.2 return invoice
 deactivate classInvoice
 
-
-'-------------- END view product ---------------
-
 InventorySystem --> actorSalesperson : 4. Response invoice
-
 deactivate InventorySystem
 end
 
 
 opt
-actorSalesperson -> InventorySystem : 5. Request Print Invoice
-
+actorSalesperson -> InventorySystem : 5. RequestPrintInvoice
 activate InventorySystem
 
-InventorySystem -> classInvoice : 5.1 printInvoice()
 activate classInvoice
+InventorySystem -> classInvoice : 5.1 printInvoice()
 
 classInvoice -> classInvoice : 5.2  print invoice
+deactivate classInvoice
+deactivate InventorySystem
 
 end
 
+opt
+actorSalesperson -> InventorySystem: 6. RequestEditInvoice
+activate InventorySystem
 
+InventorySystem -> classInvoice: 6.1 getEditInvoice(invoiceData)
+activate classInvoice
+
+classInvoice --> InventorySystem: 6.2 return invoice edit invoice
+deactivate classInvoice
+
+InventorySystem --> actorSalesperson : 6. Response Edit invoice status
+deactivate InventorySystem
+end
 
 
 @enduml
