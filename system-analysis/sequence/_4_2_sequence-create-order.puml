@@ -1,6 +1,6 @@
 @startuml
 'example
-title order sequence diagram
+title create order sequence diagram
 
 actor Customer as actorCustomer
 
@@ -32,25 +32,31 @@ deactivate classInventory
 classProduct -> InventorySystem: 3.4 return product data
 deactivate classProduct
 
-alt orderData.qty > product.inventory.qty
+alt IF (orderData.qty > product.inventory.qty)
 classInventory --> InventorySystem : 3.5 can't create order
 'deactivate InventorySystem
  destroy InventorySystem
 
-else
-InventorySystem -> classOrder: 3.6 createCategory(categoryData)
+else ELSE
 
-activate InventorySystem
+InventorySystem -> classOrder: 3.6 createOrder(orderData)
 activate classOrder
+activate InventorySystem
 
-classOrder -> classInvoice : 3.7 system create invoice
+classOrder -> classInventory: 3.7 update stock
+activate classInventory
+
+classInventory --> classOrder: 3.8 return update stock
+deactivate classInventory
+
+classOrder -> classInvoice : 3.8 system create invoice
 
 activate classInvoice
-classInvoice -> classInvoice : 3.8 print invoice
-classInvoice --> InventorySystem: 3.9 return invoice
+classInvoice -> classInvoice : 3.9 print invoice
+classInvoice --> InventorySystem: 3.10 return invoice
 
 deactivate classInvoice
-classOrder --> InventorySystem: 3.10 return order
+classOrder --> InventorySystem: 3.11 return order
 deactivate classOrder
 
 end
@@ -59,21 +65,7 @@ end
 InventorySystem -> actorSalesperson: 4. Response create order status
 deactivate InventorySystem
 
-'----------------------------- optional ---------------------
-opt
-actorSalesperson -> InventorySystem: 5. Request Cancel order
-activate InventorySystem
 
-InventorySystem -> classOrder: 5.1 cancelOrder
-activate classOrder
-
-classOrder --> InventorySystem: 5.2 return cancel order status
-deactivate classOrder
-
-InventorySystem --> actorSalesperson: 6. Response cancel order status
-deactivate InventorySystem
-
-end
 
 
 @enduml
