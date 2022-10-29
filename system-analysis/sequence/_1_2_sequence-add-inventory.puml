@@ -3,18 +3,27 @@
 
 title Add inventory sequence diagram
 
+actor Supplier as actorSupplier
 actor Manager as actorManager
 participant "Inventory System" as InventorySystem
 participant "Inventory" as classInventory
 participant "Product" as classProduct
+
 'participant "Category" as classCategory
+
 
 'actorManager -> InventorySystem: 1. RequestViewStock
 'activate InventorySystem
 
 '-------------- START add stock ---------------
+actorSupplier -> actorManager : shipment
+activate actorManager
 
-actorManager -> InventorySystem : 1 RequestAddstock
+actorManager --> actorSupplier : receive shipment
+deactivate actorManager
+
+actorManager -> InventorySystem : 1 RequestAddStock
+
 
 InventorySystem -> classProduct: 1.2 getAllProduct()
 activate classProduct
