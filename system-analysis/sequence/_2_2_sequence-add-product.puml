@@ -1,0 +1,36 @@
+@startuml
+'example
+title add product sequence diagram
+
+actor Manager as actorManager
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Product" as classProduct
+participant "Category" as classCategory
+
+actorManager -> InventorySystem: 1. RequestAddProduct
+activate InventorySystem
+
+
+'-------------- START Add product ---------------
+InventorySystem -> classCategory: 1.1 getCategory(productData.categoryId)
+activate classCategory
+
+classCategory --> InventorySystem: 1.2 return category
+deactivate classCategory
+
+InventorySystem -> classProduct: 1.3 createProduct(productData)
+activate classProduct
+
+
+
+classProduct --> InventorySystem: 1.4 return create product
+deactivate classProduct
+
+InventorySystem --> actorManager: 2. response product
+deactivate InventorySystem
+
+'-------------- END Add product ---------------
+
+
+@enduml
