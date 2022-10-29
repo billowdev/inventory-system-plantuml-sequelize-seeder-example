@@ -2,13 +2,12 @@
 'example
 title View order sequence diagram
 
-actor Manager as actorManager
+actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
 'participant "Inventory" as classInventory
 participant "Order" as classOrder
 
-
-actorManager -> InventorySystem: 1. RequestViewAllOrder
+actorSalesperson -> InventorySystem: 1. RequestViewAllOrder
 activate InventorySystem
 
 '-------------- START view product ---------------
@@ -21,28 +20,32 @@ deactivate classOrder
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorManager : 2. Response orders
+InventorySystem --> actorSalesperson : 2. Response orders
 
 deactivate InventorySystem
 
 
 opt
-actorManager -> InventorySystem: 3. RequestViewCategory
+actorSalesperson -> InventorySystem: 3. RequestViewOrder
 activate InventorySystem
 
 '-------------- START view product ---------------
-InventorySystem -> classOrder: 3.1 getCategory(id)
+InventorySystem -> classOrder: 3.1 getOrder(id)
 activate classOrder
 
-classOrder --> InventorySystem: 3.2 return category
+classOrder --> InventorySystem: 3.2 return order
 deactivate classOrder
 
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorManager : 4. Response order
+InventorySystem --> actorSalesperson : 4. Response order
 
-deactivate InventorySystemF
+deactivate InventorySystem
 end
+
+
+
+
 
 @enduml
