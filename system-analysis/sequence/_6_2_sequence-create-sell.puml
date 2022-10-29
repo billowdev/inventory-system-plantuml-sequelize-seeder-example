@@ -1,0 +1,42 @@
+@startuml
+'example
+title View invoice sequence diagram
+
+actor Salesperson as actorSalesperson
+participant "Inventory System" as InventorySystem
+participant "Sale" as classSell
+participant "Inventory" as classInventory
+participant "Receipt" as classReceipt
+
+actorSalesperson -> InventorySystem: 1. RequestCreateSell
+activate InventorySystem
+
+InventorySystem -> classSell: 1.1 createSell()
+activate classSell
+
+classSell -> classInventory: 1.2 update stock
+activate classInventory
+
+classInventory --> classSell: 1.3 return update stock
+deactivate classInventory
+
+
+
+classSell -> classReceipt : 1.4 system create receipt
+
+activate classReceipt
+classReceipt -> classReceipt : 1.5 print receipt
+classReceipt --> InventorySystem: 1.6 return receipt
+
+
+classSell --> InventorySystem: 1.7 return create sell
+deactivate classSell
+
+InventorySystem --> actorSalesperson : 2. Response create sell status
+
+deactivate InventorySystem
+
+
+
+
+@enduml
