@@ -41,7 +41,7 @@ rectangle "จัดการคำสั่งซื้อ" as stockSystem {
     '    note bottom of usecaseOrder : การสั่งซื้อสินค้า
     usecase (Edit Order) as (usecaseEditOrder)
     usecase (Cancel Order) as (usecaseDeleteOrder)
-
+    usecase (Check stock) as (usecaseCheckStock)
     ' ================ Stock ================
 
     usecase (Update stock) as (usecaseUpdateStock)
@@ -54,7 +54,7 @@ rectangle "จัดการคำสั่งซื้อ" as stockSystem {
     ' ================ Order ================
     (usecaseOrder) <.. (usecaseDeleteOrder) : <<extends>>
     (usecaseEditOrder) ..> (usecaseOrder) : <<extends>>
-    (usecaseEditOrder) ..> (usecaseUpdateStock) : <<include>>
+
     (usecaseDeleteOrder) ..> (usecaseUpdateStock) : <<include>>
     (usecaseCreateInvoice) <.. (usecaseOrder) : <<include>>
 

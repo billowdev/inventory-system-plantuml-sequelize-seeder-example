@@ -175,7 +175,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     ' ================ Order ================
     (usecaseOrder) <.. (usecaseDeleteOrder) : <<extends>>
     (usecaseEditOrder) ..> (usecaseOrder) : <<extends>>
-    (usecaseEditOrder) ..> (usecaseUpdateStock) : <<include>>
+
     (usecaseDeleteOrder) ..> (usecaseUpdateStock) : <<include>>
     (usecaseCreateInvoice) <.. (usecaseOrder) : <<include>>
 
