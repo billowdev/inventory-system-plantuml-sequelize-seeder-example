@@ -51,6 +51,9 @@ activate classReceipt
 
 classReceipt -> classReceipt : 5.2  print Receipt
 
+deactivate classReceipt
+
+'deactivate InventorySystem
 end
 
 
