@@ -1,0 +1,29 @@
+@startuml
+'example
+title delete product sequence diagram
+
+actor Manager as actorManager
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Product" as classProduct
+
+actorManager -> InventorySystem: 1. RequestDeleteProduct
+activate InventorySystem
+
+
+'-------------- START Delete product ---------------
+InventorySystem -> classProduct: 1.1 deleteProduct(productId)
+activate classProduct
+
+
+classProduct --> InventorySystem: 1.2 return delete product status
+deactivate classProduct
+
+'-------------- END Delete product ---------------
+
+InventorySystem -> actorManager: 2. Response delete product status
+deactivate InventorySystem
+
+
+
+@enduml
