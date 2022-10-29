@@ -67,6 +67,7 @@ rectangle "จัดการคำสั่งซื้อสินค้าจ
     (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
     (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
 
+
     actorSupplier -- (usecaseOrderProductFromSupplier)
     actorCEO -- (usecaseConfirmOrderList)
 
