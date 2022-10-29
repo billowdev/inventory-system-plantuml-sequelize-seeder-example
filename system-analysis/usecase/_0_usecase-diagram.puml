@@ -211,7 +211,6 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
-    (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
 
     (usecaseCreateSellReport) ..>  (usecaseSellReport)   : <<extends>>
     (usecaseSellReport)   <.. (usecaseEditSellReport)   : <<extends>>
@@ -223,7 +222,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
    
     actorSupplier -- (usecaseOrderProductFromSupplier)
     actorCEO -- (usecaseConfirmOrderList)
-
+     (usecaseCreateProductOrderList) -- actorManager
 
 
 
