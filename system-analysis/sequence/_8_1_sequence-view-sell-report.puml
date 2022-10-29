@@ -1,0 +1,62 @@
+@startuml
+'example
+title View SellReport sequence diagram
+
+actor Salesperson as actorSalesperson
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Sell Report" as usecaseSellReport
+
+actorSalesperson -> InventorySystem: 1. RequestViewAllSellReport
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> usecaseSellReport: 1.1 getAllSellReport()
+activate usecaseSellReport
+
+usecaseSellReport --> InventorySystem: 1.2 return all SellReport
+deactivate usecaseSellReport
+
+InventorySystem --> actorSalesperson : 2. Response SellReport
+
+deactivate InventorySystem
+
+
+opt
+actorSalesperson -> InventorySystem: 3. RequestViewSellReport
+activate InventorySystem
+
+InventorySystem -> usecaseSellReport: 3.1 getSellReport(id)
+activate usecaseSellReport
+
+usecaseSellReport --> InventorySystem: 3.2 return SellReport
+deactivate usecaseSellReport
+
+
+'-------------- END view product ---------------
+
+InventorySystem --> actorSalesperson : 4. Response SellReport
+
+deactivate InventorySystem
+end
+
+
+opt
+actorSalesperson -> InventorySystem : 5. Request Print SellReport
+
+activate InventorySystem
+
+InventorySystem -> usecaseSellReport : 5.1 printSellReport()
+activate usecaseSellReport
+
+usecaseSellReport -> usecaseSellReport : 5.2  print SellReport
+
+deactivate usecaseSellReport
+
+'deactivate InventorySystem
+end
+
+
+
+
+@enduml
