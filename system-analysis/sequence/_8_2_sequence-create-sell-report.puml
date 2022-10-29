@@ -1,0 +1,24 @@
+@startuml
+'example
+title View SellReport sequence diagram
+
+actor Manager as actorManager
+participant "Inventory System" as InventorySystem
+participant "SellReport" as classSellReport
+
+
+actorManager -> InventorySystem: 1. RequestCreateSellReport
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> classSellReport: 1.1 createSellReport(SellReportData)
+activate classSellReport
+
+classSellReport --> InventorySystem: 1.2 return create SellReport status
+deactivate classSellReport
+
+InventorySystem --> actorManager : 2. Response Create SellReport status
+
+deactivate InventorySystem
+
+@enduml
