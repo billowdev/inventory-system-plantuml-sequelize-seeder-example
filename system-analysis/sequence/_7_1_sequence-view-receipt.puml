@@ -1,0 +1,59 @@
+@startuml
+'example
+title View Receipt sequence diagram
+
+actor Salesperson as actorSalesperson
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Receipt" as classReceipt
+
+actorSalesperson -> InventorySystem: 1. RequestViewAllReceipt
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> classReceipt: 1.1 getAllReceipt()
+activate classReceipt
+
+classReceipt --> InventorySystem: 1.2 return all Receipt
+deactivate classReceipt
+
+InventorySystem --> actorSalesperson : 2. Response Receipts
+
+deactivate InventorySystem
+
+
+opt
+actorSalesperson -> InventorySystem: 3. RequestViewReceipt
+activate InventorySystem
+
+InventorySystem -> classReceipt: 3.1 getReceipt(id)
+activate classReceipt
+
+classReceipt --> InventorySystem: 3.2 return Receipt
+deactivate classReceipt
+
+
+'-------------- END view product ---------------
+
+InventorySystem --> actorSalesperson : 4. Response Receipt
+
+deactivate InventorySystem
+end
+
+
+opt
+actorSalesperson -> InventorySystem : 5. Request Print Receipt
+
+activate InventorySystem
+
+InventorySystem -> classReceipt : 5.1 printReceipt()
+activate classReceipt
+
+classReceipt -> classReceipt : 5.2  print Receipt
+
+end
+
+
+
+
+@enduml
