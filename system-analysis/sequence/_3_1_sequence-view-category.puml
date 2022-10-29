@@ -26,6 +26,7 @@ InventorySystem --> actorManager : 2. Response products
 deactivate InventorySystem
 
 
+opt
 actorManager -> InventorySystem: 3. RequestViewCategory
 activate InventorySystem
 
@@ -38,9 +39,9 @@ deactivate classCategory
 
 
 '-------------- END view product ---------------
-
-InventorySystem --> actorManager : 4. Response product
+InventorySystem --> actorManager : 4. Response category
 
 deactivate InventorySystem
+end
 
 @enduml

@@ -8,24 +8,25 @@ participant "Inventory System" as InventorySystem
 participant "Order" as classOrder
 
 
-actorManager -> InventorySystem: 1. RequestViewAllProduct
+actorManager -> InventorySystem: 1. RequestViewAllOrder
 activate InventorySystem
 
 '-------------- START view product ---------------
-InventorySystem -> classOrder: 1.1 getAllCategory()
+InventorySystem -> classOrder: 1.1 getAllOrder()
 activate classOrder
 
-classOrder --> InventorySystem: 1.2 return all category
+classOrder --> InventorySystem: 1.2 return all Order
 deactivate classOrder
 
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorManager : 2. Response products
+InventorySystem --> actorManager : 2. Response orders
 
 deactivate InventorySystem
 
 
+opt
 actorManager -> InventorySystem: 3. RequestViewCategory
 activate InventorySystem
 
@@ -39,8 +40,9 @@ deactivate classOrder
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorManager : 4. Response product
+InventorySystem --> actorManager : 4. Response order
 
-deactivate InventorySystem
+deactivate InventorySystemF
+end
 
 @enduml
