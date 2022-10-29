@@ -4,7 +4,6 @@ title View category sequence diagram
 
 actor Manager as actorManager
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
 participant "Category" as classCategory
 
 

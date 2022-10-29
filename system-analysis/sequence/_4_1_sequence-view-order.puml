@@ -4,13 +4,11 @@ title View order sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
 participant "Order" as classOrder
 
 actorSalesperson -> InventorySystem: 1. RequestViewAllOrder
 activate InventorySystem
 
-'-------------- START view product ---------------
 InventorySystem -> classOrder: 1.1 getAllOrder()
 activate classOrder
 
@@ -18,10 +16,7 @@ classOrder --> InventorySystem: 1.2 return all Order
 deactivate classOrder
 
 
-'-------------- END view product ---------------
-
 InventorySystem --> actorSalesperson : 2. Response orders
-
 deactivate InventorySystem
 
 
@@ -29,7 +24,6 @@ opt
 actorSalesperson -> InventorySystem: 3. RequestViewOrder
 activate InventorySystem
 
-'-------------- START view product ---------------
 InventorySystem -> classOrder: 3.1 getOrder(id)
 activate classOrder
 

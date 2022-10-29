@@ -6,7 +6,7 @@ title Add inventory sequence diagram
 actor Supplier as actorSupplier
 actor Manager as actorManager
 participant "Inventory System" as InventorySystem
-participant "Inventory" as classInventory
+participant "Stock" as classStock
 participant "Product" as classProduct
 
 'participant "Category" as classCategory
@@ -39,10 +39,10 @@ actorManager -> InventorySystem :  3 SaveAddStock
 InventorySystem -> InventorySystem :  3.1 CalculateQtyStock
 
 
-InventorySystem -> classInventory: 3.2 updateQtyStock
-activate classInventory
+InventorySystem -> classStock: 3.2 updateQtyStock
+activate classStock
 
-deactivate classInventory
+deactivate classStock
 
 InventorySystem  --> actorManager : 4 Response Add stock status
 deactivate InventorySystem
@@ -55,8 +55,8 @@ deactivate InventorySystem
 
 
 
-'classInventory --> InventorySystem: 4.4 response stock
-'deactivate classInventory
+'classStock --> InventorySystem: 4.4 response stock
+'deactivate classStock
 
 '-------------- END add stock ---------------
 

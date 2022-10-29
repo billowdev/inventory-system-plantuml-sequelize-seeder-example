@@ -4,7 +4,6 @@ title View Receipt sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
 participant "Receipt" as classReceipt
 
 actorSalesperson -> InventorySystem: 1. RequestViewAllReceipt

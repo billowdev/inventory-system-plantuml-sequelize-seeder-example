@@ -4,22 +4,18 @@ title View category sequence diagram
 
 actor Manager as actorManager
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
 participant "Category" as classCategory
 
 
 actorManager -> InventorySystem: 1. RequestViewAllProduct
 activate InventorySystem
 
-'-------------- START view product ---------------
 InventorySystem -> classCategory: 1.1 getAllCategory()
 activate classCategory
 
 classCategory --> InventorySystem: 1.2 return all category
 deactivate classCategory
 
-
-'-------------- END view product ---------------
 
 InventorySystem --> actorManager : 2. Response products
 
@@ -30,15 +26,12 @@ opt
 actorManager -> InventorySystem: 3. RequestViewCategory
 activate InventorySystem
 
-'-------------- START view product ---------------
 InventorySystem -> classCategory: 3.1 getCategory(id)
 activate classCategory
 
 classCategory --> InventorySystem: 3.2 return category
 deactivate classCategory
 
-
-'-------------- END view product ---------------
 InventorySystem --> actorManager : 4. Response category
 
 deactivate InventorySystem

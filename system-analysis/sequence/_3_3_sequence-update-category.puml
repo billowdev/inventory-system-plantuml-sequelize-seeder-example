@@ -10,7 +10,7 @@ participant "Category" as classCategory
 actorManager -> InventorySystem: 1. RequestUpdateCategory
 activate InventorySystem
 
-'-------------- START view product ---------------
+
 InventorySystem -> classCategory: 1.1 updateCategory(CategoryData)
 activate classCategory
 

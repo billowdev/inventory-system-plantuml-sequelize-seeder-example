@@ -4,7 +4,6 @@ title update product sequence diagram
 
 actor Manager as actorManager
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
 participant "Product" as classProduct
 participant "Category" as classCategory
 
@@ -17,8 +16,6 @@ activate classCategory
 classCategory --> InventorySystem: 1.2 return category
 deactivate classCategory
 
-
-'-------------- START Edit product ---------------
 InventorySystem -> classProduct: 1.3 updateProduct(productData)
 activate classProduct
 
@@ -29,7 +26,6 @@ deactivate classProduct
 
 InventorySystem -> actorManager: 2. Response update status
 deactivate InventorySystem
-'-------------- END Edit product ---------------
 
 
 

@@ -4,28 +4,22 @@ title Edit order sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
+'participant "Inventory" as classStock
 participant "Order" as classOrder
 
 actorSalesperson -> InventorySystem: 1. RequestUpdateOrder
 activate InventorySystem
 
-'-------------- START view product ---------------
 InventorySystem -> classOrder: 1.1 updateOrder()
 activate classOrder
 
 classOrder --> InventorySystem: 1.2 return update order status
 deactivate classOrder
 
-
-'-------------- END view product ---------------
-
 InventorySystem --> actorSalesperson : 2. Response update order status
 
 deactivate InventorySystem
 
-
-'----------------------------- optional ---------------------
 opt
 
 actorSalesperson -> InventorySystem: 3. Request Cancel order

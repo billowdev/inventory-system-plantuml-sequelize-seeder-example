@@ -4,7 +4,6 @@ title View SellReport sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
 participant "Sell Report" as usecaseSellReport
 
 actorSalesperson -> InventorySystem: 1. RequestViewAllSellReport

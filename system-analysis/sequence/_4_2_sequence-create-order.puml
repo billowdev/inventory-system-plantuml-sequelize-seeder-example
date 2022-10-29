@@ -8,7 +8,7 @@ actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
 participant "Order" as classOrder
 participant "Product" as classProduct
-participant "Inventory" as classInventory
+participant "Stock" as classStock
 participant "Invoice" as classInvoice
 
 
@@ -19,21 +19,20 @@ actorSalesperson --> actorCustomer : 2. Receive order
 actorSalesperson -> InventorySystem: 3. RequestCreateOrder
 activate InventorySystem
 
-'-------------- START create order ---------------
 InventorySystem -> classProduct: 3.1 selectProduct
 activate classProduct
 
-classProduct -> classInventory: 3.2 checkStock
-activate classInventory
+classProduct -> classStock: 3.2 checkStock
+activate classStock
 
-classInventory -> classProduct: 3.3 return stock
-deactivate classInventory
+classStock -> classProduct: 3.3 return stock
+deactivate classStock
 
 classProduct -> InventorySystem: 3.4 return product data
 deactivate classProduct
 
-alt IF (orderData.qty > product.inventory.qty)
-classInventory --> InventorySystem : 3.5 can't create order
+alt IF (orderData.qty > product.stock.qty)
+classStock --> InventorySystem : 3.5 can't create order
 'deactivate InventorySystem
  destroy InventorySystem
 
@@ -43,11 +42,11 @@ InventorySystem -> classOrder: 3.6 createOrder(orderData)
 activate classOrder
 activate InventorySystem
 
-classOrder -> classInventory: 3.7 update stock
-activate classInventory
+classOrder -> classStock: 3.7 update stock
+activate classStock
 
-classInventory --> InventorySystem : 3.8 return update stock
-deactivate classInventory
+classStock --> InventorySystem : 3.8 return update stock
+deactivate classStock
 
 
 classOrder -> classInvoice : 3.9 system create invoice

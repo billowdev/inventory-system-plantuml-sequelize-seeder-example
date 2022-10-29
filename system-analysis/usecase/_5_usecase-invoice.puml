@@ -20,8 +20,8 @@ skinparam Sequence{
     LifeLineBorderColor #8a8a8a
 }
 
-actor Salesperson as actorSalesperson
-note left of actorSalesperson : พนักงานขาย
+actor Cashier as actorCashier
+note left of actorCashier : พนักงานขาย
 
 
 ' =================== Stock System ===================
@@ -51,7 +51,7 @@ rectangle "จัดการใบสั่งซื้อ" as manageInvoice {
     (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<include>>
     (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<include>>
 
-     (usecaseInvoice) -- actorSalesperson
+     (usecaseInvoice) -- actorCashier
 
 
 

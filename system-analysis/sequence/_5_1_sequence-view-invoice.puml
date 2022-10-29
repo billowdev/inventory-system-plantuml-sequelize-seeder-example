@@ -4,13 +4,12 @@ title View invoice sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
+
 participant "Invoice" as classInvoice
 
 actorSalesperson -> InventorySystem: 1. RequestViewAllInvoice
 activate InventorySystem
 
-'-------------- START view product ---------------
 InventorySystem -> classInvoice: 1.1 getAllInvoice()
 activate classInvoice
 

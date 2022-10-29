@@ -21,8 +21,8 @@ skinparam Sequence{
 }
 
 
-actor Salesperson as actorSalesperson
-note left of actorSalesperson : พนักงานขาย
+actor Cashier as actorCashier
+note left of actorCashier : พนักงานขาย
 
 ' =================== Stock System ===================
 rectangle "จัดการการขาย" as manageSale {
@@ -50,7 +50,7 @@ rectangle "จัดการการขาย" as manageSale {
     (usecaseSell)  ..> (usecaseOrder) : <<include>>
 
     '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
-     (usecaseSell) -- actorSalesperson
+     (usecaseSell) -- actorCashier
 
     ' ================ Receipt ================
     (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<include>>

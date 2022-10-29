@@ -4,7 +4,7 @@ title View ProductOrderList sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
-'participant "Inventory" as classInventory
+'participant "Stock" as classInventory
 participant "Product Order List" as usecaseProductOrderList
 
 actorSalesperson -> InventorySystem: 1. RequestViewAllProductOrderList

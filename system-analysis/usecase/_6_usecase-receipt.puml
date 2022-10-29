@@ -20,8 +20,8 @@ skinparam Sequence{
 }
 left to right direction
 
-actor Salesperson as actorSalesperson
-note left of actorSalesperson : พนักงานขาย
+actor Cashier as actorCashier
+note left of actorCashier : พนักงานขาย
 
 
 ' =================== Stock System ===================
@@ -51,7 +51,7 @@ rectangle "จัดการใบเสร็จ" as manageReceipt {
     (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<include>>
     (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<include>>
 
-    (usecaseReceipt) -- actorSalesperson
+    (usecaseReceipt) -- actorCashier
 
 
 
