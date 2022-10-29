@@ -1,0 +1,46 @@
+@startuml
+'example
+title Edit order sequence diagram
+
+actor Salesperson as actorSalesperson
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Order" as classOrder
+
+actorSalesperson -> InventorySystem: 1. RequestUpdateOrder
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> classOrder: 1.1 updateOrder()
+activate classOrder
+
+classOrder --> InventorySystem: 1.2 return update order status
+deactivate classOrder
+
+
+'-------------- END view product ---------------
+
+InventorySystem --> actorSalesperson : 2. Response update order status
+
+deactivate InventorySystem
+
+
+'----------------------------- optional ---------------------
+opt
+
+actorSalesperson -> InventorySystem: 3. Request Cancel order
+activate InventorySystem
+
+InventorySystem -> classOrder: 3.1 cancelOrder
+activate classOrder
+
+classOrder --> InventorySystem: 3.2 return cancel order status
+deactivate classOrder
+
+InventorySystem --> actorSalesperson: 4. Response cancel order status
+deactivate InventorySystem
+
+end
+
+
+@enduml
