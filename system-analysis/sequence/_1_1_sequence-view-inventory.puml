@@ -24,7 +24,7 @@ deactivate classProduct
 classInventory --> InventorySystem: 1.4 return stock
 deactivate classInventory
 
-InventorySystem  --> actorManager: 2 Response stock
+InventorySystem  --> actorManager: 2 Reponse stock
 
 
 '-------------- END view stock ---------------
