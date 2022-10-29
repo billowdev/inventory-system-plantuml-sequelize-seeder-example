@@ -91,7 +91,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     usecase (Order product from supplier) as (usecaseOrderProductFromSupplier)
     usecase (Create product order list) as (usecaseCreateProductOrderList)
-    usecase (confirm product order list) as (usecaseConfirmOrderList)
+    usecase (Confirm product order list) as (usecaseConfirmOrderList)
 
     ' ================ Stock ================
     usecase (Manage Inventory) as (usecaseInventory)
