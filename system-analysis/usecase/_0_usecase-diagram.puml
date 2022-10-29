@@ -59,6 +59,9 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     ' ================ Reporting ================
     '   การทำรายงาน
     usecase (Sell Report) as (usecaseSellReport)
+    usecase (Create Sell Report) as (usecaseCreateSellReport)
+    usecase (Edit Sell Report) as (usecaseEditSellReport)
+    usecase (Delete Sell Report) as (usecaseDeleteSellReport)
 
     '    การขายสินค้า
     usecase (Sell product) as (usecaseSellProduct)
@@ -210,6 +213,10 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
     (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
+
+    (usecaseCreateSellReport) ..>  (usecaseSellReport)   : <<extends>>
+    (usecaseSellReport)   <.. (usecaseEditSellReport)   : <<extends>>
+    (usecaseDeleteSellReport) ..>  (usecaseSellReport)   : <<extends>>
 
     (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
     (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
