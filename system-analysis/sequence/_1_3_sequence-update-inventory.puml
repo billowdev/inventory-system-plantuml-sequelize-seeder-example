@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title Update inventory sequence diagram
+
+actor Manager as actorManager
+participant "Inventory System" as InventorySystem
+participant "Inventory" as classInventory
+
+'participant "Category" as classCategory
+
+'actorManager -> InventorySystem: 1. RequestViewStock
+'activate InventorySystem
+
+'-------------- START add stock ---------------
+
+actorManager -> InventorySystem : 1 RequestUpdateStock
+
+InventorySystem -> classInventory: 1.2 getQtyStock()
+activate classInventory
+
+classInventory --> InventorySystem: 1.3 return present qty stock
+deactivate classInventory
+
+'InventorySystem  --> actorManager: 1.4 Response qty stock
+
+'actorManager -> InventorySystem : 2 RequestSelectProduct
+'actorManager -> InventorySystem :  3 SaveAddStock
+
+InventorySystem -> InventorySystem :  1.4 CalculateQtyStock
+
+
+InventorySystem -> classInventory: 1.5 updateQtyStock
+activate classInventory
+
+classInventory --> InventorySystem: 1.6 return new qty stock
+deactivate classInventory
+
+InventorySystem  --> actorManager : 2 Display update stock status
+deactivate InventorySystem
+
+'classProduct -> classCategory: request category
+'activate classCategory
+'
+'classCategory -> classProduct: response category
+'deactivate classCategory
+
+
+
+'classInventory --> InventorySystem: 4.4 response stock
+'deactivate classInventory
+
+'-------------- END add stock ---------------
+
+@enduml
