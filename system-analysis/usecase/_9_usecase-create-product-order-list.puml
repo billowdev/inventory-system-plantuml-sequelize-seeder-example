@@ -69,6 +69,7 @@ rectangle "จัดการคำสั่งซื้อสินค้าจ
 
 
     actorSupplier -- (usecaseOrderProductFromSupplier)
+    actorSupplier -- (usecaseShipment)
     actorCEO -- (usecaseConfirmOrderList)
 
 
