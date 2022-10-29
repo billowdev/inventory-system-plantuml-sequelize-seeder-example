@@ -157,7 +157,6 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
-    (usecaseSellProduct)  ..> (usecaseUpdateStock)   : <<include>>
 
     (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
     (usecaseSell)  ..> (usecaseOrder) : <<include>>
