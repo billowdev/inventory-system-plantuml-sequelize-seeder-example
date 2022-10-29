@@ -1,6 +1,6 @@
 @startuml
 'example
-title View invoice sequence diagram
+title View Sell sequence diagram
 
 actor Salesperson as actorSalesperson
 participant "Inventory System" as InventorySystem
