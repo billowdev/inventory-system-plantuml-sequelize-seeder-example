@@ -2,7 +2,7 @@ const express = require('express')
 const figlet = require("figlet")
 const gradient = require("gradient-string")
 const morgan = require('morgan')
-const db = require('./db/database')
+const db = require('./models')
 
 // import cors = require('cors')
 const app = express()
@@ -25,48 +25,11 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'))
 }
 
-db.authenticate()
-  .then(() => console.log('Database was connected...'))
-  .catch(err => console.log('Error: ' + err))
-
-
-app.get('/api', (req, res) => {
-    res.json({ msg: "ok" })
-}
-)
-
-app.post('/:name', (req, res) => {
-    let n = req.params.name;
-    res.json({ data: n })
-})
-
-app.get('/', (req, res) => {
-    let id = req.query.id;
-    let n = req.query.name;
-    let age = req.query.age;
-    res.json({
-        status: res.statusCode,
-        data: {
-            id, name: n, age
-        }
-    })
-})
-
-app.post('/', (req, res) => {
-    let body = req.body;
-    res.json({
-        status: res.statusCode,
-        data: body
-    })
-})
-
-// users controller
-// const usersController = require("./users/users.controller");
-// app.use('/users', usersController)
-
-
 // PORT
 const PORT = process.env.SERVE_PORT || 5000
+
+const productController = require("./product/product.controller");
+app.use("/product", productController);
 
 // SERVER restful api at PORT
 const runningServe = async (log) => {
@@ -78,6 +41,8 @@ const runningServe = async (log) => {
     ])
 };
 
-app.listen(PORT, () => {
-    runningServe(`SERVE ON PORT ${PORT}`);
-})
+db.sequelize.sync().then(() => {
+    app.listen(PORT, () => {
+        runningServe(`SERVE ON PORT ${PORT}`);
+    })
+});
