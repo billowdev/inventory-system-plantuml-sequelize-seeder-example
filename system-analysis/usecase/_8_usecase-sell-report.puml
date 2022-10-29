@@ -48,7 +48,6 @@ rectangle "จัดการรายงานการสั่งซื้อ
 
 
 
-    usecase (Create product order list) as (usecaseCreateProductOrderList)
 
     ' ================ Stock ================
     usecase (Check Stock) as (usecaseCheckStock)
@@ -72,7 +71,6 @@ rectangle "จัดการรายงานการสั่งซื้อ
 
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
-    (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
 
     (usecaseCreateSellReport) ..>  (usecaseSellReport)   : <<extends>>
     (usecaseSellReport)   <.. (usecaseEditSellReport)   : <<extends>>
