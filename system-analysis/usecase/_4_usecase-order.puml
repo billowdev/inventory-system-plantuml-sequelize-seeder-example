@@ -1,0 +1,79 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+left to right direction
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+actor Customer as actorCustomer
+note bottom of actorCustomer : ลูกค้าผู้ที่เข้ามาซื้อสินค้าภายในบริษัท
+
+actor Salesperson as actorSalesperson
+note top of actorSalesperson : พนักงานขาย
+
+' =================== Stock System ===================
+rectangle "จัดการคำสั่งซื้อ" as stockSystem {
+
+    ' ================ Invoice ================
+    usecase (View Invoice) as (usecaseViewInvoice)
+    usecase (Create Invoice) as (usecaseCreateInvoice)
+    usecase (Print Invoice) as (usecasePrintInvoice)
+
+    ' ================ Ordering ================
+    '    การสั่งซื้อสินค้า
+
+    usecase (Order) as (usecaseOrder)
+    '    note bottom of usecaseOrder : การสั่งซื้อสินค้า
+    usecase (Edit Order) as (usecaseEditOrder)
+    usecase (Cancel Order) as (usecaseDeleteOrder)
+
+    ' ================ Stock ================
+
+    usecase (Update stock) as (usecaseUpdateStock)
+
+
+    usecase (Select product) as (usecaseSelectProduct)
+
+
+
+    ' ================ Order ================
+    (usecaseOrder) <.. (usecaseDeleteOrder) : <<extends>>
+    (usecaseEditOrder) ..> (usecaseOrder) : <<extends>>
+    (usecaseEditOrder) ..> (usecaseUpdateStock) : <<include>>
+    (usecaseDeleteOrder) ..> (usecaseUpdateStock) : <<include>>
+    (usecaseCreateInvoice) <.. (usecaseOrder) : <<include>>
+
+    ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสั่งซื้อสินค้า ===
+    actorSalesperson -- (usecaseOrder)
+    (usecaseOrder) -- actorCustomer
+
+  (usecaseOrder) ..> (usecaseSelectProduct) : <<include>>
+
+
+    ' ================ Invoice ================
+
+    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<include>>
+    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<include>>
+
+
+
+
+
+}
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+left to right direction
+' =================== Manager ===================
+' role - เจ้าหน้าที่ ที่จัดการสินค้า ให้คงคลังสินค้าอยู่เสมอ
+' duty - บริหารจัดการ stock สินค้า ทั้งการจำหน่ายออก และการรับสินค้ารวมถึงการ
+' ออกใบสั่งของ การเช็คสินค้าและการทำรายงานต่างๆ
+actor Manager as actorManager
+note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
+
+
+' =================== Stock System ===================
+rectangle "จัดการสินค้า" as manageProduct {
+
+    ' ================ Product ================
+    usecase (Manage product) as (usecaseProduct)
+    usecase (View product) as (usecaseViewProduct)
+    usecase (Add product) as (usecaseAddProduct)
+    usecase (Edit product) as (usecaseUpdateProduct)
+    usecase (Delete product) as (usecaseDeleteProduct)
+    usecase (Select product) as (usecaseSelectProduct)
+
+    usecase (Promotion) as (usecasePromotion)
+
+    ' ================ Category ================
+
+    usecase (View category) as (usecaseViewCategory)
+
+    ' ================ Product ================
+    actorManager -- (usecaseProduct)
+    (usecaseProduct) <.. (usecaseAddProduct)  : <<extends>>
+    (usecaseUpdateProduct) ..> (usecaseProduct) : <<extends>>
+    (usecaseProduct) <.. (usecaseDeleteProduct)  : <<extends>>
+    (usecaseSelectProduct) ..> (usecaseProduct) : <<extends>>
+    (usecaseProduct) <.. (usecaseViewProduct) : <<extends>>
+
+    (usecaseProduct) ..> (usecaseViewCategory) : <<include>>
+    (usecaseProduct) <.. (usecasePromotion) : <<extends>>
+
+}
+
+@enduml

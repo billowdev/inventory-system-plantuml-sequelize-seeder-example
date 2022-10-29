@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+left to right direction
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+
+actor Manager as actorManager
+note top of actorManager : เจ้าหน้าที่ ที่จัดการสินค้า
+
+
+rectangle "จัดการประเภทสินค้า" as manageCategory {
+
+    ' ================ Category ================
+    usecase (Manage category) as (usecaseCategory)
+    usecase (View category) as (usecaseViewCategory)
+    usecase (Add category) as (usecaseAddCategory)
+    usecase (Edit category) as (usecaseUpdateCategory)
+    usecase (Delete category) as (usecaseDeleteCategory)
+
+
+    ' ================ Category ================
+    actorManager -- (usecaseCategory)
+    (usecaseCategory) <.. (usecaseAddCategory)  : <<extends>>
+    (usecaseUpdateCategory) ..> (usecaseCategory) : <<extends>>
+    (usecaseCategory) <.. (usecaseDeleteCategory)  : <<extends>>
+    (usecaseViewCategory)  ..> (usecaseCategory) : <<extends>>
+
+
+
+
+
+
+}
+
+@enduml

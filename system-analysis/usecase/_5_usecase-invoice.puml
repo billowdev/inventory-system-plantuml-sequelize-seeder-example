@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/usecase-diagram
+left to right direction
+
+skinparam sequence {
+    ParticipantFontName Thai
+    ParticipantFontSize 16
+    ActorFontSize 16
+    ActorFontName Thai
+}
+'skinparam linetype polyline
+' skinparam linetype ortho
+
+skinparam Participant{
+    FontColor #efefef
+    BorderColor #c0c0c0
+}
+skinparam Sequence{
+    ParticipantBorderThickness .5
+    LifeLineBorderColor #8a8a8a
+}
+
+actor Salesperson as actorSalesperson
+note left of actorSalesperson : พนักงานขาย
+
+
+' =================== Stock System ===================
+rectangle "จัดการใบสั่งซื้อ" as manageInvoice {
+
+
+    ' ================ Invoice ================
+    usecase (Manage Invoice) as (usecaseInvoice)
+    usecase (View Invoice) as (usecaseViewInvoice)
+    usecase (Create Invoice) as (usecaseCreateInvoice)
+    usecase (Edit Invoice) as (usecaseEditInvoice)
+    usecase (Print Invoice) as (usecasePrintInvoice)
+
+
+
+    '===========================================================
+    ' ===                  Associate Flow                    ===
+    '===========================================================
+
+'
+
+    ' ================ Invoice ================
+    (usecaseInvoice) <.. (usecaseViewInvoice) : <<extends>>
+    (usecaseInvoice)  <..   (usecaseCreateInvoice): <<extends>>
+    (usecaseEditInvoice) ..> (usecaseInvoice) : <<extends>>
+
+    (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<include>>
+    (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<include>>
+
+     (usecaseInvoice) -- actorSalesperson
+
+
+
+
+}
+
+@enduml
