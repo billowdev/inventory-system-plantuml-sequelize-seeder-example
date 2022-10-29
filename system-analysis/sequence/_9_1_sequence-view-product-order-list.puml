@@ -1,0 +1,44 @@
+@startuml
+'example
+title View ProductOrderList sequence diagram
+
+actor Salesperson as actorSalesperson
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Product Order List" as usecaseProductOrderList
+
+actorSalesperson -> InventorySystem: 1. RequestViewAllProductOrderList
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> usecaseProductOrderList: 1.1 getAllProductOrderList()
+activate usecaseProductOrderList
+
+usecaseProductOrderList --> InventorySystem: 1.2 return all ProductOrderList
+deactivate usecaseProductOrderList
+
+InventorySystem --> actorSalesperson : 2. Response ProductOrderList
+
+deactivate InventorySystem
+
+
+opt
+actorSalesperson -> InventorySystem: 3. RequestViewProductOrderList
+activate InventorySystem
+
+InventorySystem -> usecaseProductOrderList: 3.1 getProductOrderList(id)
+activate usecaseProductOrderList
+
+usecaseProductOrderList --> InventorySystem: 3.2 return ProductOrderList
+deactivate usecaseProductOrderList
+
+
+'-------------- END view product ---------------
+
+InventorySystem --> actorSalesperson : 4. Response ProductOrderList
+
+deactivate InventorySystem
+end
+
+
+@enduml
