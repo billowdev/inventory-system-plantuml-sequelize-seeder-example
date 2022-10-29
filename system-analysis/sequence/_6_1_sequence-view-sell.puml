@@ -1,0 +1,41 @@
+@startuml
+'example
+title View invoice sequence diagram
+
+actor Salesperson as actorSalesperson
+participant "Inventory System" as InventorySystem
+'participant "Inventory" as classInventory
+participant "Sale" as classSell
+
+actorSalesperson -> InventorySystem: 1. RequestViewAllSell
+activate InventorySystem
+
+InventorySystem -> classSell: 1.1 getAllSell()
+activate classSell
+
+classSell --> InventorySystem: 1.2 return all sell
+deactivate classSell
+
+InventorySystem --> actorSalesperson : 2. Response sells
+
+deactivate InventorySystem
+
+
+opt
+actorSalesperson -> InventorySystem: 3. RequestViewSell
+activate InventorySystem
+
+InventorySystem -> classSell: 3.1 getSell(id)
+activate classSell
+
+classSell --> InventorySystem: 3.2 return sell
+deactivate classSell
+
+InventorySystem -->  actorSalesperson : Response View Sell
+
+end
+
+
+
+
+@enduml
