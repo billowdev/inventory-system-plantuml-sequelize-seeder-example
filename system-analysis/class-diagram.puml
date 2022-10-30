@@ -272,26 +272,27 @@ class StockOrder {
 
 
 User "*" -up-> "1" UserRoleEum
-Employee "*" -left-|> "1"   User
+Employee "*" --|> "1"   User
 Customer "*" -right-|> "1"   User
 
-Product "1" *-- "0..*" Stock
+Product "1" *-- "0..*" Stock 
 
 Employee "1" -- "1..*" Stock
 
-Product "*" -left-* "1" Category
-Product "1..*" --* "1" Supplier
+Product "*" -left-* "1" Category 
+Product "1..*" --* "1" Supplier 
 
-Order "1..*" *-- "1" Invoice
-Sell "1..*" *-- "1" Receipt
+Order "1..*" *-- "1" Invoice 
+Sell "1..*" *-- "1" Receipt 
 
-Order "1..*" --* "1" Customer
-Order "1" -- "*" Stock : "check"
+Order "1..*" --* "1" Customer 
+Order "1" --* "1..*" Product 
+'Order "1" -- "*" Stock : "check"
 
 Employee "*" -up-> "1" EmployeeRoleEum
 
-Employee "1" -- "*" Invoice : "has"
-Employee "1" -- "*" Receipt : "has"
+Employee "1" -- "*" Invoice : "Manage"
+Employee "1" -- "*" Receipt : "Manage"
 
 Employee "1" -- "*" Supplier : "Contact"
 Order "*" -- "1" Employee : "Manage"
@@ -309,7 +310,7 @@ StockOrder "1" --* "1..*" Product
 StockOrder "*" -- "*" Employee
 StockOrder "1" -right- "1..*" Supplier
 
-SellReport "*" -- "1" Employee
+SellReport "*" -- "1" Employee : "Manage"
 
 
 
