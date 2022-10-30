@@ -1,13 +1,16 @@
 @startuml
 'example
-title View SellReport sequence diagram
+title View Sell report sequence diagram
 
-actor Salesperson as actorSalesperson
-participant "Inventory System" as InventorySystem
-participant "Sell Report" as usecaseSellReport
+actor "Financial" as actorFinancial
+actor "Manager" as actorManager
+participant ":Inventory System" as InventorySystem
+participant ":Sell report" as usecaseSellReport
 
-actorSalesperson -> InventorySystem: 1. RequestViewAllSellReport
+activate actorManager
+
 activate InventorySystem
+actorManager -> InventorySystem: 1. RequestViewAllSellReport
 
 '-------------- START view product ---------------
 InventorySystem -> usecaseSellReport: 1.1 getAllSellReport()
@@ -16,14 +19,13 @@ activate usecaseSellReport
 usecaseSellReport --> InventorySystem: 1.2 return all SellReport
 deactivate usecaseSellReport
 
-InventorySystem --> actorSalesperson : 2. Response SellReport
+InventorySystem --> actorManager : 2. Response SellReport
 
-deactivate InventorySystem
 
 
 opt
-actorSalesperson -> InventorySystem: 3. RequestViewSellReport
-activate InventorySystem
+actorManager -> InventorySystem: 3. RequestViewSellReport
+
 
 InventorySystem -> usecaseSellReport: 3.1 getSellReport(id)
 activate usecaseSellReport
@@ -34,28 +36,43 @@ deactivate usecaseSellReport
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorSalesperson : 4. Response SellReport
+InventorySystem --> actorManager : 4. Response SellReport
 
-deactivate InventorySystem
 end
 
 
 opt
-actorSalesperson -> InventorySystem : 5. Request Print SellReport
+actorManager -> InventorySystem : 5. Request Print sell report
 
-activate InventorySystem
+
 
 InventorySystem -> usecaseSellReport : 5.1 printSellReport()
 activate usecaseSellReport
 
-usecaseSellReport -> usecaseSellReport : 5.2  print SellReport
+usecaseSellReport -> usecaseSellReport : 5.2  print sell report
 
+
+end
 deactivate usecaseSellReport
 
-'deactivate InventorySystem
-end
+deactivate actorManager
 
 
+
+actorFinancial -> InventorySystem: 6. RequestViewWeeklySellReport
+activate actorFinancial
+
+InventorySystem -> usecaseSellReport: 6.1 getWeeklySellReport()
+activate usecaseSellReport
+
+usecaseSellReport --> InventorySystem: 6.2 return sell report
+deactivate usecaseSellReport
+
+InventorySystem --> actorFinancial : 7. Response sell report
+deactivate actorManager
+
+deactivate InventorySystem
+deactivate actorFinancial
 
 
 @enduml

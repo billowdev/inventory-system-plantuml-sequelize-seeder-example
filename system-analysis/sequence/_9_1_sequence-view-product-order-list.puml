@@ -1,87 +1,98 @@
 @startuml
 'example
-title View ProductOrderList sequence diagram
+title View StockOrder sequence diagram
 
 
 actor Supplier as actorSupplier
 actor CEO as actorCEO
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-'participant "Stock" as classInventory
-participant "Product Order List" as classProductOrderList
-
-
+participant ":Inventory System" as InventorySystem
+participant ":stock order list" as classStockOrder
+participant ":Invoice" as classInvoice
+activate actorManager
 
 activate InventorySystem
-actorManager -> InventorySystem: 1. RequestViewAllProductOrderList
+actorManager -> InventorySystem: 1. RequestViewAllStockOrder
 
 '-------------- START view product ---------------
-InventorySystem -> classProductOrderList: 1.1 getAllProductOrderList()
-activate classProductOrderList
+InventorySystem -> classStockOrder: 1.1 getAllStockOrder()
+activate classStockOrder
 
-classProductOrderList --> InventorySystem: 1.2 return all ProductOrderList
-deactivate classProductOrderList
+classStockOrder --> InventorySystem: 1.2 return all StockOrder
+deactivate classStockOrder
 
-InventorySystem --> actorManager : 2. Response ProductOrderList
+InventorySystem --> actorManager : 2. Response StockOrder
 
-deactivate InventorySystem
 
 
 opt
-actorManager -> InventorySystem: 3. RequestViewProductOrderList
-activate InventorySystem
+actorManager -> InventorySystem: 3. RequestViewStockOrder
 
-InventorySystem -> classProductOrderList: 3.1 getProductOrderList(id)
-activate classProductOrderList
+InventorySystem -> classStockOrder: 3.1 getStockOrder(id)
+activate classStockOrder
 
-classProductOrderList --> InventorySystem: 3.2 return ProductOrderList
-deactivate classProductOrderList
+classStockOrder --> InventorySystem: 3.2 return StockOrder
+deactivate classStockOrder
 
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorManager : 4. Response product order list
+InventorySystem --> actorManager : 4. Response stock order list
 
-deactivate InventorySystem
+
 end
+deactivate actorManager
 
-actorCEO -> InventorySystem : 5. RequestPendingProductOrderList
-activate InventorySystem
+actorCEO -> InventorySystem : 5. RequestPendingStockOrder
+activate actorCEO
 
-InventorySystem -> classProductOrderList : 5.1 getPendingProductOrderList
-activate classProductOrderList
 
-classProductOrderList --> InventorySystem : 5.2 return pending product order list
-deactivate classProductOrderList
+InventorySystem -> classStockOrder : 5.1 getPendingStockOrder
+activate classStockOrder
 
-InventorySystem --> actorCEO : 6 Response pending product order list
-deactivate InventorySystem
+classStockOrder --> InventorySystem : 5.2 return pending stock order list
+deactivate classStockOrder
+
+InventorySystem --> actorCEO : 6 Response pending stock order list
+
 opt
 
-actorCEO -> InventorySystem : 7. RequestConfirmProductOrderList
-activate InventorySystem
+actorCEO -> InventorySystem : 7. RequestConfirmStockOrder
 
-InventorySystem -> classProductOrderList : 7.1 confirmProductOrderList
-activate classProductOrderList
 
-classProductOrderList --> InventorySystem : 7.2 return confirm status
-deactivate classProductOrderList
+InventorySystem -> classStockOrder : 7.1 confirmStockOrder
+activate classStockOrder
 
-InventorySystem --> actorCEO : 8. Response confirm product order list status
-deactivate InventorySystem
+classStockOrder --> InventorySystem : 7.2 return confirm status
+deactivate classStockOrder
+
+InventorySystem --> actorCEO : 8. Response confirm stock order list status
+
+end
+deactivate actorCEO
+
+actorManager -> InventorySystem : 9. RequestConfirmedStockOrder
+activate actorManager
+
+InventorySystem -> classStockOrder : 9.1 getConfirmedStockOrder
+classStockOrder --> InventorySystem : 9.2 return confirmed stock order list
+
+InventorySystem --> actorManager : 10. Response confirmed stock order list
+
+alt IF StockOrder.status == confirmed
+
+activate actorSupplier
+
+actorManager -> actorSupplier : 11. send stock order list to supplier
+InventorySystem -> classInvoice : createInvoiceStockOrder()
+activate classInvoice
+classInvoice -> classInvoice : printInvoice()
+classInvoice --> InventorySystem : return create invoice
+deactivate classInvoice
+actorSupplier --> actorManager : 12. receive stock order list
+deactivate actorSupplier
 
 end
 
-actorManager -> InventorySystem : 9. RequestConfirmedProductOrderList
-activate InventorySystem
-
-InventorySystem -> classProductOrderList : 9.1 getConfirmedProductOrderList
-classProductOrderList --> InventorySystem : 9.2 return confirmed product order list
-
-InventorySystem --> actorManager : 10. Response confirmed product order list
-deactivate InventorySystem
-
-actorManager -> actorSupplier : 11. Send product order list to supplier
-actorSupplier --> actorManager : 12. shipment product following product order list to supplier
 
 @enduml

@@ -3,14 +3,14 @@
 title Check inventory sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Stock" as classStock
-participant "Product" as classProduct
+participant ":Inventory System" as InventorySystem
+participant ":Stock" as classStock
+participant ":Product" as classProduct
 'participant "Category" as classCategory
 
+activate actorManager
 actorManager -> InventorySystem: 1. RequestCheckStock
 activate InventorySystem
-
 '-------------- START Check stock ---------------
 InventorySystem -> classStock: 1.1 getStock()
 activate classStock
@@ -26,10 +26,12 @@ deactivate classStock
 
 InventorySystem  --> actorManager: 2 Reponse stock
 
+alt IF stock.stockingDate > 120 day
+actorManager -> InventorySystem : create promotion following product
+InventorySystem -> actorManager : response promotion following product
+end
 
-'-------------- END Check stock ---------------
-
-
+deactivate actorManager
 
 
 

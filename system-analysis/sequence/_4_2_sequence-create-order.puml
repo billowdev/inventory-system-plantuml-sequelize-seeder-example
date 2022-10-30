@@ -4,19 +4,23 @@ title create order sequence diagram
 
 actor Customer as actorCustomer
 
-actor Salesperson as actorSalesperson
-participant "Inventory System" as InventorySystem
-participant "Order" as classOrder
-participant "Product" as classProduct
-participant "Stock" as classStock
-participant "Invoice" as classInvoice
 
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
+participant ":Order" as classOrder
+participant ":Product" as classProduct
+participant ":Stock" as classStock
+participant ":Invoice" as classInvoice
 
-actorCustomer -> actorSalesperson : 1. Request order product
+activate actorCashier
+activate actorCustomer
 
-actorSalesperson --> actorCustomer : 2. Receive order
+actorCustomer -> actorCashier : 1. Request order product
 
-actorSalesperson -> InventorySystem: 3. RequestCreateOrder
+actorCashier --> actorCustomer : 2. Receive order
+deactivate actorCustomer
+
+actorCashier -> InventorySystem: 3. RequestCreateOrder
 activate InventorySystem
 
 InventorySystem -> classProduct: 3.1 selectProduct
@@ -31,16 +35,13 @@ deactivate classStock
 classProduct -> InventorySystem: 3.4 return product data
 deactivate classProduct
 
-alt IF (orderData.qty > product.stock.qty)
-classStock --> InventorySystem : 3.5 can't create order
-'deactivate InventorySystem
- destroy InventorySystem
 
-else ELSE
+
+alt IF (stock.qty > order.qty)
 
 InventorySystem -> classOrder: 3.6 createOrder(orderData)
 activate classOrder
-activate InventorySystem
+
 
 classOrder -> classStock: 3.7 update stock
 activate classStock
@@ -59,15 +60,19 @@ classInvoice --> InventorySystem: 3.11 return invoice
 
 deactivate classInvoice
 classOrder --> InventorySystem: 3.12 return order
+
+else ELSE
+classStock --> classOrder : 3.5 can't create order
+'deactivate InventorySystem
 deactivate classOrder
 
 end
 
 
-InventorySystem -> actorSalesperson: 4. Response create order status
+InventorySystem -> actorCashier: 4. Response create order status
+
 deactivate InventorySystem
-
-
-
+activate actorCustomer
+actorCashier --> actorCustomer : Invoice
 
 @enduml

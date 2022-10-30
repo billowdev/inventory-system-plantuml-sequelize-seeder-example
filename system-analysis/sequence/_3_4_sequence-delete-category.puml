@@ -3,8 +3,10 @@
 title delete category sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Category" as classCategory
+participant ":Inventory System" as InventorySystem
+participant ":Category" as classCategory
+
+activate actorManager
 
 actorManager -> InventorySystem: 1. RequestDeleteCategory
 activate InventorySystem
@@ -18,6 +20,6 @@ deactivate classCategory
 InventorySystem -> actorManager: 2. Response delete category status
 deactivate InventorySystem
 
-
+deactivate actorManager
 
 @enduml

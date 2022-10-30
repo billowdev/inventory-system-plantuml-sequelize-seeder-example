@@ -3,9 +3,11 @@
 title update product sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Product" as classProduct
-participant "Category" as classCategory
+participant ":Inventory System" as InventorySystem
+participant ":Product" as classProduct
+participant ":Category" as classCategory
+
+activate actorManager
 
 actorManager -> InventorySystem: 1. RequestUpdateProduct
 activate InventorySystem
@@ -28,5 +30,5 @@ InventorySystem -> actorManager: 2. Response update status
 deactivate InventorySystem
 
 
-
+deactivate actorManager
 @enduml

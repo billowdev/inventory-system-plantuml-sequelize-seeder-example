@@ -3,8 +3,10 @@
 title delete product sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Product" as classProduct
+participant ":Inventory System" as InventorySystem
+participant ":Product" as classProduct
+
+activate actorManager
 
 actorManager -> InventorySystem: 1. RequestDeleteProduct
 activate InventorySystem
@@ -19,6 +21,6 @@ deactivate classProduct
 InventorySystem -> actorManager: 2. Response delete product status
 deactivate InventorySystem
 
-
+deactivate actorManager
 
 @enduml

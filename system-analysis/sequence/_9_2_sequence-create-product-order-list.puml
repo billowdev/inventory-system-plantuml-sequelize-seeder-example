@@ -3,10 +3,10 @@
 title View ProductOrderList sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "ProductOrderList" as classProductOrderList
-participant "Stock" as classStock
-participant "Product" as classProduct
+participant ":Inventory System" as InventorySystem
+participant ":ProductOrderList" as classProductOrderList
+participant ":Stock" as classStock
+participant ":Product" as classProduct
 
 
 

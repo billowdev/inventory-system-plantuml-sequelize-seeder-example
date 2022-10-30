@@ -4,15 +4,11 @@
 title Update inventory sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Stock" as classStock
+participant ":Inventory System" as InventorySystem
+participant ":Stock" as classStock
 
-'participant "Category" as classCategory
-
-'actorManager -> InventorySystem: 1. RequestViewStock
-'activate InventorySystem
-
-'-------------- START add stock ---------------
+activate actorManager
+activate InventorySystem
 
 actorManager -> InventorySystem : 1 RequestUpdateStock
 
@@ -32,8 +28,9 @@ activate classStock
 classStock --> InventorySystem: 1.6 return new qty stock
 deactivate classStock
 
-InventorySystem  --> actorManager : 2 Display update stock status
+InventorySystem  --> actorManager : 2 response update stock status
 deactivate InventorySystem
 
+deactivate actorManager
 
 @enduml

@@ -2,14 +2,15 @@
 'example
 title Create Sell sequence diagram
 
-actor Salesperson as actorSalesperson
-participant "Inventory System" as InventorySystem
-participant "Sale" as classSell
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
+participant ":Sale" as classSell
 
-participant "Receipt" as classReceipt
+participant ":Receipt" as classReceipt
 
+activate actorCashier
 
-actorSalesperson -> InventorySystem: 1. RequestCreateSell
+actorCashier -> InventorySystem: 1. RequestCreateSell
 activate InventorySystem
 
 InventorySystem -> classSell: 1.1 createSell()
@@ -27,11 +28,11 @@ deactivate classReceipt
 classSell --> InventorySystem: 1.5 return create sell
 deactivate classSell
 
-InventorySystem --> actorSalesperson : 2. Response create sell status
+InventorySystem --> actorCashier : 2. Response create sell status
 
 deactivate InventorySystem
 
 
-
+deactivate actorCashier
 
 @enduml

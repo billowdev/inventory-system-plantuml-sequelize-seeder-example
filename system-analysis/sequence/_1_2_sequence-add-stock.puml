@@ -5,22 +5,19 @@ title Add inventory sequence diagram
 
 actor Supplier as actorSupplier
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Stock" as classStock
-participant "Product" as classProduct
+participant ":Inventory System" as InventorySystem
+participant ":Stock" as classStock
+participant ":Product" as classProduct
 
-'participant "Category" as classCategory
-
-
-'actorManager -> InventorySystem: 1. RequestViewStock
-'activate InventorySystem
+activate actorManager
+activate InventorySystem
 
 '-------------- START add stock ---------------
 actorSupplier -> actorManager : shipment
-activate actorManager
+activate actorSupplier
 
 actorManager --> actorSupplier : receive shipment
-deactivate actorManager
+deactivate actorSupplier
 
 actorManager -> InventorySystem : 1 RequestAddStock
 
@@ -47,17 +44,6 @@ deactivate classStock
 InventorySystem  --> actorManager : 4 Response Add stock status
 deactivate InventorySystem
 
-'classProduct -> classCategory: request category
-'activate classCategory
-'
-'classCategory -> classProduct: response category
-'deactivate classCategory
-
-
-
-'classStock --> InventorySystem: 4.4 response stock
-'deactivate classStock
-
-'-------------- END add stock ---------------
+deactivate actorManager
 
 @enduml

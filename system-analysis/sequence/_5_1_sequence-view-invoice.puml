@@ -2,12 +2,14 @@
 'example
 title View invoice sequence diagram
 
-actor Salesperson as actorSalesperson
-participant "Inventory System" as InventorySystem
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
 
-participant "Invoice" as classInvoice
+participant ":Invoice" as classInvoice
 
-actorSalesperson -> InventorySystem: 1. RequestViewAllInvoice
+activate actorCashier
+
+actorCashier -> InventorySystem: 1. RequestViewAllInvoice
 activate InventorySystem
 
 InventorySystem -> classInvoice: 1.1 getAllInvoice()
@@ -16,14 +18,14 @@ activate classInvoice
 classInvoice --> InventorySystem: 1.2 return all invoice
 deactivate classInvoice
 
-InventorySystem --> actorSalesperson : 2. Response invoices
+InventorySystem --> actorCashier : 2. Response invoices
 
-deactivate InventorySystem
+
 
 
 opt
-actorSalesperson -> InventorySystem: 3. RequestViewInvoice
-activate InventorySystem
+actorCashier -> InventorySystem: 3. RequestViewInvoice
+
 
 InventorySystem -> classInvoice: 3.1 getInvoice(id)
 activate classInvoice
@@ -31,27 +33,26 @@ activate classInvoice
 classInvoice --> InventorySystem: 3.2 return invoice
 deactivate classInvoice
 
-InventorySystem --> actorSalesperson : 4. Response invoice
-deactivate InventorySystem
+InventorySystem --> actorCashier : 4. Response invoice
+
 end
 
 
 opt
-actorSalesperson -> InventorySystem : 5. RequestPrintInvoice
-activate InventorySystem
+actorCashier -> InventorySystem : 5. RequestPrintInvoice
+
 
 activate classInvoice
 InventorySystem -> classInvoice : 5.1 printInvoice()
 
 classInvoice -> classInvoice : 5.2  print invoice
-deactivate classInvoice
-deactivate InventorySystem
 
 end
+deactivate classInvoice
 
 opt
-actorSalesperson -> InventorySystem: 6. RequestEditInvoice
-activate InventorySystem
+actorCashier -> InventorySystem: 6. RequestEditInvoice
+
 
 InventorySystem -> classInvoice: 6.1 getEditInvoice(invoiceData)
 activate classInvoice
@@ -59,9 +60,9 @@ activate classInvoice
 classInvoice --> InventorySystem: 6.2 return invoice edit invoice
 deactivate classInvoice
 
-InventorySystem --> actorSalesperson : 6. Response Edit invoice status
-deactivate InventorySystem
+InventorySystem --> actorCashier : 6. Response Edit invoice status
 end
+deactivate InventorySystem
 
 
 @enduml

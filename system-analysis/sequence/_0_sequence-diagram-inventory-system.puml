@@ -1,0 +1,205 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Supplier as actorSupplier
+actor Manager as actorManager
+actor CEO as actorCEO
+actor Customer as actorCustomer
+actor Financial as actorFinancial
+actor Cashier as actorCashier
+participant ":inventory system" as InventorySystem
+participant ":product" as classProduct
+participant ":category" as classCategory
+participant ":stock" as classStock
+participant ":order" as classOrder
+participant ":invoice" as classInvoice
+participant ":sell" as classSell
+participant ":receipt" as classReceipt
+participant ":sell report" as classSellReport
+participant ":stock order" as classStockOrder
+
+' เมื่อสินค้ามาถึงบริษัท
+actorSupplier -> actorManager : 1. shipment product
+activate actorManager
+activate actorSupplier
+actorManager --> actorSupplier : 1. manager confirm receive shipment product
+deactivate actorSupplier
+
+actorManager -> InventorySystem : 2. Add product stock following category
+activate InventorySystem
+
+InventorySystem -> classProduct : getProduct()
+activate classProduct
+
+
+classProduct -> classCategory : getCategory(categoryId)
+activate classCategory
+classCategory --> classProduct : return category
+deactivate classCategory
+
+classProduct -> InventorySystem : return product
+deactivate classProduct
+
+InventorySystem -> classStock : addStock()
+activate classStock
+
+classStock --> InventorySystem : return add stock
+deactivate classStock
+
+InventorySystem --> actorManager : 3. Response Add Stock status
+deactivate actorManager
+
+' เมื่อสินค้าถูกขาย
+activate actorCustomer
+actorCustomer -> actorCashier : Order
+
+activate actorCashier
+actorCashier -> InventorySystem : requestCreateOrder()
+
+
+InventorySystem -> classStock : checkStock
+activate classStock
+classStock --> InventorySystem : return stock
+deactivate classStock
+
+alt IF stock.qty >= order.qty
+InventorySystem -> classOrder : createOrder()
+activate classOrder
+classOrder --> InventorySystem : return order
+
+InventorySystem --> actorCashier : response create order complete
+
+else ELSE
+classOrder --> InventorySystem : return create order failed
+deactivate classOrder
+InventorySystem --> actorCashier : response can't order this product
+
+end
+
+
+actorCashier -> InventorySystem : requestConfirmOrder()
+InventorySystem -> classInvoice : createInvoice()
+activate classInvoice
+classInvoice -> classInvoice : printInvoice()
+classInvoice --> InventorySystem : return create invoice
+deactivate classInvoice
+InventorySystem --> actorCashier : Response invoice
+
+actorCashier -> InventorySystem : Sell
+'
+'InventorySystem -> classReceipt : createReceipt()
+'activate classReceipt
+'classReceipt -> classReceipt : printReceipt()
+'classReceipt --> InventorySystem : return create receipt
+'deactivate classReceipt
+
+InventorySystem -> classSell: createSell()
+activate classSell
+
+classSell -> classReceipt : system create receipt
+
+activate classReceipt
+classReceipt -> classReceipt : print receipt
+
+
+classReceipt --> InventorySystem: return receipt
+deactivate classReceipt
+
+classSell --> InventorySystem: return create sell
+deactivate classSell
+
+InventorySystem --> actorCashier : Response create sell status
+deactivate actorCashier
+
+'InventorySystem --> actorCashier : response receipt
+actorCashier --> actorCustomer : invoice / receipt
+
+
+deactivate actorCustomer
+deactivate classStock
+
+actorManager -> InventorySystem : create weekly sell report
+activate actorManager
+InventorySystem --> actorManager : response weekly sell report
+
+activate actorFinancial
+actorFinancial -> InventorySystem : requestAllSellReport()
+
+InventorySystem -> classSellReport: get all sell report()
+activate classSellReport
+
+classSellReport --> InventorySystem: return all SellReport
+deactivate classSellReport
+
+InventorySystem --> actorManager : Response SellReport
+
+InventorySystem --> actorFinancial : response view sell report
+
+deactivate actorFinancial
+actorManager -> InventorySystem : create stock order list
+InventorySystem --> actorManager : response create stock order list
+deactivate actorManager
+
+actorCEO -> InventorySystem : requestPendingStockOrder
+activate actorCEO
+InventorySystem --> actorCEO : response pending stock order
+
+
+opt
+actorCEO -> InventorySystem : requestConfirmStockOrder
+InventorySystem -> classStockOrder : confirmStockOrder()
+activate classStockOrder
+classStockOrder --> InventorySystem : return confirm stock order
+deactivate classStockOrder
+InventorySystem --> actorCEO : response status stock order list
+end
+deactivate actorCEO
+
+actorManager -> InventorySystem : RequestStockOrderWasConfirmed
+activate actorManager
+
+InventorySystem -> classStockOrder : getStockOrderWasConfirmed()
+activate classStockOrder
+
+
+classStockOrder --> InventorySystem : return stock order list was confirmed
+deactivate classStockOrder
+
+InventorySystem --> actorManager : Response confirmed stock order list
+
+
+alt IF StockOrder.status == confirmed
+actorManager -> InventorySystem : requestCreateInvoiceStockOrder()
+InventorySystem -> classInvoice : createInvoiceStockOrder()
+activate classInvoice
+classInvoice -> classInvoice : printInvoice()
+classInvoice --> InventorySystem : return create invoice
+deactivate classInvoice
+InventorySystem --> actorManager : response invoice stock order
+
+
+
+actorManager -> actorSupplier : send invoice stock order list
+activate actorSupplier
+actorSupplier --> actorManager : receive invoice stock order list
+deactivate actorSupplier
+end
+
+actorManager -> InventorySystem : request check stock()
+InventorySystem -> classStock : checkStock()
+activate classStock
+classStock --> InventorySystem : return stock
+deactivate classStock
+
+InventorySystem --> actorManager : response stock
+alt IF stock.stockingDate > 120 day
+actorManager -> InventorySystem : create promotion following product
+InventorySystem -> actorManager : response promotion following product
+end
+
+loop every month
+actorManager -> InventorySystem : create monthly sell report
+InventorySystem -> actorManager : response create monthly sell report
+end loop
+
+@enduml

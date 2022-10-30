@@ -3,9 +3,10 @@
 title View category sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Category" as classCategory
+participant ":Inventory System" as InventorySystem
+participant ":Category" as classCategory
 
+activate actorManager
 
 actorManager -> InventorySystem: 1. RequestAddCategory
 activate InventorySystem
@@ -20,5 +21,7 @@ deactivate classCategory
 InventorySystem --> actorManager : 2. Response Add category status
 
 deactivate InventorySystem
+
+deactivate actorManager
 
 @enduml

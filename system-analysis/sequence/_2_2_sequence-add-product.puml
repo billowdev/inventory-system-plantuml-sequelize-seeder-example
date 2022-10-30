@@ -3,9 +3,11 @@
 title add product sequence diagram
 
 actor Manager as actorManager
-participant "Inventory System" as InventorySystem
-participant "Product" as classProduct
-participant "Category" as classCategory
+participant ":Inventory System" as InventorySystem
+participant ":Product" as classProduct
+participant ":Category" as classCategory
+
+activate actorManager
 
 actorManager -> InventorySystem: 1. RequestAddProduct
 activate InventorySystem
@@ -26,5 +28,6 @@ deactivate classProduct
 InventorySystem --> actorManager: 2. response product
 deactivate InventorySystem
 
+deactivate actorManager
 
 @enduml
