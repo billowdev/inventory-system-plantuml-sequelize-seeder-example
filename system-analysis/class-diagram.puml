@@ -1,53 +1,315 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+'skinparam linetype polyline
+'skinparam linetype ortho
+'top to bottom direction
+left to right direction
+skinparam classAttributeIconSize 0
+'Type	       Symbol
+'Extension	    <|--
+'Composition	*--
+'Aggregation	o--
+
+class User {
+    - id
+    - username
+    - hashPassword
+    - email
+    - role
+    - createdAt
+    - updatedAt
+    - lastLogin
+
+    + getOneUser() : UserEntity
+    + getAllUser() : UserEntity[]
+    + createUser() : UserEntity
+    + updateUser() : void
+    + DeleteUser() : void
+}
+'<<enumeration>>
+enum UserRoleEum {
+    - customer
+    - employee
+    - admin
+}
+
+class Employee {
+    - id
+    - name
+    - surname
+    - phone
+    - addressId
+
+    + getOneEmployee() : EmployeeEntity
+    + getAllEmployee() : EmployeeEntity[]
+    + createEmployee() : EmployeeEntity
+    + updateEmployee() : void
+    + DeleteEmployee() : void
+}
+
+class Customer {
+    - id
+    - name
+    - surname
+    - phone
+    - addressId
+
+    + getOneCustomer() : CustomerEntity
+    + getAllCustomer() : CustomerEntity[]
+    + createCustomer() : CustomerEntity
+    + updateCustomer() : void
+    + DeleteCustomer() : void
+}
+
+class Address {
+    - id
+    - houseNumber
+    - village
+    - subDistrict
+    - district
+    - province
+    - zipCode
+
+    + getOneAddress() : AddressEntity
+    + getAllAddress() : AddressEntity[]
+    + createAddress() : AddressEntity
+    + updateAddress() : void
+    + DeleteAddress() : void
+}
+
+class Supplier {
+    - id
+    - name
+    - phone
+    - email
+    - addressId
+
+    + getOneSupplier() : SupplierEntity
+    + getAllSupplier() : SupplierEntity[]
+    + createSupplier() : SupplierEntity
+    + updateSupplier() : void
+    + DeleteSupplier() : void
+}
+
+'<<enumeration>>
+enum EmployeeRoleEum {
+    - ceo
+    - cashier
+    - Manager
+    - financial
+}
+
+
+
+class Stock {
+    - id
+    - qty
+    - createdAt
+    - updatedAt
+    - productId
+    - employeeId
+
+    + getOneStock() : StockEntity
+    + getAllStock() : StockEntity[]
+    + createStock() : StockEntity
+    + updateStock() : void
+    + DeleteStock() : void
+}
+
+class Promotion {
+    - id
+    - desc
+    - iat
+    - exp
+    - discountPercent
+    - discountValue
+    - productId
+    - createdAt
+    - updatedAt
+
+    + getOnePromotion() : PromotionEntity
+    + getAllPromotion() : PromotionEntity[]
+    + createPromotion() : PromotionEntity
+    + updatePromotion() : void
+    + DeletePromotion() : void
+}
 
 class Product {
-- id
-- name
-- desc
-- brand
+    - id
+    - name
+    - desc
+    - brand
+    - price
+    - expDate
+    - mfgDate
+    - categoryId
+    - employeeId
+    - createdAt
+    - updatedAt
 
- + getProduct()
- + createProduct()
- + updateProduct()
- + deleteProduct()
+    + getOneProduct() : ProductEntity
+    + getAllProduct() : ProductEntity[]
+    + createProduct() : ProductEntity
+    + updateProduct() : void
+    + DeleteProduct() : void
 }
 
 class Category {
     - id
     - name
     - desc
-}
 
-class Stock {
-    - id
-    - qty
-    - importDate
-    - productId
-}
-
-class Receipt {
-    - id
-    - date
-    - orderId
+    + getOneCategory() : CategoryEntity
+    + getAllCategory() : CategoryEntity[]
+    + createCategory() : CategoryEntity
+    + updateCategory() : void
+    + DeleteCategory() : void
 }
 
 class Invoice {
     - id
     - productId
-    - qty
+    - employeeId
+    - orderId
+    - createdAt
+    - updatedAt
+
+    + getOneInvoice() : InvoiceEntity
+    + getAllInvoice() : InvoiceEntity[]
+    + createInvoice() : InvoiceEntity
+    + updateInvoice() : void
+    + DeleteInvoice() : void
 }
 
 class Order {
     - id
     - qty
+    - status
+    - customerId
+    - employeeId
     - productId
+    - createdAt
+    - updatedAt
+
+    + getOneOrder() : OrderEntity
+    + getAllOrder() : OrderEntity[]
+    + createOrder() : OrderEntity
+    + updateOrder() : void
+    + DeleteOrder() : void
 }
 
-Product "1" -- "0..*" Category
-Product "1" -- "0..*" Stock
-Product "1..*" <|-- "1" Invoice
+class Sell {
+    - id
+    - orderId
+    - employeeId
+    - createdAt
+    - updatedAt
 
+    + getOneSell() : SellEntity
+    + getAllSell() : SellEntity[]
+    + createSell() : SellEntity
+    + updateSell() : void
+    + DeleteSell() : void
+}
+
+class Receipt {
+    - id
+    - employeeId
+    - totalPrice
+    - sellId
+    - createdAt
+    - updatedAt
+
+
+    + getOneReceipt() : ReceiptEntity
+    + getAllReceipt() : ReceiptEntity[]
+    + createReceipt() : ReceiptEntity
+    + updateReceipt() : void
+    + DeleteReceipt() : void
+
+}
+
+enum orderStatusEnum {
+    - pending
+    - cancel
+    - complete
+}
+
+class SellReport {
+    - id
+    - revenue
+    - totalQty
+    - totalDiscount
+    - total
+    - startDate
+    - endDate
+    - employeeId
+    - createdAt
+    - updatedAt
+
+    + getOneSellReport() : SellReportEntity
+    + getAllSellReport() : SellReportEntity[]
+    + createSellReport() : SellReportEntity
+    + updateSellReport() : void
+    + DeleteSellReport() : void
+}
+
+class StockOrder {
+    - id
+    - qty
+    - productId
+    - supplier
+    - employeeId
+    - createdAt
+    - updatedAt
+
+    + getOneStockOrder() : StockOrderEntity
+    + getAllStockOrder() : StockOrderEntity[]
+    + createStockOrder() : StockOrderEntity
+    + updateStockOrder() : void
+    + DeleteStockOrder() : void
+}
+
+
+User "*" -up-> "1" UserRoleEum
+Employee "*" -left-|> "1"   User
+Customer "*" -right-|> "1"   User
+
+Product "1" *-- "0..*" Stock
+
+Employee "1" -- "1..*" Stock
+
+Product "*" -left-* "1" Category
+Product "1..*" --* "1" Supplier
+
+Order "1..*" *-- "1" Invoice
+Sell "1..*" *-- "1" Receipt
+
+Order "1..*" --* "1" Customer
+Order "1" -- "*" Stock : "check"
+
+Employee "*" -up-> "1" EmployeeRoleEum
+
+Employee "1" -- "*" Invoice : "has"
+Employee "1" -- "*" Receipt : "has"
+
+Employee "1" -- "*" Supplier : "Contact"
+Order "*" -- "1" Employee : "Manage"
+
+Order "*" -left-> "1" orderStatusEnum
+
+Promotion "0..*" -up-* "1" Product : "has"
+
+Address "1..2" -- "1" Supplier : "has"
+Customer "1" -- "1..2" Address : "has"
+Employee "1" -- "1..2" Address : "has"
+
+
+StockOrder "1" --* "1..*" Product
+StockOrder "*" -- "*" Employee
+StockOrder "1" -right- "1..*" Supplier
+
+SellReport "*" -- "1" Employee
 
 
 

@@ -34,7 +34,7 @@ note right of actorSupplier : เป็นบริษัทคู่ค้า�
 rectangle "จัดการสต๊อกสินค้า" as manageStock {
 
     ' ================ Stock ================
-    usecase (Manage Inventory) as (usecaseInventory)
+    usecase (Manage stock) as (usecaseInventory)
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)

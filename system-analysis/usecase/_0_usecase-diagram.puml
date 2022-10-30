@@ -94,7 +94,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     usecase (Confirm stock order) as (usecaseConfirmStockOrder)
 
     ' ================ Stock ================
-    usecase (Manage Inventory) as (usecaseInventory)
+    usecase (Manage stock) as (usecaseStock)
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
@@ -148,12 +148,12 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     ' ================ Stock ================
     actorSupplier -down- (usecaseShipment)
-    (usecaseInventory) - actorManager
+    (usecaseStock) - actorManager
 
-    (usecaseAddStock) ..> (usecaseInventory) : <<extends>>
+    (usecaseAddStock) ..> (usecaseStock) : <<extends>>
     (usecaseAddStock) ..> (usecaseViewProduct) : <<include>>
-    (usecaseUpdateStock) ..> (usecaseInventory) : <<extends>>
-    (usecaseInventory) <.. (usecaseCheckStock) : <<extends>>
+    (usecaseUpdateStock) ..> (usecaseStock) : <<extends>>
+    (usecaseStock) <.. (usecaseCheckStock) : <<extends>>
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
