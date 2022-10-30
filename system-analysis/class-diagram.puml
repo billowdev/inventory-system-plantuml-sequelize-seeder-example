@@ -38,6 +38,7 @@ class Employee {
     - name
     - surname
     - phone
+    - role
     - addressId
 
     + getOneEmployee() : EmployeeEntity
@@ -107,7 +108,6 @@ class Stock {
     - createdAt
     - updatedAt
     - productId
-    - employeeId
 
     + getOneStock() : StockEntity
     + getAllStock() : StockEntity[]
@@ -140,10 +140,9 @@ class Product {
     - desc
     - brand
     - price
-    - expDate
-    - mfgDate
+    - exp
+    - mfg
     - categoryId
-    - employeeId
     - createdAt
     - updatedAt
 
@@ -168,8 +167,6 @@ class Category {
 
 class Invoice {
     - id
-    - productId
-    - employeeId
     - orderId
     - createdAt
     - updatedAt
@@ -214,7 +211,6 @@ class Sell {
 
 class Receipt {
     - id
-    - employeeId
     - totalPrice
     - sellId
     - createdAt
@@ -278,7 +274,7 @@ Customer "*" -right-|> "1"   User
 Product "1" *-- "0..*" Stock 
 Product "*" -right- "1" Employee : "Manage"
 
-Employee "1" -- "1..*" Stock
+Employee "1" -- "1..*" Stock : "Manage"
 
 Product "*" -left-* "1" Category 
 Product "1..*" --* "1" Supplier 
@@ -299,20 +295,20 @@ Employee "1" -- "*" Invoice : "Manage"
 Employee "1" -- "*" Receipt : "Manage"
 
 Employee "1" -- "*" Supplier : "Contact"
-Order "*" -- "1" Employee : "Manage"
+Order "*" --* "1" Employee : "Manage"
 
 Order "*" -left-> "1" orderStatusEnum
 
-Promotion "0..*" -up-* "1" Product : "has"
+Promotion "0..*" -up-* "1" Product
 
-Address "1..2" -- "1" Supplier : "has"
-Customer "1" -- "1..2" Address : "has"
-Employee "1" -- "1..2" Address : "has"
+Address "1" -- "1" Supplier : "has"
+Customer "1" -- "1" Address : "has"
+Employee "1" -- "1" Address : "has"
 
 
 StockOrder "1" --* "1..*" Product
-StockOrder "*" -- "*" Employee
-StockOrder "1" -right- "1..*" Supplier
+StockOrder "*" --* "*" Employee
+StockOrder "1" -right-* "1..*" Supplier
 
 SellReport "*" -- "1" Employee : "Manage"
 

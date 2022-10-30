@@ -15,12 +15,24 @@ module.exports = {
     const categoryList = [
       {
         id: 1,
-        name: 'test category 1',
+        name: 'คอมพิวเตอร์',
+        desc: 'อุปกรณ์คอมพิวเตอร์ต่างๆ',
+        created_at: new Date(),
+        updated_at: new Date(),
       },
       {
         id: 2,
-        name: 'test category 2',
-
+        name: 'เครื่องดื่ม',
+        desc: 'เครื่องดื่มต่างๆ เช่น น้ำเปล่า น้ำอัดลม',
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        id: 3,
+        name: 'เครื่องสำอาง',
+        desc: 'เครื่องสำอางต่างๆ',
+        created_at: new Date(),
+        updated_at: new Date(),
       }
 
     ]

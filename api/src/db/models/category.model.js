@@ -9,12 +9,17 @@ module.exports = (sequelize, DataTypes) => {
 		name: {
 			type: DataTypes.STRING(100),
 			allowNull: true
+		},
+		desc: {
+			type: DataTypes.STRING,
+			allowNull: true
 		}
 	},
 		{
 			tableName: 'category',
-			timestamps: false,
-			freezeTableName: true
+			timestamps: true,
+			freezeTableName: true,
+			underscored: true,
 		});
 
 	Category.associate = (models) => {

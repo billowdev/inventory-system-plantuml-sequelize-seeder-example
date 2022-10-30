@@ -1,0 +1,639 @@
+{
+	"info": {
+		"_postman_id": "2d49f05e-784c-4392-aa09-b4a5615ffec9",
+		"name": "Inventory-System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21020441"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/user",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/user/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "address",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/address",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/address/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"address",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/category",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/category/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/product",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/product/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "employee",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/employee",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/employee/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"employee",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/customer",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/customer/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/order",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/order/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "invoice",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/invoice",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"invoice"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/invoice/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"invoice",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sell",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/sell",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"sell"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/address/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"address",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "receipt",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/receipt",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"receipt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/receipt/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"receipt",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "promotion",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/promotion",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"promotion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/promotion/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"promotion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stock",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/stock",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"stock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/stock/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"stock",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "supplier",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/supplier",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/supplier/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"supplier",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stock order",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/order",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/order/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sell-report",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/sell/report",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"sell",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/sell/report/1",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"sell",
+								"report",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "endpoint",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
