@@ -89,9 +89,9 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     usecase (Edit Order) as (usecaseEditOrder)
     usecase (Cancel Order) as (usecaseDeleteOrder)
 
-    usecase (Order product from supplier) as (usecaseOrderProductFromSupplier)
-    usecase (Create product order list) as (usecaseCreateProductOrderList)
-    usecase (Confirm product order list) as (usecaseConfirmOrderList)
+    usecase (stock order from supplier) as (usecaseStockOrderFromSupplier)
+    usecase (Create stock order) as (usecaseCreateStockOrder)
+    usecase (Confirm stock order) as (usecaseConfirmStockOrder)
 
     ' ================ Stock ================
     usecase (Manage Inventory) as (usecaseInventory)
@@ -216,13 +216,13 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseSellReport)   <.. (usecaseEditSellReport)   : <<extends>>
     (usecaseDeleteSellReport) ..>  (usecaseSellReport)   : <<extends>>
 
-    (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
-    (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
-    (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
+    (usecaseViewProduct) <... (usecaseCreateStockOrder) : <<include>>
+    (usecaseConfirmStockOrder) ..> (usecaseCreateStockOrder) : <<extends>>
+    (usecaseStockOrderFromSupplier) ...> (usecaseConfirmStockOrder)  : <<extend>>
    
-    actorSupplier -- (usecaseOrderProductFromSupplier)
-    actorCEO -- (usecaseConfirmOrderList)
-     (usecaseCreateProductOrderList) -- actorManager
+    actorSupplier -- (usecaseStockOrderFromSupplier)
+    actorCEO -- (usecaseConfirmStockOrder)
+     (usecaseCreateStockOrder) -- actorManager
 
 
 

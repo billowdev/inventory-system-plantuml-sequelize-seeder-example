@@ -43,11 +43,11 @@ rectangle "จัดการคำสั่งซื้อสินค้าจ
     ' ================ Ordering ================
     '    การสั่งซื้อสินค้า
 
-    usecase (Order product from supplier) as (usecaseOrderProductFromSupplier)
-    usecase (Create product order list) as (usecaseCreateProductOrderList)
-    usecase (confirm product order list) as (usecaseConfirmOrderList)
+    usecase (Order product from supplier) as (usecaseStockOrderFromSupplier)
+    usecase (Create stock order) as (usecaseCreateStockOrder)
+    usecase (confirm stock order) as (usecaseConfirmStockOrder)
 
-    actorManager -- (usecaseCreateProductOrderList)
+    actorManager -- (usecaseCreateStockOrder)
 
     ' ================ Product ================
 
@@ -63,14 +63,14 @@ rectangle "จัดการคำสั่งซื้อสินค้าจ
     ' ================ Reporting ================
     '   การทำรายงาน
 
-    (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
-    (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
-    (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
+    (usecaseViewProduct) <... (usecaseCreateStockOrder) : <<include>>
+    (usecaseConfirmStockOrder) ..> (usecaseCreateStockOrder) : <<extends>>
+    (usecaseStockOrderFromSupplier) ...> (usecaseConfirmStockOrder)  : <<extend>>
 
 
-    actorSupplier -- (usecaseOrderProductFromSupplier)
+    actorSupplier -- (usecaseStockOrderFromSupplier)
     actorSupplier -- (usecaseShipment)
-    actorCEO -- (usecaseConfirmOrderList)
+    actorCEO -- (usecaseConfirmStockOrder)
 
 
 
