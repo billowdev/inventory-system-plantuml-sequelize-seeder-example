@@ -9,7 +9,7 @@ participant ":Category" as classCategory
 
 activate actorManager
 
-actorManager -> InventorySystem: 1. RequestViewAllProduct
+actorManager -> InventorySystem: 1. requestViewAllProduct()
 activate InventorySystem
 
 
@@ -30,7 +30,7 @@ InventorySystem --> actorManager : 2. Response products
 
 opt
 
-actorManager -> InventorySystem: 3. RequestViewProduct
+actorManager -> InventorySystem: 3. requestViewProduct()
 
 
 InventorySystem -> classProduct: 3.1 getProduct(id)

@@ -8,13 +8,13 @@ actor Customer as actorCustomer
 actor Financial as actorFinancial
 actor Cashier as actorCashier
 participant ":inventory system" as InventorySystem
-participant ":product" as classProduct
-participant ":category" as classCategory
-participant ":stock" as classStock
 participant ":order" as classOrder
 participant ":invoice" as classInvoice
 participant ":sell" as classSell
 participant ":receipt" as classReceipt
+participant ":product" as classProduct
+participant ":category" as classCategory
+participant ":stock" as classStock
 participant ":sell report" as classSellReport
 participant ":stock order" as classStockOrder
 
@@ -57,13 +57,28 @@ activate actorCashier
 actorCashier -> InventorySystem : requestCreateOrder()
 
 
-InventorySystem -> classStock : checkStock
+InventorySystem -> classProduct: selectProduct()
+activate classProduct
+
+classProduct -> classStock: checkStock()
 activate classStock
-classStock --> InventorySystem : return stock
+
+classStock -> classProduct: return stock
 deactivate classStock
 
+classProduct -> InventorySystem: return product
+deactivate classProduct
+
+
 alt IF stock.qty >= order.qty
-InventorySystem -> classOrder : createOrder()
+InventorySystem -> classOrder : createOrder(order)
+
+classOrder -> classStock: updateStock()
+activate classStock
+
+classStock --> InventorySystem : return update stock
+deactivate classStock
+
 activate classOrder
 classOrder --> InventorySystem : return order
 
@@ -83,7 +98,7 @@ activate classInvoice
 classInvoice -> classInvoice : printInvoice()
 classInvoice --> InventorySystem : return create invoice
 deactivate classInvoice
-InventorySystem --> actorCashier : Response invoice
+InventorySystem --> actorCashier : response invoice
 
 actorCashier -> InventorySystem : Sell
 '
@@ -194,11 +209,19 @@ deactivate classStock
 InventorySystem --> actorManager : response stock
 alt IF stock.stockingDate > 120 day
 actorManager -> InventorySystem : create promotion following product
+InventorySystem -> classProduct : createPromotion()
+activate classProduct
+classProduct --> InventorySystem : return create promotion
+deactivate classProduct
 InventorySystem -> actorManager : response promotion following product
 end
 
 loop every month
 actorManager -> InventorySystem : create monthly sell report
+InventorySystem -> classSellReport : createSellReport()
+activate classSellReport
+classSellReport --> InventorySystem : return create sell report()
+deactivate classSellReport
 InventorySystem -> actorManager : response create monthly sell report
 end loop
 

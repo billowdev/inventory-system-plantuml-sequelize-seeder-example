@@ -1,7 +1,7 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-title Add inventory sequence diagram
+title Add stock sequence diagram
 
 actor Supplier as actorSupplier
 actor Manager as actorManager
@@ -13,35 +13,35 @@ activate actorManager
 activate InventorySystem
 
 '-------------- START add stock ---------------
-actorSupplier -> actorManager : shipment
+actorSupplier -> actorManager : 1. shipment
 activate actorSupplier
 
-actorManager --> actorSupplier : receive shipment
+actorManager --> actorSupplier : 2. receive shipment
 deactivate actorSupplier
 
-actorManager -> InventorySystem : 1 RequestAddStock
+actorManager -> InventorySystem : 3 requestAddStock()
 
 
-InventorySystem -> classProduct: 1.2 getAllProduct()
+InventorySystem -> classProduct: 3.2 getAllProduct()
 activate classProduct
 
-classProduct --> InventorySystem: 1.3 return product
+classProduct --> InventorySystem: 3.3 return product
 deactivate classProduct
 
-InventorySystem  --> actorManager: 1.4 Response product
+InventorySystem  --> actorManager: 3.4 Response product
 
-actorManager -> InventorySystem : 2 RequestSelectProduct
-actorManager -> InventorySystem :  3 SaveAddStock
+actorManager -> InventorySystem : 4. requestSelectProduct()
+actorManager -> InventorySystem :  5. saveAddStock()
 
-InventorySystem -> InventorySystem :  3.1 CalculateQtyStock
+InventorySystem -> InventorySystem :  5.1 calculateQtyStock()
 
 
-InventorySystem -> classStock: 3.2 updateQtyStock
+InventorySystem -> classStock: 5.2 updateQtyStock()
 activate classStock
 
 deactivate classStock
 
-InventorySystem  --> actorManager : 4 Response Add stock status
+InventorySystem  --> actorManager : 6. response Add stock status
 deactivate InventorySystem
 
 deactivate actorManager

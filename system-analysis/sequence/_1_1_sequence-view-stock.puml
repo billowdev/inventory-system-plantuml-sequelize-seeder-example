@@ -1,6 +1,6 @@
 @startuml
 'example
-title Check inventory sequence diagram
+title Check stock sequence diagram
 
 actor Manager as actorManager
 participant ":Inventory System" as InventorySystem
@@ -9,7 +9,7 @@ participant ":Product" as classProduct
 'participant "Category" as classCategory
 
 activate actorManager
-actorManager -> InventorySystem: 1. RequestCheckStock
+actorManager -> InventorySystem: 1. requestCheckStock()
 activate InventorySystem
 '-------------- START Check stock ---------------
 InventorySystem -> classStock: 1.1 getStock()
@@ -24,11 +24,15 @@ deactivate classProduct
 classStock --> InventorySystem: 1.4 return stock
 deactivate classStock
 
-InventorySystem  --> actorManager: 2 Reponse stock
+InventorySystem  --> actorManager: 2 reponse stock
 
 alt IF stock.stockingDate > 120 day
-actorManager -> InventorySystem : create promotion following product
-InventorySystem -> actorManager : response promotion following product
+actorManager -> InventorySystem : 3. create promotion following product
+InventorySystem -> classProduct : 3.1 createPromotion()
+activate classProduct
+classProduct --> InventorySystem : 3.2 return create promotion
+deactivate classProduct
+InventorySystem -> actorManager : 4. response promotion following product
 end
 
 deactivate actorManager

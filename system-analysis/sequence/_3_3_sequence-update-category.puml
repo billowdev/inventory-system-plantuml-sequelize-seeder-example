@@ -8,17 +8,17 @@ participant ":Category" as classCategory
 
 activate actorManager
 
-actorManager -> InventorySystem: 1. RequestUpdateCategory
+actorManager -> InventorySystem: 1. requestUpdateCategory()
 activate InventorySystem
 
 
-InventorySystem -> classCategory: 1.1 updateCategory(CategoryData)
+InventorySystem -> classCategory: 1.1 updateCategory(categoryData)
 activate classCategory
 
 classCategory --> InventorySystem: 1.2 return update category status
 deactivate classCategory
 
-InventorySystem --> actorManager : 2. Response update category status
+InventorySystem --> actorManager : 2. response update category status
 
 deactivate InventorySystem
 

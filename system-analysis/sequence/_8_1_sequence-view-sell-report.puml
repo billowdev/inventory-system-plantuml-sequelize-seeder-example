@@ -10,7 +10,7 @@ participant ":Sell report" as usecaseSellReport
 activate actorManager
 
 activate InventorySystem
-actorManager -> InventorySystem: 1. RequestViewAllSellReport
+actorManager -> InventorySystem: 1. requestViewAllSellReport()
 
 '-------------- START view product ---------------
 InventorySystem -> usecaseSellReport: 1.1 getAllSellReport()
@@ -19,12 +19,12 @@ activate usecaseSellReport
 usecaseSellReport --> InventorySystem: 1.2 return all SellReport
 deactivate usecaseSellReport
 
-InventorySystem --> actorManager : 2. Response SellReport
+InventorySystem --> actorManager : 2. response SellReport
 
 
 
 opt
-actorManager -> InventorySystem: 3. RequestViewSellReport
+actorManager -> InventorySystem: 3. requestViewSellReport()
 
 
 InventorySystem -> usecaseSellReport: 3.1 getSellReport(id)
@@ -36,20 +36,20 @@ deactivate usecaseSellReport
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorManager : 4. Response SellReport
+InventorySystem --> actorManager : 4. response sell report
 
 end
 
 
 opt
-actorManager -> InventorySystem : 5. Request Print sell report
+actorManager -> InventorySystem : 5. request print sell report
 
 
 
 InventorySystem -> usecaseSellReport : 5.1 printSellReport()
 activate usecaseSellReport
 
-usecaseSellReport -> usecaseSellReport : 5.2  print sell report
+usecaseSellReport -> usecaseSellReport : 5.2  printSellReport()
 
 
 end
@@ -59,7 +59,7 @@ deactivate actorManager
 
 
 
-actorFinancial -> InventorySystem: 6. RequestViewWeeklySellReport
+actorFinancial -> InventorySystem: 6. requestViewWeeklySellReport
 activate actorFinancial
 
 InventorySystem -> usecaseSellReport: 6.1 getWeeklySellReport()
@@ -68,7 +68,7 @@ activate usecaseSellReport
 usecaseSellReport --> InventorySystem: 6.2 return sell report
 deactivate usecaseSellReport
 
-InventorySystem --> actorFinancial : 7. Response sell report
+InventorySystem --> actorFinancial : 7. response sell report
 deactivate actorManager
 
 deactivate InventorySystem

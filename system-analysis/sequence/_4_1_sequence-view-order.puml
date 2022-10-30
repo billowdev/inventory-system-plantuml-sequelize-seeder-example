@@ -8,7 +8,7 @@ participant ":Order" as classOrder
 
 activate actorCashier
 
-actorCashier -> InventorySystem: 1. RequestViewAllOrder
+actorCashier -> InventorySystem: 1. requestViewAllOrder()
 activate InventorySystem
 
 InventorySystem -> classOrder: 1.1 getAllOrder()
@@ -18,12 +18,12 @@ classOrder --> InventorySystem: 1.2 return all Order
 deactivate classOrder
 
 
-InventorySystem --> actorCashier : 2. Response orders
+InventorySystem --> actorCashier : 2. response orders
 
 
 
 opt
-actorCashier -> InventorySystem: 3. RequestViewOrder
+actorCashier -> InventorySystem: 3. requestViewOrder()
 
 
 InventorySystem -> classOrder: 3.1 getOrder(id)
@@ -35,7 +35,7 @@ deactivate classOrder
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorCashier : 4. Response order
+InventorySystem --> actorCashier : 4. response order
 
 end
 deactivate InventorySystem

@@ -8,7 +8,7 @@ participant ":Receipt" as classReceipt
 
 activate actorCashier
 
-actorCashier -> InventorySystem: 1. RequestViewAllReceipt
+actorCashier -> InventorySystem: 1. requestViewAllReceipt()
 activate InventorySystem
 
 '-------------- START view product ---------------
@@ -18,12 +18,12 @@ activate classReceipt
 classReceipt --> InventorySystem: 1.2 return all Receipt
 deactivate classReceipt
 
-InventorySystem --> actorCashier : 2. Response Receipts
+InventorySystem --> actorCashier : 2. response Receipts
 
 
 
 opt
-actorCashier -> InventorySystem: 3. RequestViewReceipt
+actorCashier -> InventorySystem: 3. requestViewReceipt()
 
 InventorySystem -> classReceipt: 3.1 getReceipt(id)
 activate classReceipt
@@ -34,20 +34,20 @@ deactivate classReceipt
 
 '-------------- END view product ---------------
 
-InventorySystem --> actorCashier : 4. Response Receipt
+InventorySystem --> actorCashier : 4. response receipt
 
 
 end
 
 
 opt
-actorCashier -> InventorySystem : 5. Request Print Receipt
+actorCashier -> InventorySystem : 5. requestPrintReceipt()
 
 
 InventorySystem -> classReceipt : 5.1 printReceipt()
 
 activate classReceipt
-classReceipt -> classReceipt : 5.2  print Receipt
+classReceipt -> classReceipt : 5.2  printReceipt()
 
 
 end

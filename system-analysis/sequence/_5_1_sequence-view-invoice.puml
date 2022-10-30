@@ -9,7 +9,7 @@ participant ":Invoice" as classInvoice
 
 activate actorCashier
 
-actorCashier -> InventorySystem: 1. RequestViewAllInvoice
+actorCashier -> InventorySystem: 1. requestViewAllInvoice()
 activate InventorySystem
 
 InventorySystem -> classInvoice: 1.1 getAllInvoice()
@@ -18,7 +18,7 @@ activate classInvoice
 classInvoice --> InventorySystem: 1.2 return all invoice
 deactivate classInvoice
 
-InventorySystem --> actorCashier : 2. Response invoices
+InventorySystem --> actorCashier : 2. response invoices
 
 
 
@@ -33,25 +33,25 @@ activate classInvoice
 classInvoice --> InventorySystem: 3.2 return invoice
 deactivate classInvoice
 
-InventorySystem --> actorCashier : 4. Response invoice
+InventorySystem --> actorCashier : 4. response invoice
 
 end
 
 
 opt
-actorCashier -> InventorySystem : 5. RequestPrintInvoice
+actorCashier -> InventorySystem : 5. requestPrintInvoice()
 
 
 activate classInvoice
 InventorySystem -> classInvoice : 5.1 printInvoice()
 
-classInvoice -> classInvoice : 5.2  print invoice
+classInvoice -> classInvoice : 5.2  printInvoice()
 
 end
 deactivate classInvoice
 
 opt
-actorCashier -> InventorySystem: 6. RequestEditInvoice
+actorCashier -> InventorySystem: 6. requestEditInvoice()
 
 
 InventorySystem -> classInvoice: 6.1 getEditInvoice(invoiceData)
@@ -60,7 +60,7 @@ activate classInvoice
 classInvoice --> InventorySystem: 6.2 return invoice edit invoice
 deactivate classInvoice
 
-InventorySystem --> actorCashier : 6. Response Edit invoice status
+InventorySystem --> actorCashier : 7. response edit invoice status
 end
 deactivate InventorySystem
 

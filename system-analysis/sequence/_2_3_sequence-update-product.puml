@@ -9,7 +9,7 @@ participant ":Category" as classCategory
 
 activate actorManager
 
-actorManager -> InventorySystem: 1. RequestUpdateProduct
+actorManager -> InventorySystem: 1. requestUpdateProduct()
 activate InventorySystem
 
 InventorySystem -> classCategory: 1.1 getCategory(productData.categoryId)

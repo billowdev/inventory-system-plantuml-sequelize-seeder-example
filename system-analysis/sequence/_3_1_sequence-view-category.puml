@@ -8,7 +8,7 @@ participant ":Category" as classCategory
 
 activate actorManager
 
-actorManager -> InventorySystem: 1. RequestViewAllProduct
+actorManager -> InventorySystem: 1. requestViewAllProduct()
 activate InventorySystem
 
 InventorySystem -> classCategory: 1.1 getAllCategory()
@@ -23,7 +23,7 @@ InventorySystem --> actorManager : 2. Response products
 
 
 opt
-actorManager -> InventorySystem: 3. RequestViewCategory
+actorManager -> InventorySystem: 3. requestViewCategory()
 
 
 InventorySystem -> classCategory: 3.1 getCategory(id)
@@ -32,7 +32,7 @@ activate classCategory
 classCategory --> InventorySystem: 3.2 return category
 deactivate classCategory
 
-InventorySystem --> actorManager : 4. Response category
+InventorySystem --> actorManager : 4. response category
 
 deactivate InventorySystem
 end

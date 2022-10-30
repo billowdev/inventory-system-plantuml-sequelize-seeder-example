@@ -8,7 +8,7 @@ participant ":Order" as classOrder
 
 activate actorCashier
 
-actorCashier -> InventorySystem: 1. RequestUpdateOrder
+actorCashier -> InventorySystem: 1. requestUpdateOrder()
 activate InventorySystem
 
 InventorySystem -> classOrder: 1.1 updateOrder()
@@ -20,16 +20,16 @@ deactivate classOrder
 InventorySystem --> actorCashier : 2. Response update order status
 opt
 
-actorCashier -> InventorySystem: 3. Request Cancel order
+actorCashier -> InventorySystem: 3. requestCancelOrder()
 
 
-InventorySystem -> classOrder: 3.1 cancelOrder
+InventorySystem -> classOrder: 3.1 cancelOrder()
 activate classOrder
 
 classOrder --> InventorySystem: 3.2 return cancel order status
 deactivate classOrder
 
-InventorySystem --> actorCashier: 4. Response cancel order status
+InventorySystem --> actorCashier: 4. response cancel order status
 deactivate InventorySystem
 
 end

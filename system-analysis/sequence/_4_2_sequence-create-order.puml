@@ -20,59 +20,59 @@ actorCustomer -> actorCashier : 1. Request order product
 actorCashier --> actorCustomer : 2. Receive order
 deactivate actorCustomer
 
-actorCashier -> InventorySystem: 3. RequestCreateOrder
+actorCashier -> InventorySystem: 3. requestCreateOrder()
 activate InventorySystem
 
-InventorySystem -> classProduct: 3.1 selectProduct
+InventorySystem -> classProduct: 3.1 selectProduct()
 activate classProduct
 
-classProduct -> classStock: 3.2 checkStock
+classProduct -> classStock: 3.2 checkStock()
 activate classStock
 
 classStock -> classProduct: 3.3 return stock
 deactivate classStock
 
-classProduct -> InventorySystem: 3.4 return product data
+classProduct -> InventorySystem: 3.4 return product
 deactivate classProduct
 
 
 
 alt IF (stock.qty > order.qty)
 
-InventorySystem -> classOrder: 3.6 createOrder(orderData)
+InventorySystem -> classOrder: 3.5 createOrder(order)
 activate classOrder
 
 
-classOrder -> classStock: 3.7 update stock
+classOrder -> classStock: 3.6 updateStock()
 activate classStock
 
-classStock --> InventorySystem : 3.8 return update stock
+classStock --> InventorySystem : 3.7 return update stock
 deactivate classStock
 
 
-classOrder -> classInvoice : 3.9 system create invoice
+classOrder -> classInvoice : 3.8 systemCreateInvoice()
 activate classInvoice
-classInvoice -> classInvoice : 3.10 print invoice
-classInvoice --> InventorySystem: 3.11 return invoice
+classInvoice -> classInvoice : 3.9 printInvoice()
+classInvoice --> InventorySystem: 3.10 return invoice
 
 
 
 
 deactivate classInvoice
-classOrder --> InventorySystem: 3.12 return order
+classOrder --> InventorySystem: 3.11 return order
 
 else ELSE
-classStock --> classOrder : 3.5 can't create order
+classStock --> InventorySystem : 3.12 can't create order
 'deactivate InventorySystem
 deactivate classOrder
 
 end
 
 
-InventorySystem -> actorCashier: 4. Response create order status
+InventorySystem -> actorCashier: 4. response create order status
 
 deactivate InventorySystem
 activate actorCustomer
-actorCashier --> actorCustomer : Invoice
+actorCashier --> actorCustomer : 5. Invoice
 
 @enduml

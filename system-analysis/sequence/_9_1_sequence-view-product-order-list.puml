@@ -12,7 +12,7 @@ participant ":Invoice" as classInvoice
 activate actorManager
 
 activate InventorySystem
-actorManager -> InventorySystem: 1. RequestViewAllStockOrder
+actorManager -> InventorySystem: 1. RequestViewAllStockOrder()
 
 '-------------- START view product ---------------
 InventorySystem -> classStockOrder: 1.1 getAllStockOrder()
@@ -26,7 +26,7 @@ InventorySystem --> actorManager : 2. Response StockOrder
 
 
 opt
-actorManager -> InventorySystem: 3. RequestViewStockOrder
+actorManager -> InventorySystem: 3. requestViewStockOrder()
 
 InventorySystem -> classStockOrder: 3.1 getStockOrder(id)
 activate classStockOrder
@@ -43,11 +43,11 @@ InventorySystem --> actorManager : 4. Response stock order list
 end
 deactivate actorManager
 
-actorCEO -> InventorySystem : 5. RequestPendingStockOrder
+actorCEO -> InventorySystem : 5. RequestPendingStockOrder()
 activate actorCEO
 
 
-InventorySystem -> classStockOrder : 5.1 getPendingStockOrder
+InventorySystem -> classStockOrder : 5.1 getPendingStockOrder()
 activate classStockOrder
 
 classStockOrder --> InventorySystem : 5.2 return pending stock order list
@@ -57,10 +57,10 @@ InventorySystem --> actorCEO : 6 Response pending stock order list
 
 opt
 
-actorCEO -> InventorySystem : 7. RequestConfirmStockOrder
+actorCEO -> InventorySystem : 7. RequestConfirmStockOrder()
 
 
-InventorySystem -> classStockOrder : 7.1 confirmStockOrder
+InventorySystem -> classStockOrder : 7.1 confirmStockOrder()
 activate classStockOrder
 
 classStockOrder --> InventorySystem : 7.2 return confirm status
@@ -71,10 +71,10 @@ InventorySystem --> actorCEO : 8. Response confirm stock order list status
 end
 deactivate actorCEO
 
-actorManager -> InventorySystem : 9. RequestConfirmedStockOrder
+actorManager -> InventorySystem : 9. requestConfirmedStockOrder()
 activate actorManager
 
-InventorySystem -> classStockOrder : 9.1 getConfirmedStockOrder
+InventorySystem -> classStockOrder : 9.1 getConfirmedStockOrder()
 classStockOrder --> InventorySystem : 9.2 return confirmed stock order list
 
 InventorySystem --> actorManager : 10. Response confirmed stock order list
@@ -84,10 +84,10 @@ alt IF StockOrder.status == confirmed
 activate actorSupplier
 
 actorManager -> actorSupplier : 11. send stock order list to supplier
-InventorySystem -> classInvoice : createInvoiceStockOrder()
+InventorySystem -> classInvoice : 11.1 createInvoiceStockOrder()
 activate classInvoice
-classInvoice -> classInvoice : printInvoice()
-classInvoice --> InventorySystem : return create invoice
+classInvoice -> classInvoice : 11.2 printInvoice()
+classInvoice --> InventorySystem : 11.3 return create invoice
 deactivate classInvoice
 actorSupplier --> actorManager : 12. receive stock order list
 deactivate actorSupplier
