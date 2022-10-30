@@ -276,6 +276,7 @@ Employee "*" --|> "1"   User
 Customer "*" -right-|> "1"   User
 
 Product "1" *-- "0..*" Stock 
+Product "*" -right- "1" Employee : "Manage"
 
 Employee "1" -- "1..*" Stock
 
@@ -284,6 +285,9 @@ Product "1..*" --* "1" Supplier
 
 Order "1..*" *-- "1" Invoice 
 Sell "1..*" *-- "1" Receipt 
+Sell "1..*" -right-* "1" Order
+Sell "*" -- "1" Employee : "Manage"
+
 
 Order "1..*" --* "1" Customer 
 Order "1" --* "1..*" Product 
