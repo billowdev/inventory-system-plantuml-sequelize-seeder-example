@@ -1,0 +1,27 @@
+@startuml
+'example
+title View category sequence diagram
+
+actor Manager as actorManager
+participant ":Inventory System" as InventorySystem
+participant ":Category" as classCategory
+
+activate actorManager
+
+actorManager -> InventorySystem: 1. requestAddCategory()
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> classCategory: 1.1 createCategory(CategoryData)
+activate classCategory
+
+classCategory --> InventorySystem: 1.2 return create category status
+deactivate classCategory
+
+InventorySystem --> actorManager : 2. response Add category status
+
+deactivate InventorySystem
+
+deactivate actorManager
+
+@enduml

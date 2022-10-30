@@ -1,0 +1,25 @@
+@startuml
+'example
+title delete category sequence diagram
+
+actor Manager as actorManager
+participant ":Inventory System" as InventorySystem
+participant ":Category" as classCategory
+
+activate actorManager
+
+actorManager -> InventorySystem: 1. requestDeleteCategory()
+activate InventorySystem
+
+InventorySystem -> classCategory: 1.1 deleteCategory(categoryId)
+activate classCategory
+
+classCategory --> InventorySystem: 1.2 return delete category status
+deactivate classCategory
+
+InventorySystem -> actorManager: 2. response delete category status
+deactivate InventorySystem
+
+deactivate actorManager
+
+@enduml

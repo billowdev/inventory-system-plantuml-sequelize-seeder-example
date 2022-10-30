@@ -1,0 +1,47 @@
+@startuml
+'example
+title View order sequence diagram
+
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
+participant ":Order" as classOrder
+
+activate actorCashier
+
+actorCashier -> InventorySystem: 1. requestViewAllOrder()
+activate InventorySystem
+
+InventorySystem -> classOrder: 1.1 getAllOrder()
+activate classOrder
+
+classOrder --> InventorySystem: 1.2 return all Order
+deactivate classOrder
+
+
+InventorySystem --> actorCashier : 2. response orders
+
+
+
+opt
+actorCashier -> InventorySystem: 3. requestViewOrder()
+
+
+InventorySystem -> classOrder: 3.1 getOrder(id)
+activate classOrder
+
+classOrder --> InventorySystem: 3.2 return order
+deactivate classOrder
+
+
+'-------------- END view product ---------------
+
+InventorySystem --> actorCashier : 4. response order
+
+end
+deactivate InventorySystem
+
+deactivate actorCashier
+
+
+
+@enduml

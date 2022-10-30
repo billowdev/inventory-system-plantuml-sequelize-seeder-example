@@ -41,8 +41,8 @@ note right of actorSupplier : เป็นบริษัทคู่ค้า�
 actor Financial as actorFinancial
 note top of actorFinancial : เป็นฝ่ายดูแลบัญชี
 
-actor Salesperson as actorSalesperson
-note top of actorSalesperson : พนักงานขาย
+actor Cashier as actorCashier
+note top of actorCashier : พนักงานขาย
 
 actor CEO as actorCEO
 note bottom of actorCEO : ผู้บริหารระดับสูง
@@ -59,6 +59,9 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     ' ================ Reporting ================
     '   การทำรายงาน
     usecase (Sell Report) as (usecaseSellReport)
+    usecase (Create Sell Report) as (usecaseCreateSellReport)
+    usecase (Edit Sell Report) as (usecaseEditSellReport)
+    usecase (Delete Sell Report) as (usecaseDeleteSellReport)
 
     '    การขายสินค้า
     usecase (Sell product) as (usecaseSellProduct)
@@ -86,12 +89,12 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     usecase (Edit Order) as (usecaseEditOrder)
     usecase (Cancel Order) as (usecaseDeleteOrder)
 
-    usecase (Order product from supplier) as (usecaseOrderProductFromSupplier)
-    usecase (Create product order list) as (usecaseCreateProductOrderList)
-    usecase (confirm product order list) as (usecaseConfirmOrderList)
+    usecase (stock order from supplier) as (usecaseStockOrderFromSupplier)
+    usecase (Create stock order) as (usecaseCreateStockOrder)
+    usecase (Confirm stock order) as (usecaseConfirmStockOrder)
 
     ' ================ Stock ================
-    usecase (Manage Inventory) as (usecaseInventory)
+    usecase (Manage stock) as (usecaseStock)
     usecase (Check Stock) as (usecaseCheckStock)
     usecase (Add stock) as (usecaseAddStock)
     usecase (Update stock) as (usecaseUpdateStock)
@@ -145,22 +148,21 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     ' ================ Stock ================
     actorSupplier -down- (usecaseShipment)
-    (usecaseInventory) - actorManager
+    (usecaseStock) - actorManager
 
-    (usecaseAddStock) ..> (usecaseInventory) : <<extends>>
+    (usecaseAddStock) ..> (usecaseStock) : <<extends>>
     (usecaseAddStock) ..> (usecaseViewProduct) : <<include>>
-    (usecaseUpdateStock) ..> (usecaseInventory) : <<extends>>
-    (usecaseInventory) <.. (usecaseCheckStock) : <<extends>>
+    (usecaseUpdateStock) ..> (usecaseStock) : <<extends>>
+    (usecaseStock) <.. (usecaseCheckStock) : <<extends>>
 
     ' ================ Sell ================
     (usecaseSellProduct) ..> (usecaseSell) : <<extends>>
-    (usecaseSellProduct)  ..> (usecaseUpdateStock)   : <<include>>
 
     (usecaseSellProduct)  ..> (usecaseCreateReceipt) : <<include>>
     (usecaseSell)  ..> (usecaseOrder) : <<include>>
 
     '   ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการขาย
-    actorSalesperson - (usecaseSell)
+    actorCashier - (usecaseSell)
 
     '   การลงรับสินค้า เป็นส่วนหนึ่งของกระบวนการสั่งซื้อสินค้า
     (usecaseOrder) ..> (usecaseSelectProduct) : <<include>>
@@ -172,12 +174,12 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     ' ================ Order ================
     (usecaseOrder) <.. (usecaseDeleteOrder) : <<extends>>
     (usecaseEditOrder) ..> (usecaseOrder) : <<extends>>
-    (usecaseEditOrder) ..> (usecaseUpdateStock) : <<include>>
+
     (usecaseDeleteOrder) ..> (usecaseUpdateStock) : <<include>>
     (usecaseCreateInvoice) <.. (usecaseOrder) : <<include>>
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสั่งซื้อสินค้า ===
-    actorSalesperson -- (usecaseOrder)
+    actorCashier -- (usecaseOrder)
     (usecaseOrder) -- actorCustomer
 
     ' ================ Invoice ================
@@ -188,7 +190,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseCreateInvoice) ..> (usecasePrintInvoice) : <<include>>
     (usecasePrintInvoice) ..> (usecaseViewInvoice) : <<include>>
 
-     (usecaseInvoice) -- actorSalesperson
+     (usecaseInvoice) -- actorCashier
 
     ' ================ Receipt ================
     (usecaseCreateReceipt) .up.> (usecaseReceipt) : <<extends>>
@@ -197,7 +199,7 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
     (usecaseCreateReceipt) .up.> (usecasePrintReceipt) : <<include>>
     (usecaseViewReceipt)  <..   (usecasePrintReceipt): <<include>>
 
-    (usecaseReceipt) -- actorSalesperson
+    (usecaseReceipt) -- actorCashier
 
     ' ===  ความสัมพันธ์ระหว่าง actor และ usecase ในส่วนของการสออกรายงาน ===
     actorManager -- (usecaseSellReport)
@@ -209,15 +211,18 @@ rectangle "ระบบจัดการสินค้าคงคลัง" a
 
     (usecaseSellReport) ..> (usecaseViewReceipt)    : <<include>>
     (usecaseCheckStock)  <.. (usecaseSellReport)  : <<include>>
-    (usecaseCreateProductOrderList) ..>  (usecaseSellReport)   : <<extends>>
 
-    (usecaseViewProduct) <... (usecaseCreateProductOrderList) : <<include>>
-    (usecaseConfirmOrderList) ..> (usecaseCreateProductOrderList) : <<extends>>
-    (usecaseOrderProductFromSupplier) ...> (usecaseConfirmOrderList)  : <<extend>>
+    (usecaseCreateSellReport) ..>  (usecaseSellReport)   : <<extends>>
+    (usecaseSellReport)   <.. (usecaseEditSellReport)   : <<extends>>
+    (usecaseDeleteSellReport) ..>  (usecaseSellReport)   : <<extends>>
+
+    (usecaseViewProduct) <... (usecaseCreateStockOrder) : <<include>>
+    (usecaseConfirmStockOrder) ..> (usecaseCreateStockOrder) : <<extends>>
+    (usecaseStockOrderFromSupplier) ...> (usecaseConfirmStockOrder)  : <<extend>>
    
-    actorSupplier -- (usecaseOrderProductFromSupplier)
-    actorCEO -- (usecaseConfirmOrderList)
-
+    actorSupplier -- (usecaseStockOrderFromSupplier)
+    actorCEO -- (usecaseConfirmStockOrder)
+     (usecaseCreateStockOrder) -- actorManager
 
 
 

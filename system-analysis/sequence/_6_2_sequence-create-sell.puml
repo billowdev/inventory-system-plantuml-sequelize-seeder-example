@@ -1,0 +1,38 @@
+@startuml
+'example
+title Create Sell sequence diagram
+
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
+participant ":Sale" as classSell
+
+participant ":Receipt" as classReceipt
+
+activate actorCashier
+
+actorCashier -> InventorySystem: 1. requestCreateSell()
+activate InventorySystem
+
+InventorySystem -> classSell: 1.1 createSell()
+activate classSell
+
+classSell -> classReceipt : 1.2 systemCreateReceipt()
+
+activate classReceipt
+classReceipt -> classReceipt : 1.3 printReceipt()
+
+
+classReceipt --> InventorySystem: 1.4 return receipt
+deactivate classReceipt
+
+classSell --> InventorySystem: 1.5 return create sell
+deactivate classSell
+
+InventorySystem --> actorCashier : 2. response create sell status
+
+deactivate InventorySystem
+
+
+deactivate actorCashier
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+'example
+title View Sell report sequence diagram
+
+actor Manager as actorManager
+participant ":Inventory System" as InventorySystem
+participant ":Sell report" as classSellReport
+
+
+actorManager -> InventorySystem: 1. requestCreateSellReport()
+activate actorManager
+activate InventorySystem
+
+'-------------- START view product ---------------
+InventorySystem -> classSellReport: 1.1 createSellReport(SellReportData)
+activate classSellReport
+
+classSellReport --> InventorySystem: 1.2 return create SellReport status
+deactivate classSellReport
+
+InventorySystem --> actorManager : 2. response create sell report status
+
+
+loop every month
+actorManager -> InventorySystem : 3. requestCreateSellReport()
+InventorySystem -> classSellReport : 3.1 createSellReport()
+activate classSellReport
+classSellReport --> InventorySystem : 3.2 response create sell report
+deactivate classSellReport
+
+InventorySystem -> actorManager : 4. response create monthly sell report
+end loop
+
+deactivate InventorySystem
+deactivate actorManager
+@enduml

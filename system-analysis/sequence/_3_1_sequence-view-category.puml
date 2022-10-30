@@ -1,0 +1,42 @@
+@startuml
+'example
+title View category sequence diagram
+
+actor Manager as actorManager
+participant ":Inventory System" as InventorySystem
+participant ":Category" as classCategory
+
+activate actorManager
+
+actorManager -> InventorySystem: 1. requestViewAllProduct()
+activate InventorySystem
+
+InventorySystem -> classCategory: 1.1 getAllCategory()
+activate classCategory
+
+classCategory --> InventorySystem: 1.2 return all category
+deactivate classCategory
+
+
+InventorySystem --> actorManager : 2. Response products
+
+
+
+opt
+actorManager -> InventorySystem: 3. requestViewCategory()
+
+
+InventorySystem -> classCategory: 3.1 getCategory(id)
+activate classCategory
+
+classCategory --> InventorySystem: 3.2 return category
+deactivate classCategory
+
+InventorySystem --> actorManager : 4. response category
+
+deactivate InventorySystem
+end
+
+deactivate actorManager
+
+@enduml

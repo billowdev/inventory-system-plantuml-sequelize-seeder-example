@@ -1,0 +1,46 @@
+@startuml
+'example
+title View StockOrder sequence diagram
+
+actor Manager as actorManager
+participant ":Inventory System" as InventorySystem
+participant ":StockOrder" as classStockOrder
+participant ":Stock" as classStock
+participant ":Product" as classProduct
+
+
+
+actorManager -> InventorySystem: 1. requestCreateStockOrder()
+activate InventorySystem
+
+InventorySystem -> classProduct : 1.1 getProduct()
+activate classProduct
+
+classProduct --> InventorySystem : 1.2 return product
+deactivate classProduct
+
+InventorySystem --> actorManager : 2. response product
+
+actorManager -> InventorySystem : 3. requestCheckStock()
+
+
+InventorySystem -> classStock: 3.1 checkStock()
+activate classStock
+
+classStock --> InventorySystem: 3.2 return stock
+deactivate classStock
+
+
+InventorySystem -> classStockOrder: 3.3 createStockOrder()
+activate classStockOrder
+
+classStockOrder --> InventorySystem: 3.4 return create product order list status
+deactivate classStockOrder
+
+InventorySystem --> actorManager : 4. response Create StockOrder status
+deactivate InventorySystem
+
+
+
+
+@enduml

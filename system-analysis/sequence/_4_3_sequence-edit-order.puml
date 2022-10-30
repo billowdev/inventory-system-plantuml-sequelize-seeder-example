@@ -1,0 +1,38 @@
+@startuml
+'example
+title Edit order sequence diagram
+
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
+participant ":Order" as classOrder
+
+activate actorCashier
+
+actorCashier -> InventorySystem: 1. requestUpdateOrder()
+activate InventorySystem
+
+InventorySystem -> classOrder: 1.1 updateOrder()
+activate classOrder
+
+classOrder --> InventorySystem: 1.2 return update order status
+deactivate classOrder
+
+InventorySystem --> actorCashier : 2. Response update order status
+opt
+
+actorCashier -> InventorySystem: 3. requestCancelOrder()
+
+
+InventorySystem -> classOrder: 3.1 cancelOrder()
+activate classOrder
+
+classOrder --> InventorySystem: 3.2 return cancel order status
+deactivate classOrder
+
+InventorySystem --> actorCashier: 4. response cancel order status
+deactivate InventorySystem
+
+end
+
+
+@enduml

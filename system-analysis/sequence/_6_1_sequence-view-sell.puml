@@ -1,0 +1,39 @@
+@startuml
+'example
+title View Sell sequence diagram
+
+actor Cashier as actorCashier
+participant ":Inventory System" as InventorySystem
+participant ":Sale" as classSell
+
+actorCashier -> InventorySystem: 1. requestViewAllSell()
+activate InventorySystem
+
+InventorySystem -> classSell: 1.1 getAllSell()
+activate classSell
+
+classSell --> InventorySystem: 1.2 return all sell
+deactivate classSell
+
+InventorySystem --> actorCashier : 2. response sells
+
+
+opt
+actorCashier -> InventorySystem: 3. requestViewSell()
+
+InventorySystem -> classSell: 3.1 getSell(id)
+activate classSell
+
+classSell --> InventorySystem: 3.2 return sell
+deactivate classSell
+
+InventorySystem -->  actorCashier : 4. response View Sell
+
+end
+
+deactivate InventorySystem
+
+
+
+
+@enduml

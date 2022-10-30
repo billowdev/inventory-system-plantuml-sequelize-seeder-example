@@ -2,7 +2,7 @@ const express = require('express')
 const figlet = require("figlet")
 const gradient = require("gradient-string")
 const morgan = require('morgan')
-const db = require('./db/models')
+const db = require('./src/db/models')
 
 // import cors = require('cors')
 const app = express()
@@ -28,14 +28,22 @@ if (process.env.NODE_ENV === "development") {
 // PORT
 const PORT = process.env.SERVE_PORT || 5000
 
-const productController = require("./product/product.controller");
+const productController = require("./src/product/product.controller");
+const categoryController = require("./src/category/category.controller");
+const addressController = require("./src/address/address.controller");
+const userController = require("./src/user/user.controller");
+
+
 app.use("/product", productController);
+app.use("/category", categoryController);
+app.use("/address", addressController);
+app.use("/user", userController);
 
 // SERVER restful api at PORT
 const runningServe = async (log) => {
     console.log(`\n--- ${log} ---`);
 
-    const msg = `AKKARAPON SERVE`
+    const msg = `INVENTORY SERVE`
     figlet(msg, (err, data) => [
         console.log(gradient.pastel.multiline(data))
     ])
