@@ -4,7 +4,7 @@ skinparam linetype polyline
 'skinparam linetype ortho
 'top to bottom direction
 left to right direction
-skinparam classAttributeIconSize 0
+'skinparam classAttributeIconSize 0
 'Type	       Symbol
 'Extension	    <|--
 'Composition	*--
@@ -168,7 +168,9 @@ class Category {
 
 class Invoice {
     - id
-    - orderId
+    - transactionId
+    - customerId
+    - employeeId
     - createdAt
     - updatedAt
 
@@ -198,7 +200,8 @@ class Order {
 
 class Sell {
     - id
-    - orderId
+    - transactionId
+    - customerId
     - employeeId
     - createdAt
     - updatedAt
@@ -213,7 +216,7 @@ class Sell {
 class Receipt {
     - id
     - totalPrice
-    - sellId
+    - transactionId
     - createdAt
     - updatedAt
 
@@ -233,11 +236,11 @@ class Transaction {
     - createdAt
     - updatedAt
 
-    + getOneInvoice() : InvoiceEntity
-    + getAllInvoice() : InvoiceEntity[]
-    + createInvoice() : InvoiceEntity
-    + updateInvoice() : void
-    + DeleteInvoice() : void
+    + getOneTransaction() : TransactionEntity
+    + getAllTransaction() : TransactionEntity[]
+    + createTransaction() : TransactionEntity
+    + updateTransaction() : void
+    + DeleteTransaction() : void
 }
 enum transactionStatusEnum {
     - pending
@@ -268,8 +271,9 @@ class StockOrder {
     - id
     - qty
     - productId
-    - supplier
+    - supplierId
     - employeeId
+    - invoiceId
     - createdAt
     - updatedAt
 
@@ -293,11 +297,22 @@ Employee "1" -- "1..*" Stock : "Manage"
 Product "*" -left-* "1" Category
 Product "1..*" --* "1" Supplier
 
-Order "1..*" *-- "1" Invoice
+Transaction "1" *-- "1" Invoice
 
-Sell "1..*" *-- "1" Receipt
-Sell "1..*" -right-* "1" Order
-Sell "*" -- "1" Employee : "Manage"
+
+Transaction "1" *-- "1" Receipt
+
+'Employee "1" *-- "0..1" Transaction
+'Customer "1" *-- "0..1" Transaction
+
+Sell "1..*" --* "1" Transaction
+Sell "0..*" --* "1" Employee
+Sell "0..*" --* "1" Customer
+
+Invoice "0..*" --* "1" Customer
+Invoice "0..*" --* "1" Employee
+Receipt "0..*" --* "1" Customer
+Receipt "0..*" --* "1" Employee
 
 
 Order "1..*" --* "1" Customer
@@ -322,6 +337,7 @@ Address "1" -- "1" Supplier : "has"
 Customer "1" -- "1" Address : "has"
 Employee "1" -- "1" Address : "has"
 
+StockOrder "1..*" --* "1" Invoice
 
 StockOrder "1" --* "1..*" Product
 StockOrder "*" --* "*" Employee

@@ -10,15 +10,17 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
-		status: {
-			type: DataTypes.ENUM(["pending", "cancel", "complete", ]),
-			allowNull: false,
-			defaultValue: "pending",
-		},
+		
 		productId: {
 			type: DataTypes.INTEGER,
 			foreignKey: true,
 			field: 'product_id',
+			allowNull: false,
+		},
+		transactionId: {
+			type: DataTypes.INTEGER,
+			foreignKey: true,
+			field: 'transaction_id',
 			allowNull: false,
 		},
 		customerId: {
