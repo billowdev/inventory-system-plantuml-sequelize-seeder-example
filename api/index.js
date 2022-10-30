@@ -28,15 +28,38 @@ if (process.env.NODE_ENV === "development") {
 // PORT
 const PORT = process.env.SERVE_PORT || 5000
 
-const productController = require("./src/product/product.controller");
-const categoryController = require("./src/category/category.controller");
 const addressController = require("./src/address/address.controller");
+const categoryController = require("./src/category/category.controller");
+const customerController = require("./src/customer/customer.controller");
+const employeeController = require("./src/employee/employee.controller");
+const invoiceController = require("./src/invoice/invoice.controller");
+const productController = require("./src/product/product.controller");
+const promotionController = require("./src/promotion/promotion.controller");
+const receiptController = require("./src/receipt/receipt.controller");
+const sellController = require("./src/sell/sell.controller");
+const sellReportController = require("./src/sell-report/sell-report.controller");
+const stockController = require("./src/stock/stock.controller");
+const stockOrderController = require("./src/stock-order/stock-order.controller");
+const supplierController = require("./src/supplier/supplier.controller");
+
 const userController = require("./src/user/user.controller");
 
 
-app.use("/product", productController);
 app.use("/category", categoryController);
 app.use("/address", addressController);
+app.use("/customer", customerController);
+app.use("/employee", employeeController);
+app.use("/invoice", invoiceController);
+app.use("/product", productController);
+app.use("/promotion", promotionController);
+app.use("/receipt", receiptController);
+app.use("/sell", sellController);
+app.use("/sell/report", sellReportController);
+app.use("/stock", stockController);
+app.use("/stock/order", stockOrderController);
+app.use("/supplier", supplierController);
+
+
 app.use("/user", userController);
 
 // SERVER restful api at PORT

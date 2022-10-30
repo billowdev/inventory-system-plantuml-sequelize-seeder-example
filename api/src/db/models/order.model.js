@@ -6,6 +6,15 @@ module.exports = (sequelize, DataTypes) => {
 			autoIncreatement: true,
 			allowNull: false,
 		},
+		qty:{
+			type: DataTypes.INTEGER,
+			defaultValue: 0
+		},
+		status: {
+			type: DataTypes.ENUM(["pending", "cancel", "complete", ]),
+			allowNull: false,
+			defaultValue: "pending",
+		},
 		productId: {
 			type: DataTypes.INTEGER,
 			foreignKey: true,

@@ -1,6 +1,6 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-'skinparam linetype polyline
+skinparam linetype polyline
 'skinparam linetype ortho
 'top to bottom direction
 left to right direction
@@ -40,6 +40,7 @@ class Employee {
     - phone
     - role
     - addressId
+    - userId
 
     + getOneEmployee() : EmployeeEntity
     + getAllEmployee() : EmployeeEntity[]
@@ -181,7 +182,7 @@ class Invoice {
 class Order {
     - id
     - qty
-    - status
+    - transactionId
     - customerId
     - employeeId
     - productId
@@ -225,7 +226,20 @@ class Receipt {
 
 }
 
-enum orderStatusEnum {
+
+class Transaction {
+    - id
+    - status
+    - createdAt
+    - updatedAt
+
+    + getOneInvoice() : InvoiceEntity
+    + getAllInvoice() : InvoiceEntity[]
+    + createInvoice() : InvoiceEntity
+    + updateInvoice() : void
+    + DeleteInvoice() : void
+}
+enum transactionStatusEnum {
     - pending
     - cancel
     - complete
@@ -271,25 +285,26 @@ User "*" -up-> "1" UserRoleEum
 Employee "*" --|> "1"   User
 Customer "*" -right-|> "1"   User
 
-Product "1" *-- "0..*" Stock 
+Product "1" *-- "0..*" Stock
 Product "*" -right- "1" Employee : "Manage"
 
 Employee "1" -- "1..*" Stock : "Manage"
 
-Product "*" -left-* "1" Category 
-Product "1..*" --* "1" Supplier 
+Product "*" -left-* "1" Category
+Product "1..*" --* "1" Supplier
 
-Order "1..*" *-- "1" Invoice 
-Sell "1..*" *-- "1" Receipt 
+Order "1..*" *-- "1" Invoice
+
+Sell "1..*" *-- "1" Receipt
 Sell "1..*" -right-* "1" Order
 Sell "*" -- "1" Employee : "Manage"
 
 
-Order "1..*" --* "1" Customer 
-Order "1" --* "1..*" Product 
+Order "1..*" --* "1" Customer
+Order "1" --* "1..*" Product
 'Order "1" -- "*" Stock : "check"
 
-Employee "*" -up-> "1" EmployeeRoleEum
+Employee  -up->  EmployeeRoleEum
 
 Employee "1" -- "*" Invoice : "Manage"
 Employee "1" -- "*" Receipt : "Manage"
@@ -297,7 +312,9 @@ Employee "1" -- "*" Receipt : "Manage"
 Employee "1" -- "*" Supplier : "Contact"
 Order "*" --* "1" Employee : "Manage"
 
-Order "*" -left-> "1" orderStatusEnum
+Order "1..*" --*  "1" Transaction
+
+Transaction  -left->  transactionStatusEnum
 
 Promotion "0..*" -up-* "1" Product
 
