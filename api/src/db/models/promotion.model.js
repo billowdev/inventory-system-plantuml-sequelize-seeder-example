@@ -15,8 +15,9 @@ module.exports = (sequelize, DataTypes) => {
 			field: 'discount_percent',
 			defaultValue: 0
 		},
-		discount: {
+		discountValue: {
 			type: DataTypes.DECIMAL(10, 2),
+			field: 'discount_value',
 			defaultValue: 0
 		},
 		iat: {

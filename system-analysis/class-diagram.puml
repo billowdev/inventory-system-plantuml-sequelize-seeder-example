@@ -207,12 +207,11 @@ class Sell {
     - productId
     - employeeId
     - orderId
-    - receiptId
     - createdAt
     - updatedAt
 
     + getOneSell() : SellEntity
-    + getAllSell() : sEntity[]
+    + getAllSell() : SellEntity[]
     + createSell() : SellEntity
     + updateSell() : void
     + DeleteSell() : void
@@ -257,7 +256,6 @@ class SellReport {
     - id
     - revenue
     - totalQty
-    - totalDiscount
     - total
     - startDate
     - endDate

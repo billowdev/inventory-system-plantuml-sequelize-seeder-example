@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
 			field: 'total_price',
 			defaultValue: 0
 		},
-		sellId: {
+		orderId: {
 			type: DataTypes.INTEGER,
 			foreignKey: true,
-			field: 'sell_id',
+			field: 'order_id',
 			allowNull: false,
 		},
 	}, {
@@ -25,7 +25,11 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Receipt.associate = (models) => {
-		Receipt.belongsTo(models.Sell, {
+		Receipt.belongsTo(models.Order, {
+			foreignKey: 'order_id',
+			onDelete: 'casCade'
+		});
+		Receipt.hasMany(models.Sell, {
 			foreignKey: 'sell_id',
 			onDelete: 'casCade'
 		});

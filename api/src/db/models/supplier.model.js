@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(100),
 			allowNull: false
 		},
+		phone: {
+			type: DataTypes.STRING(10),
+			allowNull: false
+		},
+		email: {
+			type: DataTypes.STRING(150),
+			allowNull: false
+		},
 		addressId: {
 			type: DataTypes.INTEGER,
 			field: 'address_id',

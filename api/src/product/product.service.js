@@ -1,4 +1,4 @@
-const { Product } = require('../db/models')
+const { Product, Category} = require('../db/models')
 
 exports.findOne = async (id) => {
 	try {
@@ -12,7 +12,15 @@ exports.findOne = async (id) => {
 
 exports.findAll = async () => {
 	try {
-		return await Product.findAll()
+		return await Product.findAll(
+			{
+			include: [
+				{
+				  model: Category,
+				},
+			  ],
+		}
+		)
 	} catch (error) {
 		throw new Error(error)
 	}

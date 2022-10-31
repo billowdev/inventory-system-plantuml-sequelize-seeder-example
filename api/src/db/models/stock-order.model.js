@@ -7,17 +7,15 @@ module.exports = (sequelize, DataTypes) => {
 			autoIncreatement: true,
 			allowNull: false,
 		},
-		name: {
-			type: DataTypes.STRING(100),
-			allowNull: false
+		qty: {
+			type: DataTypes.INTEGER,
+			defaultValue: 0
 		},
-
 		supplierId: {
 			type: DataTypes.INTEGER,
 			field: 'supplier_id',
 			foreignKey: true
 		},
-
 		productId: {
 			type: DataTypes.INTEGER,
 			field: 'product_id',
@@ -26,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
 		employeeId: {
 			type: DataTypes.INTEGER,
 			field: 'employee_id',
+			foreignKey: true
+		},
+		invoiceId: {
+			type: DataTypes.INTEGER,
+			field: 'invoice_id',
 			foreignKey: true
 		},
 	}, {
@@ -38,15 +41,19 @@ module.exports = (sequelize, DataTypes) => {
 	StockOrder.associate = (models) => {
 		StockOrder.belongsTo(models.Product, {
 			foreignKey: 'product_id',
-			onDelete: 'casCade'
+			onDelete: 'NO ACTION'
 		});
 		StockOrder.belongsTo(models.Employee, {
 			foreignKey: 'employee_id',
-			onDelete: 'casCade'
+			onDelete: 'NO ACTION'
 		});
 		StockOrder.belongsTo(models.Supplier, {
 			foreignKey: 'supplier_id',
-			onDelete: 'casCade'
+			onDelete: 'NO ACTION'
+		});
+		StockOrder.belongsTo(models.Invoice, {
+			foreignKey: 'invoice_id',
+			onDelete: 'NO ACTION'
 		});
 	}
 

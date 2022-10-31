@@ -25,7 +25,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 4,
+        id: 3,
         name: 'manager name',
         surname: "manager surname",
         phone: '0987321231',
@@ -35,7 +35,7 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 5,
+        id: 4,
         name: 'financial name',
         surname: "financial surname",
         phone: '0987321231',

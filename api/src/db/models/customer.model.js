@@ -38,8 +38,9 @@ module.exports = (sequelize, DataTypes) => {
 		});
 
 	Customer.associate = (models) => {
-		// Customer.hasMany(models.Order, { foreignKey: 'customer_id' });
+		Customer.hasMany(models.Order, { foreignKey: 'customer_id' });
 		Customer.belongsTo(models.User, { foreignKey: 'user_id' });
+		Customer.belongsTo(models.Address, { foreignKey: 'address_id' });
 
 	}
 
