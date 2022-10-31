@@ -23,8 +23,16 @@ opt
 actorCashier -> InventorySystem: 3. requestCancelOrder()
 
 
+
 InventorySystem -> classOrder: 3.1 cancelOrder()
 activate classOrder
+
+classOrder -> classTransaction : updateStatusTransaction(cancel)
+activate classTransaction
+
+classTransaction --> classOrder : return update transaction
+deactivate classTransaction
+
 
 classOrder --> InventorySystem: 3.2 return cancel order status
 deactivate classOrder

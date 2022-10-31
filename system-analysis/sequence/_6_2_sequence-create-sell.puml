@@ -5,15 +5,30 @@ title Create Sell sequence diagram
 actor Cashier as actorCashier
 participant ":Inventory System" as InventorySystem
 participant ":Sale" as classSell
-
 participant ":Receipt" as classReceipt
+participant ":transaction" as classTransaction
 
 activate actorCashier
+
+
+
 
 actorCashier -> InventorySystem: 1. requestCreateSell()
 activate InventorySystem
 
-InventorySystem -> classSell: 1.1 createSell()
+'InventorySystem -> classTransaction : getTransaction
+'activate classTransaction
+'classTransaction --> InventorySystem : return transaction
+'deactivate classTransaction
+'
+'alt IF pending transaction not exist
+'InventorySystem -> classTransaction : createTransaction()
+'  activate classTransaction
+'classTransaction --> InventorySystem : return transaction
+' deactivate classTransaction
+'end
+
+InventorySystem -> classSell: 1.1 createSell(orderId)
 activate classSell
 
 classSell -> classReceipt : 1.2 systemCreateReceipt()

@@ -2,6 +2,7 @@
 'https://plantuml.com/sequence-diagram
 skinparam linetype polyline
 'skinparam linetype ortho
+
 'top to bottom direction
 left to right direction
 'skinparam classAttributeIconSize 0
@@ -168,8 +169,6 @@ class Category {
 
 class Invoice {
     - id
-    - transactionId
-    - customerId
     - employeeId
     - createdAt
     - updatedAt
@@ -184,7 +183,7 @@ class Invoice {
 class Order {
     - id
     - qty
-    - transactionId
+    - invoiceId
     - customerId
     - employeeId
     - productId
@@ -198,16 +197,23 @@ class Order {
     + DeleteOrder() : void
 }
 
+enum OrderStatusEnum {
+    - pending
+    - cancel
+    - complete
+}
+
 class Sell {
     - id
-    - transactionId
-    - customerId
+    - qty
     - employeeId
+    - orderId
+    - receiptId
     - createdAt
     - updatedAt
 
     + getOneSell() : SellEntity
-    + getAllSell() : SellEntity[]
+    + getAllSell() : sEntity[]
     + createSell() : SellEntity
     + updateSell() : void
     + DeleteSell() : void
@@ -216,7 +222,7 @@ class Sell {
 class Receipt {
     - id
     - totalPrice
-    - transactionId
+    - orderId
     - createdAt
     - updatedAt
 
@@ -230,23 +236,23 @@ class Receipt {
 }
 
 
-class Transaction {
-    - id
-    - status
-    - createdAt
-    - updatedAt
-
-    + getOneTransaction() : TransactionEntity
-    + getAllTransaction() : TransactionEntity[]
-    + createTransaction() : TransactionEntity
-    + updateTransaction() : void
-    + DeleteTransaction() : void
-}
-enum transactionStatusEnum {
-    - pending
-    - cancel
-    - complete
-}
+'class Transaction {
+'    - id
+'    - status
+'    - createdAt
+'    - updatedAt
+'
+'    + getOneTransaction() : TransactionEntity
+'    + getAllTransaction() : TransactionEntity[]
+'    + createTransaction() : TransactionEntity
+'    + updateTransaction() : void
+'    + DeleteTransaction() : void
+'}
+'enum transactionStatusEnum {
+'    - pending
+'    - cancel
+'    - complete
+'}
 
 class SellReport {
     - id
@@ -297,26 +303,30 @@ Employee "1" -- "1..*" Stock : "Manage"
 Product "*" -left-* "1" Category
 Product "1..*" --* "1" Supplier
 
-Transaction "1" *-- "1" Invoice
-
-
-Transaction "1" *-- "1" Receipt
-
+'Transaction "1" *-- "1" Invoice
+'Transaction "1" *-- "1" Receipt
 'Employee "1" *-- "0..1" Transaction
 'Customer "1" *-- "0..1" Transaction
+'Order "1..*" --*  "1" Transaction
+'Transaction  -left->  transactionStatusEnum
+'Sell "1..*" --* "1" Transaction
 
-Sell "1..*" --* "1" Transaction
 Sell "0..*" --* "1" Employee
-Sell "0..*" --* "1" Customer
+'Sell "0..*" --* "1" Customer
 
-Invoice "0..*" --* "1" Customer
-Invoice "0..*" --* "1" Employee
-Receipt "0..*" --* "1" Customer
-Receipt "0..*" --* "1" Employee
+Sell "0..*" --* "1" Order
 
 
+'Receipt "0..*" --* "1" Customer
+'Receipt "0..*" --* "1" Employee
+
+
+Order "1" --* "1" Receipt
 Order "1..*" --* "1" Customer
 Order "1" --* "1..*" Product
+Order --> OrderStatusEnum
+Order "1" --* "1" Invoice
+
 'Order "1" -- "*" Stock : "check"
 
 Employee  -up->  EmployeeRoleEum
@@ -327,9 +337,7 @@ Employee "1" -- "*" Receipt : "Manage"
 Employee "1" -- "*" Supplier : "Contact"
 Order "*" --* "1" Employee : "Manage"
 
-Order "1..*" --*  "1" Transaction
 
-Transaction  -left->  transactionStatusEnum
 
 Promotion "0..*" -up-* "1" Product
 
