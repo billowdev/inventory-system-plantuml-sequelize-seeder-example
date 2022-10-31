@@ -182,11 +182,9 @@ class Invoice {
 
 class Order {
     - id
-    - qty
     - invoiceId
     - customerId
     - employeeId
-    - productId
     - createdAt
     - updatedAt
 
@@ -206,6 +204,7 @@ enum OrderStatusEnum {
 class Sell {
     - id
     - qty
+    - productId
     - employeeId
     - orderId
     - receiptId
@@ -312,18 +311,18 @@ Product "1..*" --* "1" Supplier
 'Sell "1..*" --* "1" Transaction
 
 Sell "0..*" --* "1" Employee
-'Sell "0..*" --* "1" Customer
+Sell "0..*" --* "1" Customer
 
 Sell "0..*" --* "1" Order
+Sell "1" --* "1..*" Product
 
 
 'Receipt "0..*" --* "1" Customer
 'Receipt "0..*" --* "1" Employee
 
 
-Order "1" --* "1" Receipt
+Order "1" *-- "1" Receipt
 Order "1..*" --* "1" Customer
-Order "1" --* "1..*" Product
 Order --> OrderStatusEnum
 Order "1" --* "1" Invoice
 
