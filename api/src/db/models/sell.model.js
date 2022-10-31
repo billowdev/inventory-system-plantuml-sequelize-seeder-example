@@ -48,10 +48,10 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'product_id',
 			onDelete: 'NO ACTION'
 		});
-		Sell.belongsTo(models.Receipt, {
-			foreignKey: 'receipt_id',
-			onDelete: 'NO ACTION'
-		});
+		// Sell.belongsTo(models.Receipt, {
+		// 	foreignKey: 'receipt_id',
+		// 	onDelete: 'NO ACTION'
+		// });
 	}
 
 	return Sell;

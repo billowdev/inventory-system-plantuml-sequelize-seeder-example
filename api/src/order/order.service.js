@@ -1,8 +1,8 @@
-const { Sell } = require('../db/models')
+const { Order, Customer, Employee, Invoice } = require('../db/models')
 
 exports.findOne = async (id) => {
 	try {
-		return await Sell.findOne({
+		return await Order.findOne({
 			where: { id }
 		})
 	} catch (error) {
@@ -12,14 +12,17 @@ exports.findOne = async (id) => {
 
 exports.findAll = async () => {
 	try {
-		return await Sell.findAll({
+		return await Order.findAll({
 			include: [
-				// {
-				// 	model: Employee,
-				// },
-				// {
-				// 	model: Product,
-				// },
+				{
+					model: Customer,
+				},
+				{
+					model: Employee,
+				},
+				{
+					model: Invoice,
+				},
 			],
 		})
 	} catch (error) {
@@ -29,7 +32,7 @@ exports.findAll = async () => {
 
 exports.create = async (data) => {
 	try {
-		return await Sell.create(data);
+		return await Order.create(data);
 	} catch (error) {
 		throw new Error(error)
 	}
@@ -37,7 +40,7 @@ exports.create = async (data) => {
 
 exports.update = async (id, data) => {
 	try {
-		return await Sell.update({ ...data }, {
+		return await Order.update({ ...data }, {
 			where: { id }
 		})
 	} catch (error) {
@@ -47,7 +50,7 @@ exports.update = async (id, data) => {
 
 exports.delete = async (id) => {
 	try {
-		return await Sell.delete({ where: { id } })
+		return await Order.delete({ where: { id } })
 	} catch (error) {
 		throw new Error(error)
 	}

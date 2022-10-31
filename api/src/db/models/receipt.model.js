@@ -29,10 +29,10 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'order_id',
 			onDelete: 'casCade'
 		});
-		Receipt.hasMany(models.Sell, {
-			foreignKey: 'sell_id',
-			onDelete: 'casCade'
-		});
+		// Receipt.hasMany(models.Sell, {
+		// 	foreignKey: 'sell_id',
+		// 	onDelete: 'casCade'
+		// });
 	}
 
 	return Receipt;

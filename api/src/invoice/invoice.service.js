@@ -1,4 +1,4 @@
-const { Invoice } = require('../db/models')
+const { Invoice, Employee} = require('../db/models')
 
 exports.findOne = async (id) => {
 	try {
@@ -12,7 +12,15 @@ exports.findOne = async (id) => {
 
 exports.findAll = async () => {
 	try {
-		return await Invoice.findAll()
+		return await Invoice.findAll({
+			include: [
+
+				{
+					model: Employee,
+				},
+
+			],
+		})
 	} catch (error) {
 		throw new Error(error)
 	}

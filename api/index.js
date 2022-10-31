@@ -43,6 +43,7 @@ const stockOrderController = require("./src/stock-order/stock-order.controller")
 const supplierController = require("./src/supplier/supplier.controller");
 
 const userController = require("./src/user/user.controller");
+const orderController = require("./src/order/order.controller");
 
 
 app.use("/category", categoryController);
@@ -54,10 +55,11 @@ app.use("/product", productController);
 app.use("/promotion", promotionController);
 app.use("/receipt", receiptController);
 app.use("/sell", sellController);
-app.use("/sell/report", sellReportController);
+app.use("/sellreport", sellReportController);
 app.use("/stock", stockController);
-app.use("/stock/order", stockOrderController);
+app.use("/stockorder", stockOrderController);
 app.use("/supplier", supplierController);
+app.use("/order", orderController);
 
 
 app.use("/user", userController);

@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
 			autoIncreatement: true,
 			allowNull: false,
 		},
-		orderId: {
+		employeeId: {
 			type: DataTypes.INTEGER,
 			foreignKey: true,
-			field: 'order_id',
+			field: 'employee_id',
 			allowNull: false,
 		},
 	}, {
@@ -20,9 +20,19 @@ module.exports = (sequelize, DataTypes) => {
 	});
 
 	Invoice.associate = (models) => {
-		Invoice.belongsTo(models.Order, {
-			foreignKey: 'order_id',
-			onDelete: 'casCade'
+		Invoice.belongsTo(models.Employee, {
+			foreignKey: 'employee_id',
+			onDelete: 'NO ACTION'
+		});
+
+		Invoice.hasMany(models.Order, {
+			foreignKey: 'invoice_id',
+			onDelete: 'NO ACTION'
+		});
+
+		Invoice.hasMany(models.StockOrder, {
+			foreignKey: 'invoice_id',
+			onDelete: 'NO ACTION'
 		});
 	}
 

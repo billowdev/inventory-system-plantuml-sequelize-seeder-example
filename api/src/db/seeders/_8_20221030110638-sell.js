@@ -9,6 +9,7 @@ module.exports = {
         qty: 5,
         product_id: 3,
         order_id: 2,
+        employee_id: 1,
         created_at: new Date(),
         updated_at: new Date(),
       },
