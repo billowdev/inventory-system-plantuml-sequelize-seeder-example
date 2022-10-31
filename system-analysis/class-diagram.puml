@@ -1,10 +1,11 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-'skinparam linetype polyline
+skinparam linetype polyline
 'skinparam linetype ortho
+
 'top to bottom direction
 left to right direction
-skinparam classAttributeIconSize 0
+'skinparam classAttributeIconSize 0
 'Type	       Symbol
 'Extension	    <|--
 'Composition	*--
@@ -40,6 +41,7 @@ class Employee {
     - phone
     - role
     - addressId
+    - userId
 
     + getOneEmployee() : EmployeeEntity
     + getAllEmployee() : EmployeeEntity[]
@@ -167,7 +169,7 @@ class Category {
 
 class Invoice {
     - id
-    - orderId
+    - employeeId
     - createdAt
     - updatedAt
 
@@ -180,11 +182,9 @@ class Invoice {
 
 class Order {
     - id
-    - qty
-    - status
+    - invoiceId
     - customerId
     - employeeId
-    - productId
     - createdAt
     - updatedAt
 
@@ -195,10 +195,18 @@ class Order {
     + DeleteOrder() : void
 }
 
+enum OrderStatusEnum {
+    - pending
+    - cancel
+    - complete
+}
+
 class Sell {
     - id
-    - orderId
+    - qty
+    - productId
     - employeeId
+    - orderId
     - createdAt
     - updatedAt
 
@@ -212,7 +220,7 @@ class Sell {
 class Receipt {
     - id
     - totalPrice
-    - sellId
+    - orderId
     - createdAt
     - updatedAt
 
@@ -225,17 +233,29 @@ class Receipt {
 
 }
 
-enum orderStatusEnum {
-    - pending
-    - cancel
-    - complete
-}
+
+'class Transaction {
+'    - id
+'    - status
+'    - createdAt
+'    - updatedAt
+'
+'    + getOneTransaction() : TransactionEntity
+'    + getAllTransaction() : TransactionEntity[]
+'    + createTransaction() : TransactionEntity
+'    + updateTransaction() : void
+'    + DeleteTransaction() : void
+'}
+'enum transactionStatusEnum {
+'    - pending
+'    - cancel
+'    - complete
+'}
 
 class SellReport {
     - id
     - revenue
     - totalQty
-    - totalDiscount
     - total
     - startDate
     - endDate
@@ -254,8 +274,9 @@ class StockOrder {
     - id
     - qty
     - productId
-    - supplier
+    - supplierId
     - employeeId
+    - invoiceId
     - createdAt
     - updatedAt
 
@@ -271,25 +292,41 @@ User "*" -up-> "1" UserRoleEum
 Employee "*" --|> "1"   User
 Customer "*" -right-|> "1"   User
 
-Product "1" *-- "0..*" Stock 
+Product "1" *-- "0..*" Stock
 Product "*" -right- "1" Employee : "Manage"
 
 Employee "1" -- "1..*" Stock : "Manage"
 
-Product "*" -left-* "1" Category 
-Product "1..*" --* "1" Supplier 
+Product "*" -left-* "1" Category
+Product "1..*" --* "1" Supplier
 
-Order "1..*" *-- "1" Invoice 
-Sell "1..*" *-- "1" Receipt 
-Sell "1..*" -right-* "1" Order
-Sell "*" -- "1" Employee : "Manage"
+'Transaction "1" *-- "1" Invoice
+'Transaction "1" *-- "1" Receipt
+'Employee "1" *-- "0..1" Transaction
+'Customer "1" *-- "0..1" Transaction
+'Order "1..*" --*  "1" Transaction
+'Transaction  -left->  transactionStatusEnum
+'Sell "1..*" --* "1" Transaction
+
+Sell "0..*" --* "1" Employee
+Sell "0..*" --* "1" Customer
+
+Sell "0..*" --* "1" Order
+Sell "1" --* "1..*" Product
 
 
-Order "1..*" --* "1" Customer 
-Order "1" --* "1..*" Product 
+'Receipt "0..*" --* "1" Customer
+'Receipt "0..*" --* "1" Employee
+
+
+Order "1" *-- "1" Receipt
+Order "1..*" --* "1" Customer
+Order --> OrderStatusEnum
+Order "1" --* "1" Invoice
+
 'Order "1" -- "*" Stock : "check"
 
-Employee "*" -up-> "1" EmployeeRoleEum
+Employee  -up->  EmployeeRoleEum
 
 Employee "1" -- "*" Invoice : "Manage"
 Employee "1" -- "*" Receipt : "Manage"
@@ -297,7 +334,7 @@ Employee "1" -- "*" Receipt : "Manage"
 Employee "1" -- "*" Supplier : "Contact"
 Order "*" --* "1" Employee : "Manage"
 
-Order "*" -left-> "1" orderStatusEnum
+
 
 Promotion "0..*" -up-* "1" Product
 
@@ -305,6 +342,7 @@ Address "1" -- "1" Supplier : "has"
 Customer "1" -- "1" Address : "has"
 Employee "1" -- "1" Address : "has"
 
+StockOrder "1..*" --* "1" Invoice
 
 StockOrder "1" --* "1..*" Product
 StockOrder "*" --* "*" Employee

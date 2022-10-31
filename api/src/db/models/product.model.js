@@ -32,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: new Date(),
 			allowNull: false
 		},
-		supplierId: {
+		categoryId: {
 			type: DataTypes.INTEGER,
-			field: 'supplier_id',
+			field: 'category_id',
 			foreignKey: true
 		},
 	}, {
@@ -49,23 +49,24 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'category_id',
 			onDelete: 'NO ACTION'
 		});
+
 		Product.hasMany(models.Stock, {
-			foreignKey: 'product_id',
-			onDelete: 'casCade'
-		});
-		Product.hasMany(models.StockOrder, {
-			foreignKey: 'product_id',
-			onDelete: 'casCade'
-		});
-		Product.hasMany(models.Promotion, {
-			foreignKey: 'product_id',
-			onDelete: 'casCade'
-		});
-		Product.hasMany(models.Order, {
 			foreignKey: 'product_id',
 			onDelete: 'NO ACTION'
 		});
-		
+		Product.hasMany(models.StockOrder, {
+			foreignKey: 'product_id',
+			onDelete: 'NO ACTION'
+		});
+		Product.hasMany(models.Promotion, {
+			foreignKey: 'product_id',
+			onDelete: 'NO ACTION'
+		});
+		Product.hasMany(models.Sell, {
+			foreignKey: 'product_id',
+			onDelete: 'NO ACTION'
+		});
+
 	}
 
 	return Product;

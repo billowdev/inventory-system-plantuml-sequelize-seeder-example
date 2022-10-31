@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 	Stock.associate = (models) => {
 		Stock.belongsTo(models.Product, {
 			foreignKey: 'product_id',
-			onDelete: 'casCade'
+			onDelete: 'NO ACTION'
 		});
 
 	}

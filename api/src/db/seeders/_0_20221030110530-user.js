@@ -6,9 +6,9 @@ module.exports = {
     const userList = [
       {
         id: 1,
-        username: 'customer',
+        username: 'customer1',
         hash_password: "password",
-        email: "customer@gmail.com",
+        email: "customer1@gmail.com",
         role: 'customer',
         last_login: new Date(),
         created_at: new Date(),
@@ -60,6 +60,16 @@ module.exports = {
         hash_password: "password",
         email: "admin@gmail.com",
         role: 'admin',
+        last_login: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        id: 7,
+        username: 'customer 2',
+        hash_password: "password",
+        email: "customer2@gmail.com",
+        role: 'customer',
         last_login: new Date(),
         created_at: new Date(),
         updated_at: new Date(),

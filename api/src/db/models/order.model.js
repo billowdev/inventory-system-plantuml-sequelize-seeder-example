@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
 			primaryKey: true,
 			autoIncreatement: true,
 			allowNull: false,
-		},
-		productId: {
+		},	
+		invoiceId: {
 			type: DataTypes.INTEGER,
 			foreignKey: true,
-			field: 'product_id',
+			field: 'invoice_id',
 			allowNull: false,
 		},
 		customerId: {
@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
 			field: 'employee_id',
 			allowNull: false,
 		},
+		status: {
+			type: DataTypes.ENUM(["complete", "pending", "cancel"]),
+			allowNull: false,
+			defaultValue: "pending",
+		},
 	}, {
 		tableName: 'order',
 		timestamps: true,
@@ -34,10 +39,11 @@ module.exports = (sequelize, DataTypes) => {
 	Order.associate = (models) => {
 		Order.hasMany(models.Sell, {
 			foreignKey: 'order_id',
-			onDelete: 'casCade'
+			onDelete: 'NO ACTION'
 		});
-		Order.hasMany(models.Invoice, {
-			foreignKey: 'invoice_id',
+
+		Order.hasMany(models.Receipt, {
+			foreignKey: 'order_id',
 			onDelete: 'NO ACTION'
 		});
 
@@ -49,8 +55,8 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'customer_id',
 			onDelete: 'NO ACTION'
 		});
-		Order.belongsTo(models.Product, {
-			foreignKey: 'product_id',
+		Order.belongsTo(models.Invoice, {
+			foreignKey: 'invoice_id',
 			onDelete: 'NO ACTION'
 		});
 	}

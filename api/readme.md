@@ -54,25 +54,17 @@ npx sequelize-cli db:seed:undo:all
 
 
 npx sequelize-cli db:seed --seed _0_20221030110530-user.js
-
 npx sequelize-cli db:seed --seed _1_20221030110603-address.js
-
 npx sequelize-cli db:seed --seed _2_20221027015848-category.js
-
 npx sequelize-cli db:seed --seed _3_20221026151755-product.js
-
 npx sequelize-cli db:seed --seed _4_20221030110548-employee.js
-
-npx sequelize-cli db:seed --seed _5_20221030110542-customer.js
- 
-npx sequelize-cli db:seed --seed _6_20221030110644-order.js
-
-npx sequelize-cli db:seed --seed _7_20221027015734-invoice.js
-
+npx sequelize-cli db:seed --seed _5_20221027015734-invoice.js
+npx sequelize-cli db:seed --seed _6_20221030110542-customer.js
+npx sequelize-cli db:seed --seed _7_20221030110644-order.js
 npx sequelize-cli db:seed --seed _8_20221030110638-sell.js
-
 npx sequelize-cli db:seed --seed _9_20221027015839-reciept.js
-
 npx sequelize-cli db:seed --seed _10_20221030110618-promotion.js
-
 npx sequelize-cli db:seed --seed _11_20221030110612-stock.js
+npx sequelize-cli db:seed --seed _12_20221030110555-supplier.js
+npx sequelize-cli db:seed --seed _13_20221030110628-stock-order.js
+npx sequelize-cli db:seed --seed _14_20221030110653-sell-report.js

@@ -17,6 +17,7 @@ participant ":category" as classCategory
 participant ":stock" as classStock
 participant ":sell report" as classSellReport
 participant ":stock order" as classStockOrder
+participant ":transaction" as classTransaction
 
 ' เมื่อสินค้ามาถึงบริษัท
 actorSupplier -> actorManager : 1. shipment product
@@ -71,6 +72,20 @@ deactivate classProduct
 
 
 alt IF stock.qty >= order.qty
+
+'InventorySystem -> classTransaction : getTransaction
+'activate classTransaction
+'classTransaction --> InventorySystem : return transaction
+'deactivate classTransaction
+'
+'alt IF pending transaction not exist
+'InventorySystem -> classTransaction : createTransaction()
+'  activate classTransaction
+'classTransaction --> InventorySystem : return transaction
+' deactivate classTransaction
+'end
+
+
 InventorySystem -> classOrder : createOrder(order)
 
 classOrder -> classStock: updateStock()
@@ -108,7 +123,7 @@ actorCashier -> InventorySystem : Sell
 'classReceipt --> InventorySystem : return create receipt
 'deactivate classReceipt
 
-InventorySystem -> classSell: createSell()
+InventorySystem -> classSell: createSell(orderId)
 activate classSell
 
 classSell -> classReceipt : system create receipt

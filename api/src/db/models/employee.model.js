@@ -43,10 +43,10 @@ module.exports = (sequelize, DataTypes) => {
 		});
 
 	Employee.associate = (models) => {
-		// Employee.hasMany(models.Order, { foreignKey: 'employee_id' });
-		// Employee.hasMany(models.SellReport, { foreignKey: 'employee_id' });
-		// Employee.hasMany(models.Sell, { foreignKey: 'employee_id' });
-		// Employee.hasMany(models.StockOrder, { foreignKey: 'employee_id' });
+		Employee.hasMany(models.Order, { foreignKey: 'employee_id' });
+		Employee.hasMany(models.SellReport, { foreignKey: 'employee_id' });
+		Employee.hasMany(models.Sell, { foreignKey: 'employee_id' });
+		Employee.hasMany(models.StockOrder, { foreignKey: 'employee_id' });
 
 		Employee.belongsTo(models.User, { foreignKey: 'user_id' });
 		Employee.belongsTo(models.Address, { foreignKey: 'address_id' });

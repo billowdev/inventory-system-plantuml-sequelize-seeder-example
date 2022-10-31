@@ -11,6 +11,7 @@ participant ":Order" as classOrder
 participant ":Product" as classProduct
 participant ":Stock" as classStock
 participant ":Invoice" as classInvoice
+participant ":Transaction" as classTransaction
 
 activate actorCashier
 activate actorCustomer
@@ -39,8 +40,22 @@ deactivate classProduct
 
 alt IF (stock.qty > order.qty)
 
+'InventorySystem -> classTransaction : getTransaction
+'activate classTransaction
+'classTransaction --> InventorySystem : return transaction
+'deactivate classTransaction
+'
+'alt IF pending transaction not exist
+'InventorySystem -> classTransaction : createTransaction()
+'  activate classTransaction
+'classTransaction --> InventorySystem : return transaction
+' deactivate classTransaction
+'end
+
+
 InventorySystem -> classOrder: 3.5 createOrder(order)
 activate classOrder
+
 
 
 classOrder -> classStock: 3.6 updateStock()

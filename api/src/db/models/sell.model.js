@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
 			autoIncreatement: true,
 			allowNull: false,
 		},
+		qty : {
+			type: DataTypes.INTEGER,
+			defaultValue: 0
+		},
 		orderId: {
 			type: DataTypes.INTEGER,
 			foreignKey: true,
@@ -16,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			foreignKey: true,
 			field: 'employee_id',
+			allowNull: false,
+		},
+		productId: {
+			type: DataTypes.INTEGER,
+			foreignKey: true,
+			field: 'product_id',
 			allowNull: false,
 		},
 	}, {
@@ -34,6 +44,14 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'employee_id',
 			onDelete: 'NO ACTION'
 		});
+		Sell.belongsTo(models.Product, {
+			foreignKey: 'product_id',
+			onDelete: 'NO ACTION'
+		});
+		// Sell.belongsTo(models.Receipt, {
+		// 	foreignKey: 'receipt_id',
+		// 	onDelete: 'NO ACTION'
+		// });
 	}
 
 	return Sell;
