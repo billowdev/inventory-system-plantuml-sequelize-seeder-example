@@ -1,4 +1,6 @@
-# Migration
+## API (example nodejs sequelize seeder and migration)
+#### Node project should be implemented with the typescript I recommend.
+## Migration
 
 #### product
 <pre>
@@ -8,7 +10,7 @@
 	2. run migration
 		npx sequelize-cli db:migrate --name 20221027021221-product.js
 		npx sequelize-cli db:migrate:undo --name 20221027021221-product.js
-'</pre>
+</pre>
 
 #### category
 <pre>
@@ -18,9 +20,11 @@
 	2. run migration
 		npx sequelize-cli db:migrate --name 20221027022035-category.js
 		npx sequelize-cli db:migrate:undo --name 20221027022035-category.js
-'</pre>
+</pre>
 
+<pre>
 npx sequelize-cli migration:create --name procut-add-brand-desc-column
+</pre>
 
 
 #### seeder
@@ -38,7 +42,7 @@ npx sequelize-cli db:seed:undo:all
 		npx sequelize-cli db:seed --seed 20221027015848-category.js
 	2.1 if want to undo
 		npx sequelize-cli db:seed:undo --seed 20221027015848-category.js
-'</pre>
+</pre>
 
 #### product
 <pre>
@@ -49,7 +53,7 @@ npx sequelize-cli db:seed:undo:all
 		npx sequelize-cli db:seed --seed _2_20221026151755-product.js
 	2.1 if want to undo
 		npx sequelize-cli db:seed:undo --seed _2_20221026151755-product.js
-'</pre>
+</pre>
 
 <pre>
 npx sequelize-cli db:seed --seed _0_20221030110530-user.js
@@ -68,4 +72,3 @@ npx sequelize-cli db:seed --seed _12_20221030110555-supplier.js
 npx sequelize-cli db:seed --seed _13_20221030110628-stock-order.js
 npx sequelize-cli db:seed --seed _14_20221030110653-sell-report.js
 </pre>
-
