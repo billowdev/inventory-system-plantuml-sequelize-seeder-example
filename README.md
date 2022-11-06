@@ -79,7 +79,7 @@ npx sequelize-cli db:seed --seed _14_20221030110653-sell-report.js
 
 
 ### ⚠️ Warning, the object oriented analysis below It only takes 4 days to analyze. There may be a mistake and inaccurate at some point
-### I'd like to apologize here. BillowDev
+
 
 
 ## Use case diagram
