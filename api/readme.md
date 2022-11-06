@@ -51,8 +51,7 @@ npx sequelize-cli db:seed:undo:all
 		npx sequelize-cli db:seed:undo --seed _2_20221026151755-product.js
 '</pre>
 
-
-
+<pre>
 npx sequelize-cli db:seed --seed _0_20221030110530-user.js
 npx sequelize-cli db:seed --seed _1_20221030110603-address.js
 npx sequelize-cli db:seed --seed _2_20221027015848-category.js
@@ -68,3 +67,5 @@ npx sequelize-cli db:seed --seed _11_20221030110612-stock.js
 npx sequelize-cli db:seed --seed _12_20221030110555-supplier.js
 npx sequelize-cli db:seed --seed _13_20221030110628-stock-order.js
 npx sequelize-cli db:seed --seed _14_20221030110653-sell-report.js
+</pre>
+
